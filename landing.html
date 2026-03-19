@@ -1,0 +1,844 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Harve - Get paid to do nothing.</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="icon" type="image/png" sizes="192x192" href="favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Alice&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700;9..40,800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --text-primary:   rgba(10, 28, 92, 0.92);
+  --text-secondary: rgba(40, 75, 155, 0.60);
+  --text-muted:     rgba(80, 110, 175, 0.50);
+  --cta-bg:         rgba(10, 28, 92, 0.88);
+  --cta-hover:      rgba(8, 22, 80, 0.95);
+  --glass-bg:       rgba(220, 235, 255, 0.28);
+  --glass-border:   rgba(255, 255, 255, 0.72);
+}
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  color: var(--text-primary);
+  min-height: 100vh;
+  background:
+    radial-gradient(ellipse at 30% 20%, rgba(255,255,255,0.55) 0%, transparent 55%),
+    radial-gradient(ellipse at 75% 80%, rgba(180,200,235,0.45) 0%, transparent 50%),
+    linear-gradient(160deg, #dce8f8 0%, #c8d9f0 40%, #bccde8 70%, #c8d4e5 100%);
+  background-attachment: fixed;
+}
+
+/* ── Navbar ── */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 16px 48px;
+  max-width: 960px; margin: 12px auto 0;
+  border-radius: 14px;
+  background: rgba(220, 232, 248, 0.82);
+  backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+  transition: transform 0.35s ease;
+}
+.nav.nav-hidden {
+  transform: translateY(-100%);
+}
+.nav-links {
+  position: absolute; left: 50%; transform: translateX(-50%);
+  display: inline-flex; align-items: center; gap: 20px;
+}
+.nav-links a {
+  font: 500 14px 'DM Sans', sans-serif;
+  color: var(--text-primary);
+  text-decoration: none;
+  padding: 4px 2px;
+  transition: color 160ms ease, opacity 160ms ease;
+}
+.nav-links a:hover {
+  opacity: 0.65;
+}
+.nav-logo { display: block; background: transparent; }
+.brand-mark {
+  display: inline-flex; align-items: center; gap: 10px;
+}
+.brand-mark span {
+  font-family: 'Alice', serif; font-size: 22px; font-weight: bold;
+  color: var(--text-primary); line-height: 1;
+}
+.brand-mark svg { width: 30px; height: 30px; }
+.brand-mark--sm span { font-size: 15px; font-weight: bold; }
+.brand-mark--sm svg { width: 20px; height: 20px; }
+.nav-cta {
+  background: var(--cta-bg); color: #fff;
+  font: 500 13px 'DM Sans', sans-serif;
+  padding: 9px 20px; border-radius: 10px; border: none;
+  cursor: pointer; transition: all 180ms ease;
+  box-shadow: 0 4px 16px rgba(10,28,92,0.18), inset 0 1px 0 rgba(255,255,255,0.12);
+}
+.nav-cta:hover {
+  background: rgba(255,255,255,0.92);
+  color: var(--cta-bg);
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 6px 20px rgba(10,28,92,0.2), inset 0 1px 0 rgba(255,255,255,0.95);
+}
+
+/* ── Hero ── */
+.hero {
+  min-height: 100vh; display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 80px 24px 40px;
+}
+.hero h1 {
+  font-family: 'Alice', serif; font-size: 72px;
+  color: var(--text-primary); text-align: center;
+  line-height: 1.05; letter-spacing: -1px;
+    margin-bottom: 18px;
+}
+.hero-sub {
+  font: 400 18px/1.6 'DM Sans', sans-serif;
+  color: var(--text-secondary); text-align: center;
+  max-width: 480px; margin-bottom: 36px;
+}
+.cta-row { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+.cta-primary {
+  background: var(--cta-bg); color: #fff;
+  font: 600 15px 'DM Sans', sans-serif;
+  padding: 13px 28px; border-radius: 12px; border: none;
+  cursor: pointer; transition: all 200ms ease;
+  box-shadow: 0 6px 22px rgba(10,28,92,0.22), inset 0 1px 0 rgba(255,255,255,0.12);
+}
+.cta-primary:hover {
+  background: rgba(255,255,255,0.95);
+  color: var(--cta-bg);
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 8px 28px rgba(10,28,92,0.18), inset 0 1px 0 rgba(255,255,255,0.98);
+}
+.cta-secondary {
+  background: linear-gradient(145deg, rgba(240,248,255,0.42) 0%, rgba(220,235,255,0.24) 100%);
+  color: var(--text-primary);
+  font: 500 15px 'DM Sans', sans-serif;
+  padding: 13px 28px; border-radius: 12px;
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  cursor: pointer; transition: all 200ms ease;
+  box-shadow: 0 4px 18px rgba(65,105,200,0.10), inset 0 1px 0 rgba(255,255,255,0.82);
+}
+.cta-secondary:hover { background: linear-gradient(145deg, rgba(245,252,255,0.56) 0%, rgba(230,242,255,0.38) 100%); transform: translateY(-1px); box-shadow: 0 6px 22px rgba(65,105,200,0.14), inset 0 1px 0 rgba(255,255,255,0.88); }
+.cta-note {
+  font: 400 12px 'DM Sans', sans-serif;
+  color: var(--text-muted); text-align: center; margin-top: 14px; width: 100%;
+}
+
+/* ── Pill Component ── */
+@keyframes harve-pulse {
+  0%  { box-shadow: 0 0 0 0px rgba(52,211,153,0.55); }
+  70% { box-shadow: 0 0 0 6px rgba(52,211,153,0); }
+  100%{ box-shadow: 0 0 0 0px rgba(52,211,153,0); }
+}
+.pill-wrap { width: 360px; margin-bottom: 52px; position: relative; }
+.pill-hint {
+  position: absolute; left: 50%; top: -32px;
+  transform: translateX(-50%);
+  font: 500 11px 'DM Sans', sans-serif; color: var(--text-muted);
+  letter-spacing: 0.04em; white-space: nowrap;
+  opacity: 1; transition: opacity 300ms ease;
+  pointer-events: none;
+}
+.pill-hint::after {
+  content: ''; display: block; margin: 4px auto 0;
+  width: 0; height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid var(--text-muted);
+}
+.pill-wrap:hover .pill-hint { opacity: 0; }
+.pill {
+  width: 100%; height: 48px; border-radius: 100px;
+  overflow: hidden; position: relative; box-sizing: border-box;
+  background: linear-gradient(145deg, rgba(225,240,255,0.28) 0%, rgba(180,215,255,0.16) 100%);
+  border-top: 1px solid rgba(255,255,255,0.82);
+  border-left: 1px solid rgba(255,255,255,0.62);
+  border-right: 1px solid rgba(185,215,255,0.28);
+  border-bottom: 1px solid rgba(185,215,255,0.22);
+  box-shadow: 0 8px 32px rgba(65,105,200,0.22), 0 2px 8px rgba(65,105,200,0.10),
+    inset 0 1.5px 0 rgba(255,255,255,0.88), inset 0 0 80px rgba(255,255,255,0.05);
+  backdrop-filter: blur(32px) saturate(180%) brightness(1.04);
+  -webkit-backdrop-filter: blur(32px) saturate(180%) brightness(1.04);
+  transition: height 320ms cubic-bezier(0.30,1.06,0.64,1),
+              border-radius 320ms cubic-bezier(0.30,1.06,0.64,1);
+}
+.pill::before {
+  content: ''; position: absolute;
+  inset: -40px -20px -60px -20px;
+  background:
+    radial-gradient(120px 120px at 30% 15%, rgba(255,255,255,0.46) 0%, rgba(255,255,255,0) 60%),
+    radial-gradient(190px 190px at 75% 70%, rgba(12,32,98,0.18) 0%, rgba(12,32,98,0) 65%);
+  opacity: 0.85; pointer-events: none;
+}
+.pill:hover { height: 240px; border-radius: 20px; }
+.pill-inner { position: relative; z-index: 1; width: 100%; height: 100%; box-sizing: border-box; }
+.pill-header {
+  height: 48px; display: flex; align-items: center;
+  padding: 0 14px; gap: 10px; box-sizing: border-box;
+}
+.pill:not(:hover) .pill-header { transform: translateY(-1px); }
+.pill-spacer { flex: 1; }
+.pill-timer {
+  font: 500 12px 'DM Sans', sans-serif;
+  color: var(--text-secondary); font-variant-numeric: tabular-nums; white-space: nowrap;
+}
+.pill-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: #34D399; box-shadow: 0 0 0 3px rgba(52,211,153,0.2);
+  animation: harve-pulse 2s ease-out infinite;
+}
+.pill-content {
+  padding: 0 13px 14px 13px; box-sizing: border-box;
+  opacity: 0; pointer-events: none; transition: opacity 150ms ease;
+}
+.pill:hover .pill-content {
+  opacity: 1; pointer-events: auto; transition: opacity 200ms ease 150ms;
+}
+.earnings-card {
+  border-radius: 13px; padding: 11px 14px; margin-bottom: 10px;
+  background: rgba(242,250,255,0.42);
+  border: 1px solid rgba(255,255,255,0.75);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.92), 0 2px 8px rgba(65,105,200,0.08);
+}
+.ec-label {
+  font: 500 10px 'DM Sans', sans-serif;
+  letter-spacing: 0.07em; color: var(--text-muted);
+  text-transform: uppercase; margin-bottom: 4px;
+}
+.ec-amount {
+  font-family: 'DM Sans', sans-serif; font-weight: 800; font-size: 36px;
+  font-variant-numeric: tabular-nums; letter-spacing: -0.8px;
+  color: var(--text-primary); line-height: 1; margin-bottom: 5px;
+}
+.ec-meta { font: 400 10.5px 'DM Sans', sans-serif; color: var(--text-muted); }
+.ec-score { font-weight: 600; color: var(--text-secondary); font-variant-numeric: tabular-nums; }
+.ctrl-row { display: flex; gap: 7px; align-items: center; }
+.ctrl-btn {
+  height: 34px; border-radius: 10px; display: inline-flex;
+  align-items: center; justify-content: center; gap: 6px;
+  padding: 0 10px; cursor: pointer; flex: 1;
+  color: var(--text-secondary); font: 500 11.5px 'DM Sans', sans-serif;
+  background: rgba(255,255,255,0.32);
+  border: 0.5px solid rgba(255,255,255,0.7);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+}
+.ctrl-btn:hover { background: rgba(255,255,255,0.48); border-color: rgba(255,255,255,0.85); }
+.ctrl-mic {
+  position: relative; overflow: hidden;
+  background: linear-gradient(145deg, rgba(255,255,255,0.42) 0%, rgba(255,255,255,0.30) 55%, rgba(200,224,255,0.16) 100%);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.86), inset 0 -1px 0 rgba(12,32,98,0.06), 0 6px 18px rgba(65,105,200,0.10);
+}
+.ctrl-mic::before {
+  content: ''; position: absolute; inset: -1px; border-radius: 10px;
+  background: radial-gradient(120px 34px at 28% 18%, rgba(255,255,255,0.90) 0%, rgba(255,255,255,0.28) 46%, rgba(255,255,255,0) 70%);
+  opacity: 0.48; pointer-events: none;
+}
+.ctrl-mic.ctrl-muted {
+  background: rgba(205,48,48,0.11);
+  border: 0.5px solid rgba(205,48,48,0.3);
+  color: rgba(175,35,35,0.88);
+  box-shadow: none;
+}
+.ctrl-mic.ctrl-muted:hover { background: rgba(205,48,48,0.14); border-color: rgba(205,48,48,0.36); }
+.pill-dot.paused {
+  background: #F59E0B;
+  box-shadow: 0 0 6px rgba(251,191,36,0.65);
+  animation: none;
+}
+.ctrl-submit {
+  width: 38px; flex: none; padding: 0;
+  background: linear-gradient(145deg, rgba(140,178,255,0.26) 0%, rgba(95,140,235,0.18) 55%, rgba(55,104,210,0.16) 100%);
+  border: 0.5px solid rgba(165,195,255,0.46); color: rgba(10,28,92,0.76);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.70), inset 0 -1px 0 rgba(12,32,98,0.10), 0 6px 18px rgba(65,105,200,0.14);
+  position: relative; overflow: hidden;
+}
+.ctrl-submit::before {
+  content: ''; position: absolute; inset: -1px; border-radius: 10px;
+  background: radial-gradient(22px 18px at 30% 22%, rgba(255,255,255,0.70) 0%, rgba(255,255,255,0.18) 45%, rgba(255,255,255,0) 70%);
+  opacity: 0.55; pointer-events: none;
+}
+
+/* ── Social Proof Carousel (horizontal rolling ticker) ── */
+.proof {
+  background: linear-gradient(180deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0.08) 100%);
+  padding: 20px 0; margin-top: 32px;
+  font: 500 14px 'DM Sans', sans-serif; color: var(--text-secondary);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  overflow: hidden;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  transition: opacity 180ms ease;
+}
+.proof-track {
+  display: flex;
+  width: max-content;
+  animation: proof-roll 50s linear infinite;
+}
+.proof:hover .proof-track { animation-play-state: paused; }
+@keyframes proof-roll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.proof-carousel {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+.proof-item {
+  display: inline-block;
+  padding: 0 24px;
+  white-space: nowrap;
+}
+.proof-item .proof-amount { font-weight: 700; color: var(--text-primary); }
+.proof-sep {
+  display: inline-block;
+  color: var(--text-muted);
+  opacity: 0.6;
+  padding: 0 4px;
+  user-select: none;
+}
+
+/* ── How It Works ── */
+.how { padding: 20px 48px 120px; max-width: 1200px; margin: 0 auto; text-align: center; }
+.section-label {
+  font: 500 11px 'DM Sans', sans-serif; color: var(--text-muted);
+  letter-spacing: 0.10em; text-transform: uppercase; margin-bottom: 16px;
+}
+.section-headline {
+  font: normal 44px 'Alice', serif; color: var(--text-primary); margin-bottom: 48px;
+}
+.cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+.card {
+  background: linear-gradient(145deg, rgba(235,245,255,0.32) 0%, rgba(210,230,255,0.18) 100%);
+  border: 1px solid rgba(255,255,255,0.72);
+  border-radius: 20px; padding: 32px 28px 36px 28px;
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  text-align: left; position: relative; overflow: hidden;
+  box-shadow: 0 6px 28px rgba(65,105,200,0.10), inset 0 1.5px 0 rgba(255,255,255,0.85), inset 0 0 60px rgba(255,255,255,0.04);
+  transition: transform 200ms ease, box-shadow 200ms ease;
+}
+.card::before {
+  content: ''; position: absolute; inset: 0; border-radius: 18px;
+  background: radial-gradient(160px 80px at 25% 12%, rgba(255,255,255,0.65) 0%, rgba(255,255,255,0) 55%);
+  opacity: 0.35; pointer-events: none;
+}
+.card:hover { transform: translateY(-2px); box-shadow: 0 10px 36px rgba(65,105,200,0.14), inset 0 1.5px 0 rgba(255,255,255,0.88), inset 0 0 60px rgba(255,255,255,0.05); }
+.card-step {
+  font: 700 11px 'DM Sans', sans-serif; color: var(--text-muted);
+  letter-spacing: 0.10em; text-transform: uppercase; margin-bottom: 20px;
+}
+.card-media {
+  width: 100%; aspect-ratio: 16 / 10; border-radius: 16px;
+  overflow: hidden; background: rgba(200,220,255,0.2);
+}
+.card-media video {
+  width: 100%; height: 100%; object-fit: cover; object-position: center; display: block;
+}
+.card-title { font: normal 22px 'Alice', serif; color: var(--text-primary); margin-top: 24px; margin-bottom: 0; }
+.card-body { font: 400 15px/1.7 'DM Sans', sans-serif; color: var(--text-secondary); margin-top: 12px; }
+
+/* ── Earnings Table ── */
+.earnings-section { padding: 0 48px 100px; max-width: 720px; margin: 0 auto; text-align: center; }
+.earnings-section .section-headline { margin-bottom: 48px; }
+.table-glass {
+  background: linear-gradient(145deg, rgba(235,245,255,0.30) 0%, rgba(210,230,255,0.16) 100%);
+  border: 1px solid rgba(255,255,255,0.72);
+  border-radius: 20px; overflow: hidden;
+  backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+  box-shadow: 0 8px 32px rgba(65,105,200,0.12), inset 0 1.5px 0 rgba(255,255,255,0.82);
+}
+.table-glass table { width: 100%; border-collapse: collapse; }
+.table-glass th {
+  background: rgba(255,255,255,0.25); padding: 14px 24px;
+  font: 500 12px 'DM Sans', sans-serif; color: var(--text-muted);
+  text-transform: uppercase; letter-spacing: 0.06em; text-align: left;
+}
+.table-glass td {
+  border-top: 1px solid rgba(255,255,255,0.35); padding: 16px 24px;
+  font: 400 15px 'DM Sans', sans-serif; color: var(--text-secondary); text-align: left;
+}
+.table-glass td:last-child { font-weight: 700; color: var(--text-primary); }
+.table-note {
+  font: 400 12px 'DM Sans', sans-serif; color: var(--text-muted);
+  margin-top: 16px; max-width: 560px; margin-left: auto; margin-right: auto;
+}
+
+/* ── Final CTA ── */
+.final-cta { padding: 100px 48px; text-align: center; }
+.final-cta h2 { font: normal 56px 'Alice', serif; color: var(--text-primary); margin-bottom: 12px; }
+.final-cta p { font: 400 18px/1.6 'DM Sans', sans-serif; color: var(--text-secondary); margin-bottom: 36px; }
+
+/* ── FAQ ── */
+.faq { padding: 80px 48px 100px; max-width: 720px; margin: 0 auto; }
+.faq-headline { font: normal 44px 'Alice', serif; color: var(--text-primary); margin-bottom: 48px; }
+.faq-item {
+  border-bottom: 1px solid rgba(255,255,255,0.40);
+}
+.faq-item:first-child { border-top: 1px solid rgba(255,255,255,0.40); }
+.faq-q {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 20px 0; cursor: pointer; gap: 16px;
+  font: 500 15px 'DM Sans', sans-serif; color: var(--text-primary);
+  background: none; border: none; width: 100%; text-align: left;
+}
+.faq-q:hover { color: rgba(10,28,92,1); }
+.faq-chevron {
+  width: 20px; height: 20px; flex-shrink: 0;
+  transition: transform 250ms ease;
+  color: var(--text-muted);
+}
+.faq-item.open .faq-chevron { transform: rotate(180deg); }
+.faq-a {
+  max-height: 0; overflow: hidden;
+  transition: max-height 300ms ease, padding 300ms ease;
+  padding: 0 0;
+}
+.faq-item.open .faq-a {
+  max-height: 200px;
+  padding: 0 0 20px;
+}
+.faq-a p {
+  font: 400 14px/1.7 'DM Sans', sans-serif; color: var(--text-secondary);
+}
+
+/* ── Footer ── */
+.footer {
+  border-top: 1px solid rgba(255,255,255,0.35);
+  padding: 48px 48px 24px;
+}
+.footer-top {
+  display: flex; justify-content: space-between; align-items: flex-start;
+  margin-bottom: 40px; gap: 48px; flex-wrap: wrap;
+}
+.footer-brand { display: flex; flex-direction: column; gap: 16px; }
+.footer-socials { display: flex; gap: 14px; margin-top: 4px; }
+.footer-socials a {
+  display: flex; align-items: center; justify-content: center;
+  width: 32px; height: 32px; border-radius: 8px;
+  color: var(--text-secondary); transition: all 160ms ease;
+}
+.footer-socials a:hover { color: var(--text-primary); transform: translateY(-1px); }
+.footer-cols { display: flex; gap: 64px; }
+.footer-col h4 {
+  font: 600 12px 'DM Sans', sans-serif; color: var(--text-muted);
+  text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 14px;
+}
+.footer-col a {
+  display: block; font: 400 14px 'DM Sans', sans-serif;
+  color: var(--text-secondary); text-decoration: none;
+  padding: 4px 0; transition: color 150ms ease;
+}
+.footer-col a:hover { color: var(--text-primary); }
+.footer-bottom {
+  border-top: 1px solid rgba(255,255,255,0.30);
+  padding-top: 20px;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.footer-copy { font: 400 12px 'DM Sans', sans-serif; color: var(--text-muted); }
+
+/* ── Entrance animations ── */
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fade-down {
+  from { opacity: 0; transform: translateY(-16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.nav { animation: fade-down 600ms cubic-bezier(0.22,1,0.36,1) both; animation-delay: 100ms; }
+
+.hero-anim {
+  opacity: 0;
+  animation: fade-up 700ms cubic-bezier(0.22,1,0.36,1) both;
+}
+.hero-anim:nth-child(1) { animation-delay: 200ms; }
+.hero-anim:nth-child(2) { animation-delay: 420ms; }
+.hero-anim:nth-child(3) { animation-delay: 560ms; }
+.hero-anim:nth-child(4) { animation-delay: 680ms; }
+.hero-anim:nth-child(5) { animation-delay: 820ms; }
+
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 600ms cubic-bezier(0.22,1,0.36,1),
+              transform 600ms cubic-bezier(0.22,1,0.36,1);
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-stagger > .reveal:nth-child(1) { transition-delay: 0ms; }
+.reveal-stagger > .reveal:nth-child(2) { transition-delay: 100ms; }
+.reveal-stagger > .reveal:nth-child(3) { transition-delay: 200ms; }
+.reveal-stagger > .reveal:nth-child(4) { transition-delay: 300ms; }
+.reveal-stagger > .reveal:nth-child(5) { transition-delay: 400ms; }
+.reveal-stagger > .reveal:nth-child(6) { transition-delay: 500ms; }
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .hero h1 { font-size: 44px; }
+  .cards { grid-template-columns: 1fr; }
+  .nav { padding: 16px 24px; }
+  .nav-links { display: none; }
+  .how, .earnings-section, .final-cta, .footer, .faq { padding-left: 24px; padding-right: 24px; }
+  .pill-wrap { width: 320px; }
+  .footer-top { flex-direction: column; }
+  .footer-cols { gap: 36px; flex-wrap: wrap; }
+  .faq-headline { font-size: 32px; }
+}
+</style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="nav">
+  <div class="brand-mark">
+    <svg width="30" height="30" viewBox="0 0 20 20" fill="none"><defs><mask id="nav-wm"><rect width="20" height="20" fill="black"/><circle cx="10" cy="10" r="9" fill="white"/><path d="M4 7.6C6.5 6.75 8.5 6.75 10 7.6 11.5 8.45 13.5 8.45 16 7.6" stroke="black" stroke-width="2.1" stroke-linecap="round" fill="none"/><path d="M4 10C6.5 9.15 8.5 9.15 10 10 11.5 10.85 13.5 10.85 16 10" stroke="black" stroke-width="2.1" stroke-linecap="round" fill="none"/><path d="M4 12.4C6.5 11.55 8.5 11.55 10 12.4 11.5 13.25 13.5 13.25 16 12.4" stroke="black" stroke-width="2.1" stroke-linecap="round" fill="none"/></mask></defs><g mask="url(#nav-wm)"><circle cx="10" cy="10" r="9.2" fill="rgba(10,28,92,0.92)"/></g><circle cx="10" cy="10" r="9" stroke="rgba(10,28,92,0.92)" stroke-width="1.5"/></svg>
+    <span>harve</span>
+  </div>
+  <div class="nav-links" aria-label="Primary navigation">
+    <a href="#creator">Get paid to post</a>
+    <a href="#mobile">Mobile</a>
+    <a href="#enterprise">Enterprises</a>
+  </div>
+  <button class="nav-cta" id="nav-download">Download</button>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="pill-wrap hero-anim">
+    <div class="pill-hint">Hover to try it live</div>
+    <div class="pill" id="pill">
+      <div class="pill-inner">
+        <div class="pill-header">
+          <svg width="24" height="24" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <mask id="wm">
+                <rect x="0" y="0" width="20" height="20" fill="black"/>
+                <circle cx="10" cy="10" r="9" fill="white"/>
+                <path d="M4 7.6 C6.5 6.75 8.5 6.75 10 7.6 C11.5 8.45 13.5 8.45 16 7.6" stroke="black" stroke-width="2.1" stroke-linecap="round" fill="none"/>
+                <path d="M4 10 C6.5 9.15 8.5 9.15 10 10 C11.5 10.85 13.5 10.85 16 10" stroke="black" stroke-width="2.1" stroke-linecap="round" fill="none"/>
+                <path d="M4 12.4 C6.5 11.55 8.5 11.55 10 12.4 C11.5 13.25 13.5 13.25 16 12.4" stroke="black" stroke-width="2.1" stroke-linecap="round" fill="none"/>
+              </mask>
+            </defs>
+            <g mask="url(#wm)"><circle cx="10" cy="10" r="9.2" fill="rgba(10,28,92,0.92)"/></g>
+            <circle cx="10" cy="10" r="9" stroke="rgba(10,28,92,0.92)" stroke-width="1.5"/>
+          </svg>
+          <div class="pill-spacer"></div>
+          <div class="pill-dot" id="pill-dot"></div>
+          <div class="pill-timer" id="pill-timer">00:00</div>
+        </div>
+        <div class="pill-content">
+          <div class="earnings-card">
+            <div class="ec-label">THIS SESSION</div>
+            <div class="ec-amount" id="pill-amount">$786.23</div>
+            <div class="ec-meta">Quality score <span class="ec-score">84</span>/100 &middot; High-value Pro</div>
+          </div>
+          <div class="ctrl-row">
+            <button class="ctrl-btn ctrl-mic" id="pill-mic" type="button">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M12 14.25c1.66 0 3-1.34 3-3V6.5c0-1.66-1.34-3-3-3s-3 1.34-3 3v4.75c0 1.66 1.34 3 3 3Z" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M7 10.5v.75a5 5 0 0 0 10 0v-.75" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M12 16.25v4.25" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M9.5 20.5h5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+              <span id="pill-mic-label">Mic on</span>
+            </button>
+            <button class="ctrl-btn" id="pill-pause" type="button">
+              <span id="pill-pause-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M8 6.5v11" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><path d="M16 6.5v11" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></span>
+              <span id="pill-play-icon" style="display:none"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M8 5v14l11-7L8 5z" fill="currentColor"/></svg></span>
+              <span id="pill-pause-label">Pause</span>
+            </button>
+            <button class="ctrl-btn ctrl-submit">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M6.5 12h10.2" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><path d="M13.2 7.8 17.5 12l-4.3 4.2" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h1 class="hero-anim">Get paid to do nothing.</h1>
+  <p class="hero-sub hero-anim">Harve runs quietly in the background while you work, study, or live your day.</p>
+  <div class="cta-row hero-anim">
+    <button class="cta-primary">Download for Mac</button>
+    <button class="cta-secondary">Download for Windows</button>
+    <div class="cta-note">Free to start &middot; No credit card required</div>
+  </div>
+  <!-- Social Proof Carousel (horizontal rolling ticker) -->
+  <div class="proof hero-anim">
+    <div class="proof-track">
+      <div class="proof-carousel">
+        <span class="proof-item">Carol made <span class="proof-amount">$12.50</span> doing her homework</span><span class="proof-sep">•</span>
+        <span class="proof-item">Tyler made <span class="proof-amount">$384.75</span> while working on his startup</span><span class="proof-sep">•</span>
+        <span class="proof-item">Marcus made <span class="proof-amount">$212.50</span> reviewing case law</span><span class="proof-sep">•</span>
+        <span class="proof-item">Sarah made <span class="proof-amount">$67.83</span> studying for her MCAT</span><span class="proof-sep">•</span>
+        <span class="proof-item">Priya made <span class="proof-amount">$89.25</span> in her design sprint</span><span class="proof-sep">•</span>
+        <span class="proof-item">Jake made <span class="proof-amount">$42.50</span> during his remote standup</span><span class="proof-sep">•</span>
+        <span class="proof-item">Elena made <span class="proof-amount">$127.50</span> coding in VS Code</span><span class="proof-sep">•</span>
+        <span class="proof-item">David made <span class="proof-amount">$287.00</span> building his side project</span><span class="proof-sep">•</span>
+        <span class="proof-item">Maya made <span class="proof-amount">$36.00</span> on her Coursera course</span><span class="proof-sep">•</span>
+        <span class="proof-item">Alex made <span class="proof-amount">$512.40</span> during investor week</span><span class="proof-sep">•</span>
+      </div>
+      <div class="proof-carousel" aria-hidden="true">
+        <span class="proof-item">Carol made <span class="proof-amount">$12.50</span> doing her homework</span><span class="proof-sep">•</span>
+        <span class="proof-item">Tyler made <span class="proof-amount">$384.75</span> while working on his startup</span><span class="proof-sep">•</span>
+        <span class="proof-item">Marcus made <span class="proof-amount">$212.50</span> reviewing case law</span><span class="proof-sep">•</span>
+        <span class="proof-item">Sarah made <span class="proof-amount">$67.83</span> studying for her MCAT</span><span class="proof-sep">•</span>
+        <span class="proof-item">Priya made <span class="proof-amount">$89.25</span> in her design sprint</span><span class="proof-sep">•</span>
+        <span class="proof-item">Jake made <span class="proof-amount">$42.50</span> during his remote standup</span><span class="proof-sep">•</span>
+        <span class="proof-item">Elena made <span class="proof-amount">$127.50</span> coding in VS Code</span><span class="proof-sep">•</span>
+        <span class="proof-item">David made <span class="proof-amount">$287.00</span> building his side project</span><span class="proof-sep">•</span>
+        <span class="proof-item">Maya made <span class="proof-amount">$36.00</span> on her Coursera course</span><span class="proof-sep">•</span>
+        <span class="proof-item">Alex made <span class="proof-amount">$512.40</span> during investor week</span><span class="proof-sep">•</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- How It Works -->
+<section class="how">
+  <div class="section-label reveal">HOW IT WORKS</div>
+  <div class="section-headline reveal">Three steps. Zero effort.</div>
+  <div class="cards reveal-stagger">
+    <div class="card reveal">
+      <div class="card-step">01</div>
+      <div class="card-media">
+        <video src="https://videos.pexels.com/video-files/4820378/4820378-hd_1920_1080_30fps.mp4" muted loop autoplay playsinline></video>
+      </div>
+      <div class="card-title">Download Harve</div>
+      <div class="card-body">Install the lightweight overlay on your Mac or PC. Takes 30 seconds. Runs silently in the background.</div>
+    </div>
+    <div class="card reveal">
+      <div class="card-step">02</div>
+      <div class="card-media">
+        <video src="https://videos.pexels.com/video-files/4064869/4064869-uhd_2732_1440_25fps.mp4" muted loop autoplay playsinline></video>
+      </div>
+      <div class="card-title">Live your day</div>
+      <div class="card-body">Work, study, browse — whatever you do. Harve captures your active sessions passively. You do nothing extra.</div>
+    </div>
+    <div class="card reveal">
+      <div class="card-step">03</div>
+      <div class="card-media">
+        <video src="https://videos.pexels.com/video-files/7567651/7567651-hd_1920_1080_25fps.mp4" muted loop autoplay playsinline></video>
+      </div>
+      <div class="card-title">Get paid Monday</div>
+      <div class="card-body">Every Monday your earnings hit your account. The more professional your activity, the more you earn.</div>
+    </div>
+  </div>
+</section>
+
+<!-- Earnings Table -->
+<section class="earnings-section">
+  <div class="section-headline reveal">What people are earning</div>
+  <div class="table-glass reveal">
+    <table>
+      <thead>
+        <tr><th>User Type</th><th>Monthly Hours</th><th>Est. Monthly</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Student</td><td>110 hrs</td><td>$165/mo</td></tr>
+        <tr><td>Student (verified)</td><td>132 hrs</td><td>$594/mo</td></tr>
+        <tr><td>Office professional</td><td>68 hrs</td><td>$204/mo</td></tr>
+        <tr><td>Engineer / Analyst</td><td>90 hrs</td><td>$855/mo</td></tr>
+        <tr><td>Lawyer / Doctor</td><td>91 hrs</td><td>$1,934/mo</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="table-note reveal">Earnings reflect 25% revenue share of actual batch sale price. Higher professional activity = higher sell rate = higher earnings.</div>
+</section>
+
+<!-- Final CTA -->
+<section class="final-cta">
+  <h2 class="reveal">Start earning today.</h2>
+  <p class="reveal">Your data has always had value.<br>Now it pays you.</p>
+  <div class="cta-row reveal">
+    <button class="cta-primary">Download for Mac</button>
+    <button class="cta-secondary">Download for Windows</button>
+    <div class="cta-note">Free to start &middot; No credit card required</div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq reveal-stagger">
+  <div class="faq-headline reveal">Frequently asked questions</div>
+  <div class="faq-item reveal">
+    <button class="faq-q">What exactly does Harve do?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <div class="faq-a"><p>Harve is a lightweight desktop overlay that runs silently in the background while you work, study, or go about your day. It passively captures session data and sells it in aggregated batches — and you get paid a share of the revenue every Monday.</p></div>
+  </div>
+  <div class="faq-item reveal">
+    <button class="faq-q">Is Harve free?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <div class="faq-a"><p>Yes, Harve is completely free to download and use. There are no subscription fees, no credit card required, and no hidden costs. You earn money — you never pay anything.</p></div>
+  </div>
+  <div class="faq-item reveal">
+    <button class="faq-q">How much can I actually earn?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <div class="faq-a"><p>Earnings depend on your profession and how many active hours you log. Students typically earn $165–$594/mo, professionals $200–$855/mo, and high-value fields like law and medicine can earn over $1,900/mo. You receive 25% of the batch sale price.</p></div>
+  </div>
+  <div class="faq-item reveal">
+    <button class="faq-q">What data does Harve collect?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <div class="faq-a"><p>Harve captures your active screen sessions — the apps you use, how you work, and how long you're active. This behavioral data is what AI companies, research firms, and enterprise buyers pay for. Before any session is submitted, you review it and confirm there's nothing sensitive. Harve automatically pauses during calls, banking apps, password managers, and any app you choose to exclude. You are always in control of what gets submitted. Your privacy is protected by consent — not by collecting less.</p></div>
+  </div>
+  <div class="faq-item reveal">
+    <button class="faq-q">When and how do I get paid?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <div class="faq-a"><p>Payouts happen every Monday. Once your earnings reach the minimum threshold, funds are deposited directly into your connected account. No invoices, no manual steps.</p></div>
+  </div>
+  <div class="faq-item reveal">
+    <button class="faq-q">Does Harve slow down my computer?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <div class="faq-a"><p>No. Harve is designed to be extremely lightweight. It uses minimal CPU and memory, and runs as a small overlay that stays out of your way. You won't notice it's there.</p></div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="brand-mark brand-mark--sm">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><defs><mask id="ft-wm"><rect width="20" height="20" fill="black"/><circle cx="10" cy="10" r="9" fill="white"/><path d="M4 7.6C6.5 6.75 8.5 6.75 10 7.6 11.5 8.45 13.5 8.45 16 7.6" stroke="black" stroke-width="2.1" stroke-linecap="round" fill="none"/><path d="M4 10C6.5 9.15 8.5 9.15 10 10 11.5 10.85 13.5 10.85 16 10" stroke="black" stroke-width="2.1" stroke-linecap="round" fill="none"/><path d="M4 12.4C6.5 11.55 8.5 11.55 10 12.4 11.5 13.25 13.5 13.25 16 12.4" stroke="black" stroke-width="2.1" stroke-linecap="round" fill="none"/></mask></defs><g mask="url(#ft-wm)"><circle cx="10" cy="10" r="9.2" fill="rgba(10,28,92,0.92)"/></g><circle cx="10" cy="10" r="9" stroke="rgba(10,28,92,0.92)" stroke-width="1.5"/></svg>
+        <span>harve</span>
+      </div>
+      <div class="footer-socials">
+        <a href="#" aria-label="X / Twitter"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+        <a href="#" aria-label="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/></svg></a>
+        <a href="#" aria-label="Discord"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.095 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.095 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg></a>
+      </div>
+    </div>
+    <div class="footer-cols">
+      <div class="footer-col">
+        <h4>Support</h4>
+        <a href="#">Help Center</a>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <a href="#">Press</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">&copy; 2026 Harve.ai. All rights reserved.</span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  // Pill timer + earnings ticker (pauses when Pause clicked)
+  var secs = 0, earnings = 786.23, rate = 0.00278, paused = false, micMuted = false;
+  var timerEl = document.getElementById('pill-timer');
+  var amountEl = document.getElementById('pill-amount');
+  var dotEl = document.getElementById('pill-dot');
+  var micBtn = document.getElementById('pill-mic');
+  var micLabel = document.getElementById('pill-mic-label');
+  var pauseBtn = document.getElementById('pill-pause');
+  var pauseIcon = document.getElementById('pill-pause-icon');
+  var playIcon = document.getElementById('pill-play-icon');
+  var pauseLabel = document.getElementById('pill-pause-label');
+  function pad(n){ return n < 10 ? '0'+n : ''+n; }
+  function fmt(v){ return '$' + v.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','); }
+  setInterval(function(){
+    if (paused) return;
+    secs++;
+    earnings += rate;
+    timerEl.textContent = pad(Math.floor(secs/60)) + ':' + pad(secs%60);
+    amountEl.textContent = fmt(earnings);
+  }, 1000);
+  micBtn.addEventListener('click', function(){
+    micMuted = !micMuted;
+    micBtn.classList.toggle('ctrl-muted', micMuted);
+    micLabel.textContent = micMuted ? 'Muted' : 'Mic on';
+  });
+  pauseBtn.addEventListener('click', function(){
+    paused = !paused;
+    dotEl.classList.toggle('paused', paused);
+    pauseIcon.style.display = paused ? 'none' : 'inline';
+    playIcon.style.display = paused ? 'inline' : 'none';
+    pauseLabel.textContent = paused ? 'Resume' : 'Pause';
+  });
+
+  // OS detection — show only the relevant download button with OS icon
+  var ua = navigator.userAgent || navigator.platform || '';
+  var isMac = /Mac|iPhone|iPad|iPod/i.test(ua);
+  var winIcon = '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:-2px;margin-right:6px"><path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-13.051-1.851"/></svg>';
+  var macIcon = '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:-2px;margin-right:6px"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>';
+  var icon = isMac ? macIcon : winIcon;
+  var label = isMac ? 'Download for Mac' : 'Download for Windows';
+
+  document.getElementById('nav-download').innerHTML = icon + label;
+
+  var primaries = document.querySelectorAll('.cta-primary');
+  var secondaries = document.querySelectorAll('.cta-secondary');
+  for (var i = 0; i < primaries.length; i++) primaries[i].innerHTML = icon + label;
+  for (var i = 0; i < secondaries.length; i++) secondaries[i].style.display = 'none';
+
+  // FAQ accordion
+  var faqItems = document.querySelectorAll('.faq-item');
+  for (var i = 0; i < faqItems.length; i++) {
+    faqItems[i].querySelector('.faq-q').addEventListener('click', function() {
+      var item = this.parentElement;
+      item.classList.toggle('open');
+    });
+  }
+
+  // Scroll reveal via IntersectionObserver
+  var reveals = document.querySelectorAll('.reveal');
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+  reveals.forEach(function(el) { observer.observe(el); });
+
+  // Hide header on scroll down, show on scroll up
+  var nav = document.querySelector('.nav');
+  var lastScrollY = window.scrollY;
+  var navH = nav ? nav.offsetHeight : 60;
+  window.addEventListener('scroll', function() {
+    var sy = window.scrollY;
+    if (sy > lastScrollY && sy > navH) {
+      nav.classList.add('nav-hidden');
+    } else {
+      nav.classList.remove('nav-hidden');
+    }
+    lastScrollY = sy;
+  }, { passive: true });
+
+  // Fade the proof carousel as it scrolls up toward the fixed header
+  var proof = document.querySelector('.proof');
+  if (proof) {
+    proof.addEventListener('animationend', function() {
+      proof.style.animation = 'none';
+    });
+  }
+  function clamp01(n){ return Math.max(0, Math.min(1, n)); }
+  function updateProofOpacity() {
+    if (!proof) return;
+    var r = proof.getBoundingClientRect();
+    var navH = nav ? nav.getBoundingClientRect().height : 60;
+
+    // distance from top of carousel to bottom of nav (positive = still below nav)
+    var dist = r.top - navH;
+    var h = Math.max(1, r.height);
+
+    // fade from full opacity to 0 over the last 75% of the carousel height
+    var fadeZone = h * 0.75;
+    var opacity = clamp01(dist / fadeZone);
+
+    proof.style.opacity = String(opacity);
+  }
+  window.addEventListener('scroll', updateProofOpacity, { passive: true });
+  window.addEventListener('resize', updateProofOpacity);
+  updateProofOpacity();
+})();
+</script>
+</body>
+</html>
