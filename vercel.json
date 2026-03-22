@@ -27,6 +27,8 @@
     { "source": "/support/privacy-data/", "destination": "/support/privacy-data.html" },
     { "source": "/support/troubleshooting", "destination": "/support/troubleshooting.html" },
     { "source": "/support/troubleshooting/", "destination": "/support/troubleshooting.html" },
+    { "source": "/support/intercom-knowledge-seed", "destination": "/support/intercom-knowledge-seed.html" },
+    { "source": "/support/intercom-knowledge-seed/", "destination": "/support/intercom-knowledge-seed.html" },
     { "source": "/auth-callback", "destination": "/auth-callback.html" },
     { "source": "/auth-callback/", "destination": "/auth-callback.html" }
   ]

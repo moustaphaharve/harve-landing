@@ -32,7 +32,9 @@ Big products use **Intercom** (or Zendesk, Crisp, etc.) because the messenger, i
 | `INTERCOM.md` | How to enable Intercom + Fin on this site |
 | `FIN-SETUP.md` | **Why Fin has no context** + website sync vs native articles |
 | `INTERCOM-KNOWLEDGE-STEPS.md` | **Exact Fin sync values** + why login can’t be automated from git |
-| `article-urls.txt` | Every production help URL (`harve.ai`) |
+| `article-urls.txt` | Every production help URL (`harve.ai`) — **auto-generated** |
+| `intercom-knowledge-seed.html` | **Single crawl entry** for Intercom Fin (lists all article links) |
+| `../scripts/generate-intercom-knowledge.mjs` | Run after adding/removing pages to refresh seed + URLs |
 | `/sitemap.xml`, `/robots.txt` (site root) | Crawlable list + allow bots (helps Fin website sync) |
 | `help-widget.css`, `help-widget.js` | Optional custom launcher (unused) |
 

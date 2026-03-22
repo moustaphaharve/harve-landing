@@ -1,61 +1,51 @@
-# Fin knowledge — what’s automated vs what only you can click
+# Intercom Fin — sync all Harve help articles (auto)
 
-## If Fin shows “shop” / merch / `/shop/ols`
-Your **live** `harve.ai` is probably still GoDaddy **Online Store** or a template that links to `/shop`. Intercom follows those links. **Do not** sync the whole domain unchecked.
+Your **real** help content lives in this repo (`support/**/*.html`). Intercom cannot log into GitHub; it **crawls public URLs** on `harve.ai`.
 
-1. **URLs to exclude** (Advanced settings): add `https://harve.ai/shop` and any other non‑Harve paths.
-2. **Uncheck** the `/shop` branch in the tree.
-3. **Additional URLs:** add `https://harve.ai/support.html` (and other `/support/...` pages if needed).
-4. Long term: **deploy** this repo’s static site to `harve.ai` and remove/disable the store — see **`../DEPLOY-HARVE-DOMAIN.md`**.
+## What we added in the repo
 
----
+| File | Purpose |
+|------|---------|
+| **`support/intercom-knowledge-seed.html`** | One page with **every** help URL as `<a href>` links. Crawlers + Fin follow these and ingest each article. |
+| **`support/article-urls.txt`** | Same URLs (plain list) — for you or scripts. |
+| **`scripts/generate-intercom-knowledge.mjs`** | Regenerates the two files when you add/remove HTML pages. |
 
-## What the repo already has (no Intercom login required)
+After adding or renaming help pages, run:
 
-| Item | Location |
-|------|----------|
-| Public Messenger `app_id` | `support.html` → `g9nmr6d9` |
-| Full URL list for help | `article-urls.txt` |
-| **Sitemap** for crawlers / discovery | `/sitemap.xml` at site root |
-| **robots.txt** allows indexing | `/robots.txt` |
+```bash
+node scripts/generate-intercom-knowledge.mjs
+```
 
-**I (the AI / CI) cannot log into [app.intercom.com](https://app.intercom.com)** — there is no Intercom **access token** or password in this repo, and Fin “Train content” is **dashboard-only** for security.
+Commit and deploy to Vercel so `harve.ai` updates.
 
 ---
 
-## What you do once (≈2 minutes) — copy these values
+## One-time setup in Intercom (≈2 min)
 
-1. **Log in** to Intercom in your browser.
+1. Open **Knowledge** → **Sources** → your **Website** / **Harve** source (or **Add content** → **Website**).
 
-2. Open **Knowledge** / **Sources** / **Train Fin** (wording varies).  
-   Quick link (your workspace):  
-   `https://app.intercom.com/a/apps/g9nmr6d9/knowledge-hub/overview`  
-   If that 404s, use the sidebar: **Knowledge** → **Sources** → **Add content** → **Website**.
+2. Set the **root URL** to either:
+   - **`https://harve.ai`** — and **restrict paths** to `/support/` (exclude `/shop`, marketing, etc.), **or**
+   - **`https://harve.ai/support/intercom-knowledge-seed`** — the seed page alone (Intercom will follow all links).
 
-3. **Add website** (sync):
-   - **URL:** `https://harve.ai`  
-   - Include paths under **`/support/`** (and `/support.html` if the UI asks for explicit paths).
+3. **Additional URLs** (if the UI offers it): paste **`https://harve.ai/sitemap.xml`** so nothing is missed.
 
-4. **Optional:** Paste **`https://harve.ai/sitemap.xml`** anywhere Intercom offers “sitemap” or “seed URLs” (depends on UI version).
+4. **Exclude** non-help paths, e.g. `https://harve.ai/shop`, old GoDaddy pages, etc.
 
-5. **Enable for Fin:** In Fin / AI Agent settings, ensure this **Website** source is **on** for customer-facing answers—not only Copilot.
+5. In **Fin / AI Agent** settings, turn **on** this source for **customer-facing** answers (not only internal Copilot).
 
-6. Wait for first sync, then ask Fin: *“How do I install Harve?”* — it should cite your install article.
+6. Wait for sync (can take minutes). Test Fin: *“How do I install Harve?”* — it should cite your install article.
 
 ---
 
-## If the site isn’t on `harve.ai` yet
+## If Fin still shows wrong content
 
-Deploy first, then either:
-
-- Change **`sitemap.xml`**, **`robots.txt`**, and **`article-urls.txt`** to your real domain, **or**
-- In Intercom, use **your real origin** in step 3 (e.g. `https://www.harve.ai`).
-
-Use **one canonical host** (redirect `www` ↔ apex) so Fin doesn’t duplicate pages.
+- Confirm **live** `harve.ai` is this repo (not a parked page or store).
+- Re-run the generator after content changes, deploy, then **re-sync** or **refresh** the source in Intercom.
 
 ---
 
-## Credentials note
+## Credentials
 
-- **`app_id` in HTML** = public (normal).
-- **Fin / Knowledge** = requires **your** Intercom session; never commit API tokens to git.
+- **`app_id` in HTML** = public (OK to commit).
+- **Intercom API tokens** — never commit; dashboard-only for manual actions unless you add CI with secrets.
