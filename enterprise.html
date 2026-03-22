@@ -65,8 +65,24 @@ a{color:inherit;text-decoration:none}
 .field input,.field select,.field textarea{width:100%;padding:11px 13px;border-radius:8px;border:1px solid rgba(255,255,255,.1);background:rgba(0,0,0,.3);color:var(--white);font-size:13px;font-family:inherit;-webkit-appearance:none;appearance:none}
 .field select{background-image:url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l4 4 4-4' stroke='rgba(255,255,255,0.4)' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 13px center;padding-right:32px}
 .field select option{background:#1a2744;color:#fff}
-.field select:focus{animation:selectPop .25s cubic-bezier(.16,1,.3,1)}
-@keyframes selectPop{0%{transform:scale(.98);opacity:.7}100%{transform:scale(1);opacity:1}}
+
+/* ── custom dropdown ── */
+.custom-select{position:relative;width:100%}
+.custom-select .sel-trigger{width:100%;padding:11px 32px 11px 13px;border-radius:8px;border:1px solid rgba(255,255,255,.1);background:rgba(0,0,0,.3);color:var(--white);font-size:13px;font-family:inherit;cursor:pointer;text-align:left;transition:border-color .2s}
+.custom-select .sel-trigger.placeholder{color:var(--white-muted)}
+.custom-select .sel-trigger:hover{border-color:rgba(255,255,255,.2)}
+.custom-select .sel-trigger:focus{outline:none;border-color:rgba(59,127,232,.5)}
+.custom-select .sel-arrow{position:absolute;right:13px;top:50%;transform:translateY(-50%) rotate(0deg);transition:transform .3s cubic-bezier(.16,1,.3,1);pointer-events:none}
+.custom-select.open .sel-arrow{transform:translateY(-50%) rotate(180deg)}
+.custom-select .sel-options{position:absolute;top:calc(100% + 4px);left:0;right:0;background:rgba(18,30,58,.97);border:1px solid rgba(255,255,255,.12);border-radius:8px;overflow:hidden;z-index:20;backdrop-filter:blur(12px);transform-origin:top center;transform:scaleY(0);opacity:0;transition:transform .25s cubic-bezier(.16,1,.3,1),opacity .2s ease;max-height:220px;overflow-y:auto}
+.custom-select.open .sel-options{transform:scaleY(1);opacity:1}
+.custom-select .sel-opt{padding:10px 13px;font-size:13px;color:var(--white-muted);cursor:pointer;transition:background .15s,color .15s}
+.custom-select .sel-opt:hover{background:rgba(59,127,232,.15);color:var(--white)}
+.custom-select .sel-opt.active{color:var(--white);background:rgba(59,127,232,.1)}
+
+/* ── cursor glow ── */
+#cursor-glow{position:fixed;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,rgba(59,127,232,.12) 0%,rgba(59,127,232,.04) 35%,transparent 70%);pointer-events:none;z-index:0;transform:translate(-50%,-50%);transition:opacity .3s;opacity:0;will-change:transform}
+#cursor-glow.active{opacity:1}
 .field textarea{min-height:64px;resize:vertical}
 .field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:rgba(59,127,232,.5)}
 .form-submit{width:100%;margin-top:6px;padding:13px;font-weight:600;cursor:pointer;background:var(--white);color:var(--navy-deep);border:none;border-radius:8px;font-size:13px;font-family:inherit;transition:opacity .2s}
@@ -166,6 +182,7 @@ pre.code-sample{margin-top:24px;padding:18px;border-radius:8px;background:rgba(0
 </head>
 <body>
 <div id="bg-overlay"></div>
+<div id="cursor-glow"></div>
 <div class="pill-bg" id="pill-bg" aria-hidden="true"></div>
 
 <header class="ent-nav">
@@ -380,15 +397,34 @@ pre.code-sample{margin-top:24px;padding:18px;border-radius:8px;background:rgba(0
         <div class="field"><label for="full-name">Full name</label><input id="full-name" name="name" type="text" autocomplete="name" required /></div>
         <div class="field"><label for="work-email">Work email</label><input id="work-email" name="email" type="email" autocomplete="email" required /></div>
         <div class="field"><label for="company">Company</label><input id="company" name="company" type="text" autocomplete="organization" required /></div>
-        <div class="field"><label for="building">What are you building?</label>
-          <select id="building" name="building" required>
-            <option value="">Select</option><option>Frontier AI / RLHF</option><option>Healthcare AI</option><option>Legal AI</option><option>Financial AI</option><option>Enterprise Software</option><option>Defense / Government</option><option>Other</option>
-          </select>
+        <div class="field"><label>What are you building?</label>
+          <div class="custom-select" data-name="building">
+            <button type="button" class="sel-trigger placeholder">Select</button>
+            <svg class="sel-arrow" width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" stroke-linecap="round"/></svg>
+            <div class="sel-options">
+              <div class="sel-opt" data-val="Frontier AI / RLHF">Frontier AI / RLHF</div>
+              <div class="sel-opt" data-val="Healthcare AI">Healthcare AI</div>
+              <div class="sel-opt" data-val="Legal AI">Legal AI</div>
+              <div class="sel-opt" data-val="Financial AI">Financial AI</div>
+              <div class="sel-opt" data-val="Enterprise Software">Enterprise Software</div>
+              <div class="sel-opt" data-val="Defense / Government">Defense / Government</div>
+              <div class="sel-opt" data-val="Other">Other</div>
+            </div>
+            <input type="hidden" name="building" required />
+          </div>
         </div>
-        <div class="field"><label for="volume">Monthly data volume needed</label>
-          <select id="volume" name="volume" required>
-            <option value="">Select</option><option>Under 10,000 hours</option><option>10K-50K hours</option><option>50K-100K hours</option><option>100K+ hours</option>
-          </select>
+        <div class="field"><label>Monthly data volume needed</label>
+          <div class="custom-select" data-name="volume">
+            <button type="button" class="sel-trigger placeholder">Select</button>
+            <svg class="sel-arrow" width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" stroke-linecap="round"/></svg>
+            <div class="sel-options">
+              <div class="sel-opt" data-val="Under 10,000 hours">Under 10,000 hours</div>
+              <div class="sel-opt" data-val="10K-50K hours">10K-50K hours</div>
+              <div class="sel-opt" data-val="50K-100K hours">50K-100K hours</div>
+              <div class="sel-opt" data-val="100K+ hours">100K+ hours</div>
+            </div>
+            <input type="hidden" name="volume" required />
+          </div>
         </div>
         <div class="field"><label for="notes">Anything specific? (optional)</label><textarea id="notes" name="notes" rows="2"></textarea></div>
         <button type="submit" class="form-submit">Request a data sample</button>
@@ -511,6 +547,43 @@ pre.code-sample{margin-top:24px;padding:18px;border-radius:8px;background:rgba(0
   }
   window.addEventListener("scroll",function(){requestAnimationFrame(movePills)},{passive:true});
   movePills();
+
+  /* ── custom dropdown logic ── */
+  document.querySelectorAll(".custom-select").forEach(function(sel){
+    var trigger=sel.querySelector(".sel-trigger");
+    var opts=sel.querySelectorAll(".sel-opt");
+    var hidden=sel.querySelector("input[type=hidden]");
+
+    trigger.addEventListener("click",function(e){
+      e.stopPropagation();
+      document.querySelectorAll(".custom-select.open").forEach(function(s){if(s!==sel)s.classList.remove("open")});
+      sel.classList.toggle("open");
+    });
+
+    opts.forEach(function(opt){
+      opt.addEventListener("click",function(e){
+        e.stopPropagation();
+        var v=opt.getAttribute("data-val");
+        trigger.textContent=v;
+        trigger.classList.remove("placeholder");
+        hidden.value=v;
+        opts.forEach(function(o){o.classList.remove("active")});
+        opt.classList.add("active");
+        sel.classList.remove("open");
+      });
+    });
+  });
+  document.addEventListener("click",function(){document.querySelectorAll(".custom-select.open").forEach(function(s){s.classList.remove("open")})});
+
+  /* ── cursor glow ── */
+  var glow=document.getElementById("cursor-glow");
+  var glowActive=false;
+  document.addEventListener("mousemove",function(e){
+    if(!glowActive){glow.classList.add("active");glowActive=true}
+    glow.style.left=e.clientX+"px";
+    glow.style.top=e.clientY+"px";
+  });
+  document.addEventListener("mouseleave",function(){glow.classList.remove("active");glowActive=false});
 })();
 </script>
 </body>
