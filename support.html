@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Help Center — Harve</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Alice&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="support/support.css">
+<style>
+.hero { text-align: center; padding: 16px 24px 32px; max-width: 640px; margin: 0 auto; }
+.hero h1 { font-family: 'Alice', serif; font-size: clamp(26px, 4vw, 34px); font-weight: normal; margin-bottom: 22px; }
+.search-wrap { position: relative; max-width: 520px; margin: 0 auto; }
+.search-wrap svg { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); width: 20px; height: 20px; color: var(--text-muted); pointer-events: none; }
+#support-search {
+  width: 100%; padding: 14px 16px 14px 48px; border: 1px solid rgba(255,255,255,0.9);
+  border-radius: 12px; background: rgba(255,255,255,0.95); font-size: 15px;
+  box-shadow: 0 4px 24px rgba(10, 28, 92, 0.08);
+}
+#support-search:focus { outline: none; border-color: rgba(10, 28, 92, 0.25); }
+.search-hint { font-size: 12px; color: var(--text-muted); margin-top: 10px; }
+.grid-wrap { max-width: 1040px; margin: 0 auto; padding: 0 24px 48px; }
+.grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+@media (max-width: 900px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 520px) { .grid { grid-template-columns: 1fr; } }
+.cat-card {
+  display: block; text-decoration: none; color: inherit;
+  background: rgba(255,255,255,0.88); border: 1px solid var(--border); border-radius: 16px;
+  padding: 22px; transition: transform 180ms ease, box-shadow 180ms ease;
+  box-shadow: 0 4px 20px rgba(10, 28, 92, 0.06);
+}
+.cat-card:hover { transform: translateY(-3px); box-shadow: 0 12px 36px rgba(10, 28, 92, 0.1); }
+.cat-card.hidden { display: none; }
+.cat-icon {
+  width: 44px; height: 44px; border-radius: 12px; background: rgba(220, 235, 255, 0.65);
+  display: flex; align-items: center; justify-content: center; margin-bottom: 14px; color: var(--text-primary);
+}
+.cat-card h2 { font-size: 17px; font-weight: 600; margin-bottom: 8px; }
+.cat-card p { font-size: 14px; color: var(--text-secondary); line-height: 1.5; margin-bottom: 12px; }
+.cat-meta { font-size: 12px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; }
+</style>
+</head>
+<body class="support-hub">
+
+<header class="hc-top">
+  <a class="logo" href="/">
+    <svg width="28" height="28" viewBox="0 0 20 20" fill="none" aria-hidden="true"><defs><mask id="h1"><rect width="20" height="20" fill="black"/><circle cx="10" cy="10" r="9" fill="white"/><path d="M4 7.6C6.5 6.75 8.5 6.75 10 7.6 11.5 8.45 13.5 8.45 16 7.6" stroke="black" stroke-width="2.1" stroke-linecap="round" fill="none"/><path d="M4 10C6.5 9.15 8.5 9.15 10 10 11.5 10.85 13.5 10.85 16 10" stroke="black" stroke-width="2.1" stroke-linecap="round" fill="none"/><path d="M4 12.4C6.5 11.55 8.5 11.55 10 12.4 11.5 13.25 13.5 13.25 16 12.4" stroke="black" stroke-width="2.1" stroke-linecap="round" fill="none"/></mask></defs><g mask="url(#h1)"><circle cx="10" cy="10" r="9.2" fill="rgba(10,28,92,0.92)"/></g><circle cx="10" cy="10" r="9" stroke="rgba(10,28,92,0.92)" stroke-width="1.5"/></svg>
+    Harve
+  </a>
+  <nav class="hc-nav">
+    <a href="/">Home</a>
+    <a href="/privacy.html">Privacy</a>
+    <a href="/terms.html">Terms</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <h1>Advice and answers from the Harve team</h1>
+  <div class="search-wrap">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    <input type="search" id="support-search" placeholder="Search collections…" autocomplete="off" aria-label="Search help">
+  </div>
+  <p class="search-hint">Browse by topic below — each section has step-by-step articles.</p>
+</section>
+
+<div class="grid-wrap">
+  <div class="grid" id="cat-grid">
+
+    <a class="cat-card" href="/support/getting-started.html" data-kw="getting started download install onboarding first session mac windows app">
+      <div class="cat-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/><circle cx="12" cy="12" r="3"/></svg></div>
+      <h2>Getting started</h2>
+      <p>Install Harve, complete onboarding, and run your first session.</p>
+      <span class="cat-meta">6 articles</span>
+    </a>
+
+    <a class="cat-card" href="/support/account-sign-in.html" data-kw="account login sign in workos browser wrong email">
+      <div class="cat-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20v-2a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v2"/></svg></div>
+      <h2>Account &amp; sign-in</h2>
+      <p>Browser login, the “Opening Harve” page, and switching accounts.</p>
+      <span class="cat-meta">5 articles</span>
+    </a>
+
+    <a class="cat-card" href="/support/earnings-payouts.html" data-kw="money earnings payout bank stripe connect monday">
+      <div class="cat-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg></div>
+      <h2>Earnings &amp; payouts</h2>
+      <p>How you get paid, connecting a bank, and Stripe onboarding.</p>
+      <span class="cat-meta">5 articles</span>
+    </a>
+
+    <a class="cat-card" href="/support/recording-overlay.html" data-kw="recording overlay pill shortcut session screen">
+      <div class="cat-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8"/><path d="M12 17v4"/></svg></div>
+      <h2>Recording &amp; overlay</h2>
+      <p>The pill, shortcuts, pauses, and what gets captured.</p>
+      <span class="cat-meta">5 articles</span>
+    </a>
+
+    <a class="cat-card" href="/support/privacy-data.html" data-kw="privacy data security kyc edu verification">
+      <div class="cat-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+      <h2>Privacy &amp; your data</h2>
+      <p>What we collect, verification, and your controls.</p>
+      <span class="cat-meta">4 articles</span>
+    </a>
+
+    <a class="cat-card" href="/support/troubleshooting.html" data-kw="troubleshooting fix error upload app">
+      <div class="cat-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg></div>
+      <h2>Troubleshooting</h2>
+      <p>Common issues with install, recording, and uploads.</p>
+      <span class="cat-meta">4 articles</span>
+    </a>
+
+  </div>
+</div>
+
+<footer class="hc-foot">
+  <a href="/privacy.html">Privacy</a> · <a href="/terms.html">Terms</a> · <a href="mailto:support@harve.ai">support@harve.ai</a>
+</footer>
+
+<script>
+(function() {
+  var input = document.getElementById('support-search');
+  var cards = document.querySelectorAll('.cat-card');
+  function norm(s) { return (s || '').toLowerCase(); }
+  function filter() {
+    var q = norm(input.value).trim();
+    if (!q) { cards.forEach(function(c) { c.classList.remove('hidden'); }); return; }
+    var words = q.split(/\s+/).filter(Boolean);
+    cards.forEach(function(c) {
+      var text = norm(c.getAttribute('data-kw') + ' ' + c.textContent);
+      var ok = words.some(function(w) { return text.indexOf(w) !== -1; });
+      c.classList.toggle('hidden', !ok);
+    });
+  }
+  input.addEventListener('input', filter);
+})();
+</script>
+<!-- Intercom Messenger — see support/INTERCOM.md -->
+<script>
+  window.intercomSettings = {
+    api_base: "https://api-iam.intercom.io",
+    app_id: "g9nmr6d9",
+  };
+</script>
+<script>
+(function(){var w=window;var ic=w.Intercom;if(typeof ic==="function"){ic('update',w.intercomSettings);}else{var d=document;var i=function(){i.c(arguments);};i.q=[];i.c=function(args){i.q.push(args);};w.Intercom=i;var l=function(){var s=d.createElement('script');s.type='text/javascript';s.async=true;s.src='https://widget.intercom.io/widget/'+w.intercomSettings.app_id;var x=d.getElementsByTagName('script')[0];x.parentNode.insertBefore(s,x);};if(document.readyState==='complete'){l();}else if(w.attachEvent){w.attachEvent('onload',l);}else{w.addEventListener('load',l,false);}}})();
+</script>
+</body>
+</html>

@@ -1,0 +1,5 @@
+# Harve marketing + help — allow crawlers (including Intercom Fin website sync).
+User-agent: *
+Allow: /
+
+Sitemap: https://harve.ai/sitemap.xml
