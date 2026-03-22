@@ -26,7 +26,7 @@ You can share **`https://harve.ai/auth-callback`** with WorkOS (same page as `au
 4. **Output Directory:** leave default / `.` — Vercel serves files from the project root.
 5. **Deploy.**
 
-After deploy you get a URL like `https://harve-landing-xxx.vercel.app`. Click through `/`, `/support.html`, `/auth-callback.html`.
+After deploy you get a URL like `https://harve-landing-xxx.vercel.app`. Click through `/`, `/support`, `/auth-callback`.
 
 ## 3. Connect `harve.ai` (GoDaddy DNS)
 
@@ -42,8 +42,8 @@ After deploy you get a URL like `https://harve-landing-xxx.vercel.app`. Click th
 
 | Task | Where |
 |------|--------|
-| WorkOS redirect | Add **`https://harve.ai/auth-callback.html`** (exact) in WorkOS dashboard |
-| Electron app | Set **`HARVE_REDIRECT_URI=https://harve.ai/auth-callback.html`** for production builds (`ENV.md` in `harve-overlay`) |
+| WorkOS redirect | Add **`https://harve.ai/auth-callback`** (exact) in WorkOS dashboard |
+| Electron app | Set **`HARVE_REDIRECT_URI=https://harve.ai/auth-callback`** for production builds (`ENV.md` in `harve-overlay`) |
 | Intercom Fin | Re-sync website; **exclude** `/shop` if old host had a store; seed **`/support`** |
 | `sitemap.xml` / `robots.txt` | Already use `https://harve.ai` — no change if that’s your canonical URL |
 
@@ -55,7 +55,7 @@ Every PR gets a preview URL — useful to check before promoting to production.
 
 | Local | Production |
 |-------|------------|
-| `node server.js` may map `/auth/callback` → file | Use **`https://harve.ai/auth-callback.html`** in WorkOS + app env |
+| `node server.js` may map `/auth/callback` → file | Use **`https://harve.ai/auth-callback`** in WorkOS + app env |
 
 ---
 

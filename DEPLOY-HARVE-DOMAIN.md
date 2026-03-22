@@ -43,7 +43,7 @@ You need **one** clear story:
 | `https://harve.ai/` | Your landing (`landing.html` as `index.html` or redirect) |
 | `https://harve.ai/support.html` | Help hub |
 | `https://harve.ai/support/...` | Help articles |
-| `https://harve.ai/auth-callback.html` | WorkOS / AuthKit return URL for the app |
+| `https://harve.ai/auth-callback` | WorkOS / AuthKit return URL for the app |
 | `https://harve.ai/privacy.html`, `terms.html` | Legal |
 
 ### Option 1 — Stay on GoDaddy hosting
@@ -82,14 +82,14 @@ The Electron app must use the **same** redirect URI that is allowlisted in the *
 
 1. In WorkOS **AuthKit / Redirects**, add (if not already):
 
-   `https://harve.ai/auth-callback.html`
+   `https://harve.ai/auth-callback`
 
 2. Keep a **development** URI for local testing, e.g.  
    `http://localhost:4174/auth/callback`  
    (only if your dev server actually serves that path).
 
 3. For **production builds** of the app, set the environment variable **`HARVE_REDIRECT_URI`** to  
-   `https://harve.ai/auth-callback.html`  
+   `https://harve.ai/auth-callback`  
    (see `harve-overlay` `auth.ts`).
 
 ---
@@ -119,4 +119,4 @@ If your site is **only** on `www.harve.ai`, update those files to match **one** 
 | Fin learns shop merch | **Exclude** `/shop` in Intercom; sync only `/support` + add seeds |
 | Users don’t see your static site | **Deploy** `harve-landing` to the host that serves `harve.ai` |
 | GoDaddy store still on domain | **Disable store** or **stop linking** from home |
-| Login redirect wrong | **WorkOS** allows `https://harve.ai/auth-callback.html` + app **`HARVE_REDIRECT_URI`** |
+| Login redirect wrong | **WorkOS** allows `https://harve.ai/auth-callback` + app **`HARVE_REDIRECT_URI`** |

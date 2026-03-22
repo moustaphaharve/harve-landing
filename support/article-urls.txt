@@ -1,45 +1,45 @@
-# Canonical production URLs (matches sitemap.xml + deploy checklist).
-# If your live site uses www, add https://www.harve.ai/... duplicates in Intercom or set a single canonical host.
+# Canonical production URLs (clean, no .html extension).
+# Vercel rewrites handle serving the actual .html files.
 
-https://harve.ai/support.html
+https://harve.ai/support
 
-https://harve.ai/support/getting-started.html
-https://harve.ai/support/account-sign-in.html
-https://harve.ai/support/earnings-payouts.html
-https://harve.ai/support/recording-overlay.html
-https://harve.ai/support/privacy-data.html
-https://harve.ai/support/troubleshooting.html
+https://harve.ai/support/getting-started
+https://harve.ai/support/account-sign-in
+https://harve.ai/support/earnings-payouts
+https://harve.ai/support/recording-overlay
+https://harve.ai/support/privacy-data
+https://harve.ai/support/troubleshooting
 
-https://harve.ai/support/articles/install-harve.html
-https://harve.ai/support/articles/prepare-your-device.html
-https://harve.ai/support/articles/macos-vs-windows.html
-https://harve.ai/support/articles/onboarding-flow.html
-https://harve.ai/support/articles/first-session.html
-https://harve.ai/support/articles/how-to-use-harve.html
+https://harve.ai/support/articles/install-harve
+https://harve.ai/support/articles/prepare-your-device
+https://harve.ai/support/articles/macos-vs-windows
+https://harve.ai/support/articles/onboarding-flow
+https://harve.ai/support/articles/first-session
+https://harve.ai/support/articles/how-to-use-harve
 
-https://harve.ai/support/articles/browser-sign-in.html
-https://harve.ai/support/articles/opening-harve-page.html
-https://harve.ai/support/articles/wrong-account-logout.html
-https://harve.ai/support/articles/sign-out-of-harve.html
-https://harve.ai/support/articles/profile-and-settings.html
+https://harve.ai/support/articles/browser-sign-in
+https://harve.ai/support/articles/opening-harve-page
+https://harve.ai/support/articles/wrong-account-logout
+https://harve.ai/support/articles/sign-out-of-harve
+https://harve.ai/support/articles/profile-and-settings
 
-https://harve.ai/support/articles/connect-bank-stripe.html
-https://harve.ai/support/articles/when-you-get-paid.html
-https://harve.ai/support/articles/balance-and-threshold.html
-https://harve.ai/support/articles/payout-issues.html
-https://harve.ai/support/articles/individual-not-business.html
+https://harve.ai/support/articles/connect-bank-stripe
+https://harve.ai/support/articles/when-you-get-paid
+https://harve.ai/support/articles/balance-and-threshold
+https://harve.ai/support/articles/payout-issues
+https://harve.ai/support/articles/individual-not-business
 
-https://harve.ai/support/articles/pill-and-controls.html
-https://harve.ai/support/articles/what-gets-recorded.html
-https://harve.ai/support/articles/keyboard-shortcut.html
-https://harve.ai/support/articles/pause-sensitive-apps.html
-https://harve.ai/support/articles/recording-not-saving.html
+https://harve.ai/support/articles/pill-and-controls
+https://harve.ai/support/articles/what-gets-recorded
+https://harve.ai/support/articles/keyboard-shortcut
+https://harve.ai/support/articles/pause-sensitive-apps
+https://harve.ai/support/articles/recording-not-saving
 
-https://harve.ai/support/articles/what-data-harve-collects.html
-https://harve.ai/support/articles/kyc-and-identity.html
-https://harve.ai/support/articles/edu-email-verification.html
-https://harve.ai/support/articles/data-requests.html
+https://harve.ai/support/articles/what-data-harve-collects
+https://harve.ai/support/articles/kyc-and-identity
+https://harve.ai/support/articles/edu-email-verification
+https://harve.ai/support/articles/data-requests
 
-https://harve.ai/support/articles/app-wont-open.html
-https://harve.ai/support/articles/upload-or-sync-failed.html
-https://harve.ai/support/articles/contact-support.html
+https://harve.ai/support/articles/app-wont-open
+https://harve.ai/support/articles/upload-or-sync-failed
+https://harve.ai/support/articles/contact-support
