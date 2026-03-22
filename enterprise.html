@@ -9,345 +9,266 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
   <style>
-    :root {
-      --navy-deep: #0B1628;
-      --navy-mid: #0F2040;
-      --navy-warm: #152A52;
-      --navy-cool: #0D1E3A;
-      --navy-black: #070F1A;
-      --white: #FFFFFF;
-      --white-muted: rgba(255, 255, 255, 0.55);
-      --white-dim: rgba(255, 255, 255, 0.12);
-      --blue-accent: #3B7FE8;
-      --green-accent: #2ECC8C;
-      --gold-accent: #C9963A;
-      --border: rgba(255, 255, 255, 0.09);
-    }
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body {
-      font-family: "DM Sans", system-ui, sans-serif;
-      color: var(--white);
-      background: linear-gradient(180deg, #0B1628 0%, #0F2040 55%);
-      transition: background 0.8s ease;
-      min-height: 100vh;
-      line-height: 1.5;
-    }
-    a { color: inherit; text-decoration: none; }
-    .display { font-family: "Instrument Serif", Georgia, serif; }
-    .ent-nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 20px 32px; max-width: 1440px; margin: 0 auto;
-      background: rgba(7, 15, 26, 0.85); backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
-    }
-    .ent-nav .logo { font-family: "Instrument Serif", serif; font-size: 18px; letter-spacing: 0.06em; font-weight: 400; }
-    .ent-nav-right { display: flex; align-items: center; gap: 24px; }
-    .ent-nav-right a.data-team { font-size: 14px; color: var(--white-muted); transition: color 0.2s; }
-    .ent-nav-right a.data-team:hover { color: var(--white); }
-    .btn-outline {
-      display: inline-block; padding: 10px 20px; font-size: 13px; font-weight: 600;
-      color: var(--white); border: 1px solid var(--white); border-radius: 6px; cursor: pointer;
-      background: transparent; transition: background 0.2s, color 0.2s;
-    }
-    .btn-outline:hover { background: var(--white); color: var(--navy-deep); }
-    .btn-primary {
-      display: inline-block; padding: 14px 28px; font-size: 14px; font-weight: 600;
-      background: var(--navy-deep); color: var(--white); border: none; border-radius: 6px; cursor: pointer;
-      transition: opacity 0.2s;
-    }
-    .btn-primary:hover { opacity: 0.92; }
-    .btn-white {
-      background: var(--white); color: var(--navy-deep); border: none;
-      padding: 14px 28px; font-size: 14px; font-weight: 600; border-radius: 6px; cursor: pointer;
-    }
-    .btn-ghost {
-      background: transparent; color: var(--white); border: 1px solid rgba(255,255,255,0.45);
-      padding: 14px 28px; font-size: 14px; font-weight: 600; border-radius: 6px; cursor: pointer;
-    }
-    .split {
-      display: flex; max-width: 1440px; margin: 0 auto; padding: 96px 32px 80px;
-      gap: 56px; align-items: flex-start;
-    }
-    @media (max-width: 767px) {
-      .split { flex-direction: column; padding: 88px 20px 48px; gap: 40px; }
-      .split-left { display: contents; }
-      .split-right { order: 2; width: 100% !important; max-width: none !important; flex: none !important; }
-      .hero-ent { order: 1; }
-      .scroll-sections { order: 3; }
-    }
-    .split-left { flex: 1; min-width: 0; }
-    .split-right {
-      flex: 0 0 38%; max-width: 420px; position: relative;
-    }
-    @media (min-width: 768px) {
-      .split-left { width: 60%; }
-    }
-    .sticky-card {
-      position: sticky; top: 100px;
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid var(--border);
-      border-radius: 12px; padding: 28px;
-    }
-    @media (max-width: 767px) {
-      .sticky-card { position: static; }
-    }
-    .sticky-card h3 { font-family: "Instrument Serif", serif; font-size: 24px; font-weight: 400; margin-bottom: 8px; }
-    .sticky-card .sub { font-size: 13px; color: var(--white-muted); margin-bottom: 24px; line-height: 1.5; }
-    .field { margin-bottom: 16px; }
-    .field label { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--white-muted); margin-bottom: 6px; }
-    .field input, .field select, .field textarea {
-      width: 100%; padding: 12px 14px; border-radius: 6px; border: 1px solid var(--border);
-      background: rgba(0,0,0,0.25); color: var(--white); font-size: 14px; font-family: inherit;
-    }
-    .field textarea { min-height: 72px; resize: vertical; }
-    .field input:focus, .field select:focus, .field textarea:focus {
-      outline: none; border-color: rgba(59, 127, 232, 0.5);
-    }
-    .form-submit { width: 100%; margin-top: 8px; padding: 14px; font-weight: 600; cursor: pointer; }
-    .form-foot { font-size: 11px; color: var(--white-muted); margin-top: 14px; line-height: 1.45; }
-    .hero-ent { min-height: calc(100vh - 96px); padding-top: 8px; }
-    .badge {
-      font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--white-muted); margin-bottom: 20px;
-    }
-    .hero-ent h1 {
-      font-family: "Instrument Serif", serif; font-size: clamp(40px, 6vw, 72px); font-weight: 400; line-height: 1.08;
-      margin-bottom: 20px; letter-spacing: -0.02em;
-    }
-    .hero-ent .lead { font-size: 18px; font-weight: 400; color: var(--white-muted); max-width: 540px; margin-bottom: 28px; }
-    .trust-row { font-size: 13px; color: var(--white-muted); }
-    .trust-row span.dot { margin: 0 10px; opacity: 0.5; }
-    .scroll-sections section {
-      min-height: 100vh; padding: 80px 0 100px; display: flex; flex-direction: column; justify-content: center;
-    }
-    .sec-label { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--white-muted); margin-bottom: 16px; }
-    .sec-head { font-family: "Instrument Serif", serif; font-size: clamp(36px, 5vw, 56px); font-weight: 400; line-height: 1.1; margin-bottom: 28px; }
-    .io-hidden { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
-    .io-visible { opacity: 1; transform: translateY(0); }
-    .io-visible.stagger-1 { transition-delay: 0.08s; }
-    .io-visible.stagger-2 { transition-delay: 0.16s; }
-    .io-visible.stagger-3 { transition-delay: 0.24s; }
-    .big-num { font-family: "Instrument Serif", serif; font-size: clamp(64px, 12vw, 96px); line-height: 1; margin-bottom: 12px; }
-    .stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin: 36px 0; }
-    @media (max-width: 900px) { .stat-grid { grid-template-columns: repeat(2, 1fr); } }
-    .stat-grid .n { font-family: "Instrument Serif", serif; font-size: 28px; }
-    .stat-grid .l { font-size: 12px; color: var(--white-muted); margin-top: 4px; }
-    .buyer-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 24px; }
-    @media (max-width: 900px) { .buyer-grid { grid-template-columns: 1fr; } }
-    .buyer-card {
-      border: 1px solid var(--border); border-radius: 10px; padding: 18px; cursor: pointer;
-      background: rgba(255,255,255,0.02); text-align: left; color: inherit; font: inherit;
-      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s;
-    }
-    .buyer-card:hover { transform: translateY(-3px); box-shadow: 0 8px 32px rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.2); }
-    .buyer-card h4 { font-size: 15px; font-weight: 600; margin-bottom: 6px; }
-    .buyer-card p { font-size: 13px; color: var(--white-muted); }
-    .buyer-card.expanded p.extra { display: block !important; margin-top: 10px; font-size: 12px; color: var(--white-muted); }
-    .buyer-card p.extra { display: none; margin: 0; }
-    .roi-sliders { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin: 24px 0; }
-    @media (max-width: 600px) { .roi-sliders { grid-template-columns: 1fr; } }
-    .roi-sliders label { font-size: 12px; color: var(--white-muted); display: block; margin-bottom: 8px; }
-    .roi-sliders input[type="range"] { width: 100%; accent-color: var(--blue-accent); }
-    .roi-figures { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 28px 0; }
-    .roi-figures .box { padding: 16px; border: 1px solid var(--border); border-radius: 8px; }
-    .roi-figures .box .val { font-family: "Instrument Serif", serif; font-size: 28px; }
-    .roi-figures .box.save .val { color: var(--green-accent); }
-    .roi-figures .lbl { font-size: 11px; color: var(--white-muted); text-transform: uppercase; letter-spacing: 0.06em; margin-top: 6px; }
-    .roi-dynamic { font-size: 15px; color: var(--white-muted); margin-top: 16px; max-width: 640px; }
-    .tier-table { font-size: 13px; margin-top: 20px; width: 100%; border-collapse: collapse; }
-    .tier-table td { padding: 8px 0; border-bottom: 1px solid var(--border); color: var(--white-muted); }
-    .tier-table td:first-child { color: var(--white); }
-    .cols-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 24px; }
-    @media (max-width: 900px) { .cols-3 { grid-template-columns: 1fr; } }
-    .col-box { border: 1px solid var(--border); border-radius: 10px; padding: 20px; }
-    .col-box h4 { font-size: 14px; margin-bottom: 12px; font-weight: 600; }
-    .col-box ul { list-style: none; font-size: 13px; color: var(--white-muted); }
-    .col-box li { margin-bottom: 8px; padding-left: 12px; border-left: 2px solid var(--border); }
-    pre.code-sample {
-      margin-top: 28px; padding: 20px; border-radius: 8px; background: rgba(0,0,0,0.35);
-      border: 1px solid var(--border); font-size: 12px; line-height: 1.45; overflow-x: auto;
-      font-family: ui-monospace, "Cascadia Code", monospace; color: rgba(255,255,255,0.85);
-    }
-    .comp-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 24px; }
-    @media (max-width: 900px) { .comp-row { grid-template-columns: repeat(2, 1fr); } }
-    .comp-tile { border: 1px solid var(--border); border-radius: 10px; padding: 18px; }
-    .comp-tile h4 { font-size: 14px; margin-bottom: 10px; }
-    .comp-tile p { font-size: 12px; color: var(--white-muted); line-height: 1.5; }
-    .price-table { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 14px; }
-    .price-table th { text-align: left; padding: 14px 12px; border-bottom: 1px solid var(--border); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--white-muted); }
-    .price-table td { padding: 14px 12px; border-bottom: 1px solid var(--border); color: var(--white-muted); }
-    .price-table tr.audio { background: rgba(59, 127, 232, 0.08); }
-    .price-table tr.gold { background: rgba(201, 150, 58, 0.1); }
-    .pilot-steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; margin-top: 32px; position: relative; }
-    @media (max-width: 900px) { .pilot-steps { grid-template-columns: 1fr; } }
-    .pilot-steps::before {
-      content: ""; position: absolute; top: 24px; left: 8%; right: 8%; height: 1px;
-      background: var(--border); z-index: 0;
-    }
-    @media (max-width: 900px) { .pilot-steps::before { display: none; } }
-    .pilot-step { position: relative; z-index: 1; padding: 0 16px; }
-    .pilot-step .num { width: 48px; height: 48px; border-radius: 50%; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-weight: 600; margin-bottom: 16px; background: var(--navy-deep); }
-    .pilot-step h4 { font-size: 15px; margin-bottom: 8px; }
-    .pilot-step p { font-size: 13px; color: var(--white-muted); }
-    .final-cta {
-      text-align: center; padding: 100px 32px; border-top: 1px solid var(--border);
-    }
-    .final-cta h2 { font-family: "Instrument Serif", serif; font-size: clamp(32px, 5vw, 48px); font-weight: 400; margin-bottom: 28px; }
-    .final-btns { display: flex; flex-wrap: wrap; gap: 16px; justify-content: center; margin-bottom: 20px; }
-    .num-anim { transition: transform 0.15s ease; display: inline-block; }
-    .num-anim.pulse { transform: scale(1.06); }
+:root {
+  --navy-deep: #0B1628; --navy-mid: #0F2040; --navy-warm: #152A52; --navy-cool: #0D1E3A; --navy-black: #070F1A;
+  --white: #FFFFFF; --white-muted: rgba(255,255,255,0.55); --white-dim: rgba(255,255,255,0.12);
+  --blue-accent: #3B7FE8; --green-accent: #2ECC8C; --gold-accent: #C9963A; --border: rgba(255,255,255,0.09);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:"DM Sans",system-ui,sans-serif;color:var(--white);background:var(--navy-deep);min-height:100vh;line-height:1.5;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+.display{font-family:"Instrument Serif",Georgia,serif}
+
+/* ── bg overlay for smooth gradient transitions ── */
+#bg-overlay{position:fixed;inset:0;z-index:-1;transition:background 1.2s cubic-bezier(.4,0,.2,1);background:var(--navy-deep);will-change:background}
+
+/* ── nav ── */
+.ent-nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:16px 32px;background:rgba(7,15,26,0.82);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--border)}
+.nav-brand{display:inline-flex;align-items:center;gap:9px}
+.nav-brand svg{width:24px;height:24px}
+.nav-brand span{font-family:'Instrument Serif',serif;font-size:17px;color:var(--white)}
+.ent-nav-right{display:flex;align-items:center;gap:20px}
+.ent-nav-right .nav-link{font-size:13px;color:var(--white-muted);transition:color .2s;font-weight:500}
+.ent-nav-right .nav-link:hover{color:var(--white)}
+.btn-nav{padding:9px 18px;font-size:12px;font-weight:600;color:var(--white);border:1px solid rgba(255,255,255,.35);border-radius:8px;background:transparent;cursor:pointer;transition:all .2s;font-family:inherit}
+.btn-nav:hover{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.55)}
+
+/* ── layout ── */
+.split{display:flex;max-width:1400px;margin:0 auto;padding:84px 32px 0;gap:52px;align-items:flex-start}
+.split-left{flex:1;min-width:0}
+.split-right{flex:0 0 36%;max-width:400px;position:relative}
+@media(min-width:768px){.split-left{width:62%}}
+@media(max-width:767px){.split{flex-direction:column;padding:80px 20px 0;gap:32px}.split-left{display:contents}.split-right{order:2;width:100%!important;max-width:none!important;flex:none!important}.hero-ent{order:1}.scroll-sections{order:3}}
+
+/* ── sticky form card ── */
+.sticky-card{position:sticky;top:88px;background:rgba(255,255,255,0.035);border:1px solid var(--border);border-radius:14px;padding:26px}
+@media(max-width:767px){.sticky-card{position:static}}
+.sticky-card h3{font-family:"Instrument Serif",serif;font-size:22px;font-weight:400;margin-bottom:6px}
+.sticky-card .sub{font-size:12px;color:var(--white-muted);margin-bottom:22px;line-height:1.5}
+.field{margin-bottom:14px}
+.field label{display:block;font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--white-muted);margin-bottom:5px}
+.field input,.field select,.field textarea{width:100%;padding:11px 13px;border-radius:8px;border:1px solid rgba(255,255,255,.1);background:rgba(0,0,0,.3);color:var(--white);font-size:13px;font-family:inherit;-webkit-appearance:none;appearance:none}
+.field select{background-image:url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l4 4 4-4' stroke='rgba(255,255,255,0.4)' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 13px center;padding-right:32px}
+.field select option{background:#1a2744;color:#fff}
+.field textarea{min-height:64px;resize:vertical}
+.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:rgba(59,127,232,.5)}
+.form-submit{width:100%;margin-top:6px;padding:13px;font-weight:600;cursor:pointer;background:var(--white);color:var(--navy-deep);border:none;border-radius:8px;font-size:13px;font-family:inherit;transition:opacity .2s}
+.form-submit:hover{opacity:.9}
+.form-foot{font-size:10px;color:var(--white-muted);margin-top:12px;line-height:1.45}
+
+/* ── sections ── */
+.hero-ent{min-height:calc(100vh - 100px);display:flex;flex-direction:column;justify-content:center;padding:16px 0 60px}
+.badge{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--white-muted);margin-bottom:20px}
+.hero-ent h1{font-family:"Instrument Serif",serif;font-size:clamp(38px,5.5vw,68px);font-weight:400;line-height:1.08;margin-bottom:20px;letter-spacing:-.02em}
+.hero-ent .lead{font-size:17px;font-weight:400;color:var(--white-muted);max-width:540px;margin-bottom:32px}
+
+/* ── trust stamps ── */
+.trust-stamps{display:flex;flex-wrap:wrap;gap:14px;margin-top:4px}
+.stamp{display:inline-flex;align-items:center;gap:8px;padding:8px 16px 8px 12px;border:1px solid rgba(255,255,255,.15);border-radius:50px;font-size:11px;font-weight:600;letter-spacing:.04em;color:rgba(255,255,255,.75);background:rgba(255,255,255,.04)}
+.stamp svg{width:18px;height:18px;opacity:.65;flex-shrink:0}
+
+.scroll-sections section{min-height:100vh;padding:60px 0 80px;display:flex;flex-direction:column;justify-content:center}
+.sec-label{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--white-muted);margin-bottom:14px}
+.sec-head{font-family:"Instrument Serif",serif;font-size:clamp(34px,4.5vw,54px);font-weight:400;line-height:1.1;margin-bottom:24px}
+
+/* ── scroll animations ── */
+.reveal{opacity:0;transform:translateY(40px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal>*{opacity:0;transform:translateY(24px);transition:opacity .7s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1)}
+.reveal.visible>*{opacity:1;transform:translateY(0)}
+
+.big-num{font-family:"Instrument Serif",serif;font-size:clamp(56px,11vw,88px);line-height:1;margin-bottom:10px}
+.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin:32px 0}
+@media(max-width:900px){.stat-grid{grid-template-columns:repeat(2,1fr)}}
+.stat-grid .n{font-family:"Instrument Serif",serif;font-size:26px}
+.stat-grid .l{font-size:11px;color:var(--white-muted);margin-top:4px}
+
+.buyer-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:20px}
+@media(max-width:900px){.buyer-grid{grid-template-columns:1fr}}
+.buyer-card{border:1px solid var(--border);border-radius:10px;padding:16px;cursor:pointer;background:rgba(255,255,255,.02);text-align:left;color:inherit;font:inherit;transition:transform .25s cubic-bezier(.16,1,.3,1),box-shadow .25s,border-color .25s}
+.buyer-card:hover{transform:translateY(-3px);box-shadow:0 8px 32px rgba(255,255,255,.05);border-color:rgba(255,255,255,.2)}
+.buyer-card h4{font-size:14px;font-weight:600;margin-bottom:5px}
+.buyer-card p{font-size:12px;color:var(--white-muted)}
+.buyer-card.expanded p.extra{display:block!important;margin-top:8px;font-size:11px;color:var(--gold-accent)}
+.buyer-card p.extra{display:none;margin:0}
+
+.roi-sliders{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:20px 0}
+@media(max-width:600px){.roi-sliders{grid-template-columns:1fr}}
+.roi-sliders label{font-size:11px;color:var(--white-muted);display:block;margin-bottom:6px}
+.roi-sliders input[type="range"]{width:100%;accent-color:var(--blue-accent)}
+.roi-figures{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:24px 0}
+.roi-figures .box{padding:14px;border:1px solid var(--border);border-radius:8px}
+.roi-figures .box .val{font-family:"Instrument Serif",serif;font-size:26px;transition:transform .15s}
+.roi-figures .box.save .val{color:var(--green-accent)}
+.roi-figures .lbl{font-size:10px;color:var(--white-muted);text-transform:uppercase;letter-spacing:.06em;margin-top:5px}
+.roi-dynamic{font-size:14px;color:var(--white-muted);margin-top:14px;max-width:600px}
+.tier-table{font-size:12px;margin-top:18px;width:100%;border-collapse:collapse}
+.tier-table td{padding:7px 0;border-bottom:1px solid var(--border);color:var(--white-muted)}
+.tier-table td:first-child{color:var(--white)}
+
+.cols-3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:20px}
+@media(max-width:900px){.cols-3{grid-template-columns:1fr}}
+.col-box{border:1px solid var(--border);border-radius:10px;padding:18px}
+.col-box h4{font-size:13px;margin-bottom:10px;font-weight:600}
+.col-box ul{list-style:none;font-size:12px;color:var(--white-muted)}
+.col-box li{margin-bottom:7px;padding-left:11px;border-left:2px solid var(--border)}
+pre.code-sample{margin-top:24px;padding:18px;border-radius:8px;background:rgba(0,0,0,.35);border:1px solid var(--border);font-size:11px;line-height:1.45;overflow-x:auto;font-family:ui-monospace,"Cascadia Code",monospace;color:rgba(255,255,255,.8)}
+
+/* ── compliance stamps (certificate style) ── */
+.comp-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:24px}
+@media(max-width:900px){.comp-row{grid-template-columns:repeat(2,1fr)}}
+.comp-stamp{border:2px solid rgba(255,255,255,.12);border-radius:50%;width:140px;height:140px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;margin:0 auto 12px;position:relative}
+.comp-stamp::before{content:"";position:absolute;inset:4px;border-radius:50%;border:1px dashed rgba(255,255,255,.12)}
+.comp-stamp h4{font-size:13px;font-weight:700;letter-spacing:.04em}
+.comp-stamp .sub-line{font-size:8px;text-transform:uppercase;letter-spacing:.12em;color:var(--white-muted);margin-top:2px}
+.comp-desc{font-size:11px;color:var(--white-muted);line-height:1.45;text-align:center;max-width:160px;margin:0 auto}
+
+.price-table{width:100%;border-collapse:collapse;margin-top:18px;font-size:13px}
+.price-table th{text-align:left;padding:12px 10px;border-bottom:1px solid var(--border);font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--white-muted)}
+.price-table td{padding:12px 10px;border-bottom:1px solid var(--border);color:var(--white-muted)}
+.price-table tr.audio{background:rgba(59,127,232,.08)}
+.price-table tr.gold{background:rgba(201,150,58,.1)}
+
+.pilot-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:28px;position:relative}
+@media(max-width:900px){.pilot-steps{grid-template-columns:1fr}}
+.pilot-steps::before{content:"";position:absolute;top:24px;left:8%;right:8%;height:1px;background:var(--border);z-index:0}
+@media(max-width:900px){.pilot-steps::before{display:none}}
+.pilot-step{position:relative;z-index:1;padding:0 14px}
+.pilot-step .num{width:48px;height:48px;border-radius:50%;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-weight:600;margin-bottom:14px;background:var(--navy-deep)}
+.pilot-step h4{font-size:14px;margin-bottom:6px}
+.pilot-step p{font-size:12px;color:var(--white-muted)}
+
+.final-cta{text-align:center;padding:100px 32px;border-top:1px solid var(--border)}
+.final-cta h2{font-family:"Instrument Serif",serif;font-size:clamp(30px,4.5vw,46px);font-weight:400;margin-bottom:24px}
+.final-btns{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin-bottom:18px}
+.btn-white{background:var(--white);color:var(--navy-deep);border:none;padding:14px 26px;font-size:13px;font-weight:600;border-radius:8px;cursor:pointer;font-family:inherit}
+.btn-ghost{background:transparent;color:var(--white);border:1px solid rgba(255,255,255,.4);padding:14px 26px;font-size:13px;font-weight:600;border-radius:8px;cursor:pointer;font-family:inherit}
+.btn-outline{display:inline-block;padding:11px 20px;font-size:13px;font-weight:600;color:var(--white);border:1px solid rgba(255,255,255,.35);border-radius:8px;cursor:pointer;background:transparent;transition:all .2s;font-family:inherit}
+.btn-outline:hover{background:rgba(255,255,255,.08)}
   </style>
 </head>
 <body>
-  <header class="ent-nav">
-    <a href="/" class="logo display">HARVE</a>
-    <div class="ent-nav-right">
-      <a href="#contact-form" class="data-team">Data team</a>
-      <button type="button" class="btn-outline" id="nav-request-sample">Request a sample</button>
-    </div>
-  </header>
+<div id="bg-overlay"></div>
 
-  <div class="split">
-    <div class="split-left">
-      <section class="hero-ent scroll-region" id="region-hero" data-bg="linear-gradient(180deg, #0B1628 0%, #0F2040 55%)">
-        <div class="io-block">
-          <p class="badge">Professional behavioral data</p>
-          <h1 class="display">The only verified professional behavioral data platform.</h1>
-          <p class="lead">2,000,000 professionals submitting sessions weekly. AI-annotated every 30 seconds. Delivered to your pipeline every Monday.</p>
-          <p class="trust-row">SOC 2 Type II<span class="dot">·</span>HIPAA Compliant<span class="dot">·</span>GDPR Ready</p>
+<header class="ent-nav">
+  <a href="/" class="nav-brand">
+    <svg width="24" height="24" viewBox="0 0 20 20" fill="none"><defs><mask id="enav"><rect width="20" height="20" fill="black"/><circle cx="10" cy="10" r="9" fill="white"/><path d="M4 7.6C6.5 6.75 8.5 6.75 10 7.6 11.5 8.45 13.5 8.45 16 7.6" stroke="black" stroke-width="2.1" stroke-linecap="round" fill="none"/><path d="M4 10C6.5 9.15 8.5 9.15 10 10 11.5 10.85 13.5 10.85 16 10" stroke="black" stroke-width="2.1" stroke-linecap="round" fill="none"/><path d="M4 12.4C6.5 11.55 8.5 11.55 10 12.4 11.5 13.25 13.5 13.25 16 12.4" stroke="black" stroke-width="2.1" stroke-linecap="round" fill="none"/></mask></defs><g mask="url(#enav)"><circle cx="10" cy="10" r="9.2" fill="white"/></g></svg>
+    <span>harve</span>
+  </a>
+  <div class="ent-nav-right">
+    <a href="#contact-form" class="nav-link">Data team</a>
+    <span style="color:rgba(255,255,255,.15)">|</span>
+    <button type="button" class="btn-nav" id="nav-request-sample">Request a sample</button>
+  </div>
+</header>
+
+<div class="split">
+  <div class="split-left">
+    <section class="hero-ent scroll-region" id="region-hero" data-bg="linear-gradient(170deg, #0B1628 0%, #0F2040 100%)">
+      <div class="reveal">
+        <p class="badge">Professional behavioral data</p>
+        <h1 class="display">The #1 verified professional behavioral data platform.</h1>
+        <p class="lead">2,000,000 professionals submitting sessions weekly. AI-annotated every 30 seconds. Delivered to your pipeline every Monday.</p>
+        <div class="trust-stamps">
+          <span class="stamp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>SOC 2 Type II</span>
+          <span class="stamp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>HIPAA Compliant</span>
+          <span class="stamp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>GDPR Ready</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="scroll-sections">
+      <!-- ROI Calculator (moved up) -->
+      <section class="scroll-region" id="region-roi" data-bg="linear-gradient(170deg, #0D1E3A 0%, #0B1628 100%)">
+        <div class="reveal">
+          <p class="sec-label">Your ROI</p>
+          <h2 class="sec-head display">See what you save.</h2>
+          <div class="roi-sliders">
+            <div>
+              <label for="hours-range">Hours of professional data per month</label>
+              <input type="range" id="hours-range" min="1000" max="500000" step="1000" value="50000" />
+              <div id="hours-val" style="font-size:12px;color:var(--white-muted);margin-top:5px;">50,000 hours</div>
+            </div>
+            <div>
+              <label for="tier-range">Your tier</label>
+              <input type="range" id="tier-range" min="0" max="4" step="1" value="2" />
+              <div id="tier-val" style="font-size:12px;color:var(--white-muted);margin-top:5px;">Professional</div>
+            </div>
+          </div>
+          <div class="roi-figures">
+            <div class="box"><div class="val" id="harve-cost">$0</div><div class="lbl">Harve cost</div></div>
+            <div class="box"><div class="val" id="merc-cost">$0</div><div class="lbl">Manual equivalent</div></div>
+            <div class="box save"><div class="val" id="save-amt">$0</div><div class="lbl">You save</div></div>
+          </div>
+          <p class="roi-dynamic" id="roi-sentence"></p>
+          <table class="tier-table">
+            <tr><td>Consumer</td><td>$10/hr</td></tr>
+            <tr><td>Student</td><td>$20/hr</td></tr>
+            <tr><td>Student .edu verified</td><td>$45/hr</td></tr>
+            <tr><td>Professional</td><td>$65/hr</td></tr>
+            <tr><td>High Value</td><td>$100/hr</td></tr>
+            <tr><td>Elite</td><td>$165/hr</td></tr>
+            <tr><td>Audio-enabled</td><td>3x tier rate</td></tr>
+          </table>
         </div>
       </section>
 
-      <div class="scroll-sections">
-        <section class="scroll-region" id="region-supply" data-bg="linear-gradient(180deg, #0F2040 0%, #152A52 100%)">
-          <div class="io-block">
-            <p class="sec-label">The supply</p>
-            <div class="big-num display">2,000,000+</div>
-            <p style="font-size:18px;color:var(--white-muted);margin-bottom:32px;">verified professionals submitting sessions weekly</p>
-            <div class="stat-grid">
-              <div><div class="n display">480</div><div class="l">annotation entries per 4-hour session</div></div>
-              <div><div class="n display">$0.000264</div><div class="l">annotation cost per hour</div></div>
-              <div><div class="n display">52</div><div class="l">consecutive Monday deliveries</div></div>
-              <div><div class="n display">20+</div><div class="l">professional domains covered</div></div>
-            </div>
-            <p style="font-size:15px;color:var(--white-muted);max-width:640px;">Every session: KYC-verified identity. AI-annotated every 30 seconds. PII-scrubbed before delivery.</p>
+      <!-- The Supply -->
+      <section class="scroll-region" id="region-supply" data-bg="linear-gradient(170deg, #0F2040 0%, #152A52 100%)">
+        <div class="reveal">
+          <p class="sec-label">The supply</p>
+          <div class="big-num display">2,000,000+</div>
+          <p style="font-size:17px;color:var(--white-muted);margin-bottom:28px;">verified professionals submitting sessions weekly</p>
+          <div class="stat-grid">
+            <div><div class="n display">480</div><div class="l">annotation entries per 4-hour session</div></div>
+            <div><div class="n display">$0.000264</div><div class="l">annotation cost per hour</div></div>
+            <div><div class="n display">52</div><div class="l">consecutive Monday deliveries</div></div>
+            <div><div class="n display">20+</div><div class="l">professional domains covered</div></div>
           </div>
-        </section>
+          <p style="font-size:14px;color:var(--white-muted);max-width:600px;">Every session: KYC-verified identity. AI-annotated every 30 seconds. PII-scrubbed before delivery.</p>
+        </div>
+      </section>
 
-        <section class="scroll-region" id="region-buyer" data-bg="linear-gradient(180deg, #152A52 0%, #0F2040 100%)">
-          <div class="io-block">
-            <p class="sec-label">What are you building</p>
-            <h2 class="sec-head display">Six categories. One pipeline.</h2>
-            <div class="buyer-grid" id="buyer-grid">
-              <button type="button" class="buyer-card" data-extra="$140–180/hr · Availability: standard">
-                <h4>Frontier AI + RLHF</h4>
-                <p>Expert reasoning patterns from verified professionals</p>
-                <p class="extra" hidden></p>
-              </button>
-              <button type="button" class="buyer-card" data-extra="$160–200/hr · HIPAA lanes available">
-                <h4>Healthcare AI</h4>
-                <p>Physician workflow. HIPAA-compliant. The only source.</p>
-                <p class="extra" hidden></p>
-              </button>
-              <button type="button" class="buyer-card" data-extra="$150–190/hr · Westlaw-adjacent workflows">
-                <h4>Legal AI</h4>
-                <p>Senior lawyer workflow from Westlaw and contract review</p>
-                <p class="extra" hidden></p>
-              </button>
-              <button type="button" class="buyer-card" data-extra="$130–170/hr · Terminal-grade sessions">
-                <h4>Financial AI</h4>
-                <p>Bloomberg terminal sessions and analyst decision-making</p>
-                <p class="extra" hidden></p>
-              </button>
-              <button type="button" class="buyer-card" data-extra="$90–130/hr · Product telemetry bundles">
-                <h4>Enterprise Software</h4>
-                <p>Real behavioral usage of your product in the wild</p>
-                <p class="extra" hidden></p>
-              </button>
-              <button type="button" class="buyer-card" data-extra="Custom · Cleared handling on request">
-                <h4>Defense + Government</h4>
-                <p>Analyst workflow with cleared data handling available</p>
-                <p class="extra" hidden></p>
-              </button>
-            </div>
+      <!-- Buyer Selector -->
+      <section class="scroll-region" id="region-buyer" data-bg="linear-gradient(170deg, #152A52 0%, #0F2040 100%)">
+        <div class="reveal">
+          <p class="sec-label">What are you building</p>
+          <h2 class="sec-head display">Six categories. One pipeline.</h2>
+          <div class="buyer-grid" id="buyer-grid">
+            <button type="button" class="buyer-card" data-extra="$140-180/hr | Standard availability">
+              <h4>Frontier AI + RLHF</h4><p>Expert reasoning patterns from verified professionals</p><p class="extra" hidden></p>
+            </button>
+            <button type="button" class="buyer-card" data-extra="$160-200/hr | HIPAA lanes available">
+              <h4>Healthcare AI</h4><p>Physician workflow. HIPAA-compliant. The only source.</p><p class="extra" hidden></p>
+            </button>
+            <button type="button" class="buyer-card" data-extra="$150-190/hr | Westlaw-adjacent workflows">
+              <h4>Legal AI</h4><p>Senior lawyer workflow from Westlaw and contract review</p><p class="extra" hidden></p>
+            </button>
+            <button type="button" class="buyer-card" data-extra="$130-170/hr | Terminal-grade sessions">
+              <h4>Financial AI</h4><p>Bloomberg terminal sessions and analyst decision-making</p><p class="extra" hidden></p>
+            </button>
+            <button type="button" class="buyer-card" data-extra="$90-130/hr | Product telemetry bundles">
+              <h4>Enterprise Software</h4><p>Real behavioral usage of your product in the wild</p><p class="extra" hidden></p>
+            </button>
+            <button type="button" class="buyer-card" data-extra="Custom pricing | Cleared handling on request">
+              <h4>Defense + Government</h4><p>Analyst workflow with cleared data handling available</p><p class="extra" hidden></p>
+            </button>
           </div>
-        </section>
+        </div>
+      </section>
 
-        <section class="scroll-region" id="region-roi" data-bg="linear-gradient(180deg, #0D1E3A 0%, #0B1628 100%)">
-          <div class="io-block">
-            <p class="sec-label">Your ROI</p>
-            <h2 class="sec-head display">See what you save.</h2>
-            <div class="roi-sliders">
-              <div>
-                <label for="hours-range">Hours of professional data per month</label>
-                <input type="range" id="hours-range" min="1000" max="500000" step="1000" value="50000" />
-                <div id="hours-val" style="font-size:13px;color:var(--white-muted);margin-top:6px;">50,000 hours</div>
-              </div>
-              <div>
-                <label for="tier-range">Your tier</label>
-                <input type="range" id="tier-range" min="0" max="4" step="1" value="2" />
-                <div id="tier-val" style="font-size:13px;color:var(--white-muted);margin-top:6px;">Professional</div>
-              </div>
-            </div>
-            <div class="roi-figures">
-              <div class="box"><div class="val num-anim" id="harve-cost">$0</div><div class="lbl">Harve cost</div></div>
-              <div class="box"><div class="val num-anim" id="merc-cost">$0</div><div class="lbl">Mercor equivalent cost</div></div>
-              <div class="box save"><div class="val num-anim" id="save-amt">$0</div><div class="lbl">You save</div></div>
-            </div>
-            <p class="roi-dynamic" id="roi-sentence"></p>
-            <table class="tier-table">
-              <tr><td>Consumer</td><td>$10/hr</td></tr>
-              <tr><td>Student</td><td>$20/hr</td></tr>
-              <tr><td>Student .edu verified</td><td>$45/hr</td></tr>
-              <tr><td>Professional</td><td>$65/hr</td></tr>
-              <tr><td>High Value</td><td>$100/hr</td></tr>
-              <tr><td>Elite</td><td>$165/hr</td></tr>
-              <tr><td>Audio-enabled</td><td>3x tier rate</td></tr>
-            </table>
+      <!-- Data Product -->
+      <section class="scroll-region" id="region-product" data-bg="linear-gradient(170deg, #0B1628 0%, #0F2040 90%)">
+        <div class="reveal">
+          <p class="sec-label">What you receive</p>
+          <h2 class="sec-head display">Not a CSV. A structured intelligence layer.</h2>
+          <div class="cols-3">
+            <div class="col-box"><h4>Session Metadata</h4><ul><li>KYC-verified profile</li><li>Age bracket</li><li>Professional tier</li><li>Employer category</li><li>Consent timestamp</li><li>Zero PII</li></ul></div>
+            <div class="col-box"><h4>Annotation Timeline</h4><ul><li>Every 30 seconds</li><li>Active app + activity type</li><li>Professional domain</li><li>Attention signal</li><li>Quality score</li><li>480 entries per session</li></ul></div>
+            <div class="col-box"><h4>Query API</h4><ul><li>Filter by any field</li><li>JSON + video delivery</li><li>Monday 09:00 EST</li><li>1-day integration</li><li>SOC 2 audited</li><li>Dedicated support</li></ul></div>
           </div>
-        </section>
-
-        <section class="scroll-region" id="region-product" data-bg="linear-gradient(180deg, #0B1628 0%, #0F2040 90%)">
-          <div class="io-block">
-            <p class="sec-label">What you receive</p>
-            <h2 class="sec-head display">Not a CSV. A structured intelligence layer.</h2>
-            <div class="cols-3">
-              <div class="col-box">
-                <h4>Session Metadata</h4>
-                <ul>
-                  <li>KYC-verified profile</li>
-                  <li>Age bracket</li>
-                  <li>Professional tier</li>
-                  <li>Employer category</li>
-                  <li>Consent timestamp</li>
-                  <li>Zero PII</li>
-                </ul>
-              </div>
-              <div class="col-box">
-                <h4>Annotation Timeline</h4>
-                <ul>
-                  <li>Every 30 seconds</li>
-                  <li>Active app + activity type</li>
-                  <li>Professional domain</li>
-                  <li>Attention signal</li>
-                  <li>Quality score</li>
-                  <li>480 entries per session</li>
-                </ul>
-              </div>
-              <div class="col-box">
-                <h4>Query API</h4>
-                <ul>
-                  <li>Filter by any field</li>
-                  <li>JSON + video delivery</li>
-                  <li>Monday 09:00 EST</li>
-                  <li>1-day integration</li>
-                  <li>SOC 2 audited</li>
-                  <li>Dedicated support</li>
-                </ul>
-              </div>
-            </div>
-            <pre class="code-sample">{
+          <pre class="code-sample">{
   "query": {
     "profession_tier": "elite",
     "professional_domain": "legal",
@@ -362,258 +283,170 @@
     "delivery": "Monday 09:00 EST"
   }
 }</pre>
-          </div>
-        </section>
+        </div>
+      </section>
 
-        <section class="scroll-region" id="region-compliance" data-bg="linear-gradient(180deg, #070F1A 0%, #0B1628 100%)">
-          <div class="io-block">
-            <p class="sec-label">Your legal team</p>
-            <h2 class="sec-head display">Their objections. Already answered.</h2>
-            <div class="comp-row">
-              <div class="comp-tile">
-                <h4>SOC 2 Type II</h4>
-                <p>Continuous audit certified. Full report available under NDA.</p>
-              </div>
-              <div class="comp-tile">
-                <h4>HIPAA</h4>
-                <p>BAA available. PII scrubbing pipeline independently audited.</p>
-              </div>
-              <div class="comp-tile">
-                <h4>GDPR</h4>
-                <p>DPA standard. Erasure requests fulfilled within 72 hours.</p>
-              </div>
-              <div class="comp-tile">
-                <h4>PIPEDA</h4>
-                <p>Canadian federal compliance. Consent framework independently reviewed.</p>
-              </div>
+      <!-- Compliance -->
+      <section class="scroll-region" id="region-compliance" data-bg="linear-gradient(170deg, #070F1A 0%, #0B1628 100%)">
+        <div class="reveal">
+          <p class="sec-label">Your legal team</p>
+          <h2 class="sec-head display">Their objections. Already answered.</h2>
+          <div class="comp-row">
+            <div>
+              <div class="comp-stamp"><h4>SOC 2</h4><div class="sub-line">Type II</div></div>
+              <p class="comp-desc">Continuous audit certified. Full report available under NDA.</p>
             </div>
-            <p style="font-size:13px;color:var(--white-muted);margin-top:24px;max-width:720px;">Full security documentation, penetration test results, and compliance packages available to qualified buyers under NDA.</p>
-          </div>
-        </section>
-
-        <section class="scroll-region" id="region-pricing" data-bg="linear-gradient(180deg, #0B1628 0%, #152A52 100%)">
-          <div class="io-block">
-            <p class="sec-label">Transparent pricing</p>
-            <h2 class="sec-head display">Know your number before the first call.</h2>
-            <table class="price-table">
-              <thead><tr><th>Tier</th><th>Data type</th><th>Rate</th><th>Minimum</th></tr></thead>
-              <tbody>
-                <tr><td>Consumer</td><td>Behavioral</td><td>$10/hr</td><td>1,000 hrs/mo</td></tr>
-                <tr><td>Student</td><td>Behavioral</td><td>$20/hr</td><td>1,000 hrs/mo</td></tr>
-                <tr><td>Student .edu verified</td><td>Behavioral</td><td>$45/hr</td><td>1,000 hrs/mo</td></tr>
-                <tr><td>Professional</td><td>Behavioral</td><td>$65/hr</td><td>2,500 hrs/mo</td></tr>
-                <tr><td>High Value</td><td>Behavioral</td><td>$100/hr</td><td>1,000 hrs/mo</td></tr>
-                <tr><td>Elite</td><td>Behavioral</td><td>$165/hr</td><td>1,000 hrs/mo</td></tr>
-                <tr class="audio"><td>Audio-enabled</td><td>Behavioral + audio</td><td>3x tier rate</td><td>2,500 hrs/mo</td></tr>
-                <tr class="gold"><td>Exclusivity</td><td>Category lock</td><td>Custom</td><td>$500K+ annual</td></tr>
-              </tbody>
-            </table>
-            <p style="font-size:14px;color:var(--white-muted);margin:20px 0;">Volume discounts at 50,000+ hours/month. Custom specifications for contracts above $500K/year.</p>
-            <div style="display:flex;gap:12px;flex-wrap:wrap;">
-              <button type="button" class="btn-outline js-scroll-form">Request a data sample</button>
-              <button type="button" class="btn-ghost js-scroll-form">Start a pilot</button>
+            <div>
+              <div class="comp-stamp"><h4>HIPAA</h4><div class="sub-line">Compliant</div></div>
+              <p class="comp-desc">BAA available. PII scrubbing pipeline independently audited.</p>
+            </div>
+            <div>
+              <div class="comp-stamp"><h4>GDPR</h4><div class="sub-line">Ready</div></div>
+              <p class="comp-desc">DPA standard. Erasure requests fulfilled within 72 hours.</p>
+            </div>
+            <div>
+              <div class="comp-stamp"><h4>PIPEDA</h4><div class="sub-line">Compliant</div></div>
+              <p class="comp-desc">Canadian federal compliance. Consent framework independently reviewed.</p>
             </div>
           </div>
-        </section>
+          <p style="font-size:12px;color:var(--white-muted);margin-top:24px;max-width:680px;">Full security documentation, penetration test results, and compliance packages available to qualified buyers under NDA.</p>
+        </div>
+      </section>
 
-        <section class="scroll-region" id="region-pilot" data-bg="linear-gradient(180deg, #152A52 0%, #0B1628 100%)">
-          <div class="io-block">
-            <p class="sec-label">How it starts</p>
-            <h2 class="sec-head display">Start Monday. Sign when you're certain.</h2>
-            <div class="pilot-steps">
-              <div class="pilot-step">
-                <div class="num">1</div>
-                <h4>Request your sample</h4>
-                <p>Tell us your target tier. We deliver 1,000 annotated hours within 48 hours. Free.</p>
-              </div>
-              <div class="pilot-step">
-                <div class="num">2</div>
-                <h4>Run your evaluation</h4>
-                <p>Integrate into your pipeline. Measure quality. Your team decides.</p>
-              </div>
-              <div class="pilot-step">
-                <div class="num">3</div>
-                <h4>Start your subscription</h4>
-                <p>First delivery next Monday. First invoice after your second delivery.</p>
-              </div>
-            </div>
-            <p style="font-size:13px;color:var(--white-muted);margin-top:24px;">We have not missed a Monday delivery since launch.</p>
+      <!-- Pricing -->
+      <section class="scroll-region" id="region-pricing" data-bg="linear-gradient(170deg, #0B1628 0%, #152A52 100%)">
+        <div class="reveal">
+          <p class="sec-label">Transparent pricing</p>
+          <h2 class="sec-head display">Know your number before the first call.</h2>
+          <table class="price-table">
+            <thead><tr><th>Tier</th><th>Data type</th><th>Rate</th><th>Minimum</th></tr></thead>
+            <tbody>
+              <tr><td>Consumer</td><td>Behavioral</td><td>$10/hr</td><td>1,000 hrs/mo</td></tr>
+              <tr><td>Student</td><td>Behavioral</td><td>$20/hr</td><td>1,000 hrs/mo</td></tr>
+              <tr><td>Student .edu verified</td><td>Behavioral</td><td>$45/hr</td><td>1,000 hrs/mo</td></tr>
+              <tr><td>Professional</td><td>Behavioral</td><td>$65/hr</td><td>2,500 hrs/mo</td></tr>
+              <tr><td>High Value</td><td>Behavioral</td><td>$100/hr</td><td>1,000 hrs/mo</td></tr>
+              <tr><td>Elite</td><td>Behavioral</td><td>$165/hr</td><td>1,000 hrs/mo</td></tr>
+              <tr class="audio"><td>Audio-enabled</td><td>Behavioral + audio</td><td>3x tier rate</td><td>2,500 hrs/mo</td></tr>
+              <tr class="gold"><td>Exclusivity</td><td>Category lock</td><td>Custom</td><td>$500K+ annual</td></tr>
+            </tbody>
+          </table>
+          <p style="font-size:13px;color:var(--white-muted);margin:18px 0;">Volume discounts at 50,000+ hours/month. Custom specifications for contracts above $500K/year.</p>
+          <div style="display:flex;gap:12px;flex-wrap:wrap;">
+            <button type="button" class="btn-outline js-scroll-form">Request a data sample</button>
+            <button type="button" class="btn-ghost js-scroll-form">Start a pilot</button>
           </div>
-        </section>
-      </div>
+        </div>
+      </section>
+
+      <!-- Pilot -->
+      <section class="scroll-region" id="region-pilot" data-bg="linear-gradient(170deg, #152A52 0%, #0B1628 100%)">
+        <div class="reveal">
+          <p class="sec-label">How it starts</p>
+          <h2 class="sec-head display">Start Monday. Sign when you're certain.</h2>
+          <div class="pilot-steps">
+            <div class="pilot-step"><div class="num">1</div><h4>Request your sample</h4><p>Tell us your target tier. We deliver 1,000 annotated hours within 48 hours. Free.</p></div>
+            <div class="pilot-step"><div class="num">2</div><h4>Run your evaluation</h4><p>Integrate into your pipeline. Measure quality. Your team decides.</p></div>
+            <div class="pilot-step"><div class="num">3</div><h4>Start your subscription</h4><p>First delivery next Monday. First invoice after your second delivery.</p></div>
+          </div>
+          <p style="font-size:12px;color:var(--white-muted);margin-top:20px;">We have not missed a Monday delivery since launch.</p>
+        </div>
+      </section>
     </div>
-
-    <aside class="split-right" id="contact-form">
-      <div class="sticky-card">
-        <h3 class="display">Talk to our data team</h3>
-        <p class="sub">Every contract above $100K includes a dedicated data team contact. No automated responses.</p>
-        <form id="sales-form" action="#" method="post" onsubmit="return false;">
-          <div class="field">
-            <label for="full-name">Full name</label>
-            <input id="full-name" name="name" type="text" autocomplete="name" required />
-          </div>
-          <div class="field">
-            <label for="work-email">Work email</label>
-            <input id="work-email" name="email" type="email" autocomplete="email" required />
-          </div>
-          <div class="field">
-            <label for="company">Company</label>
-            <input id="company" name="company" type="text" autocomplete="organization" required />
-          </div>
-          <div class="field">
-            <label for="building">What are you building?</label>
-            <select id="building" name="building" required>
-              <option value="">Select</option>
-              <option>Frontier AI / RLHF</option>
-              <option>Healthcare AI</option>
-              <option>Legal AI</option>
-              <option>Financial AI</option>
-              <option>Enterprise Software</option>
-              <option>Defense / Government</option>
-              <option>Other</option>
-            </select>
-          </div>
-          <div class="field">
-            <label for="volume">Monthly data volume needed</label>
-            <select id="volume" name="volume" required>
-              <option value="">Select</option>
-              <option>Under 10,000 hours</option>
-              <option>10K–50K hours</option>
-              <option>50K–100K hours</option>
-              <option>100K+ hours</option>
-            </select>
-          </div>
-          <div class="field">
-            <label for="notes">Anything specific about your data needs? (optional)</label>
-            <textarea id="notes" name="notes" rows="3"></textarea>
-          </div>
-          <button type="submit" class="btn-primary form-submit">Request a data sample</button>
-        </form>
-        <p class="form-foot">Samples delivered within 48 hours. First 1,000 hours free. NDA available on request.</p>
-      </div>
-    </aside>
   </div>
 
-  <section class="final-cta scroll-region" id="region-final" data-bg="linear-gradient(180deg, #0B1628 0%, #070F1A 100%)">
-    <h2 class="display">The data your model needs. Delivered every Monday.</h2>
-    <div class="final-btns">
-      <button type="button" class="btn-white js-scroll-form">Request your free data sample</button>
-      <button type="button" class="btn-ghost js-scroll-form">Talk to our data team</button>
+  <aside class="split-right" id="contact-form">
+    <div class="sticky-card">
+      <h3 class="display">Talk to our data team</h3>
+      <p class="sub">Every contract above $100K includes a dedicated data team contact. No automated responses.</p>
+      <form id="sales-form" action="#" method="post" onsubmit="return false;">
+        <div class="field"><label for="full-name">Full name</label><input id="full-name" name="name" type="text" autocomplete="name" required /></div>
+        <div class="field"><label for="work-email">Work email</label><input id="work-email" name="email" type="email" autocomplete="email" required /></div>
+        <div class="field"><label for="company">Company</label><input id="company" name="company" type="text" autocomplete="organization" required /></div>
+        <div class="field"><label for="building">What are you building?</label>
+          <select id="building" name="building" required>
+            <option value="">Select</option><option>Frontier AI / RLHF</option><option>Healthcare AI</option><option>Legal AI</option><option>Financial AI</option><option>Enterprise Software</option><option>Defense / Government</option><option>Other</option>
+          </select>
+        </div>
+        <div class="field"><label for="volume">Monthly data volume needed</label>
+          <select id="volume" name="volume" required>
+            <option value="">Select</option><option>Under 10,000 hours</option><option>10K-50K hours</option><option>50K-100K hours</option><option>100K+ hours</option>
+          </select>
+        </div>
+        <div class="field"><label for="notes">Anything specific? (optional)</label><textarea id="notes" name="notes" rows="2"></textarea></div>
+        <button type="submit" class="form-submit">Request a data sample</button>
+      </form>
+      <p class="form-foot">Samples delivered within 48 hours. First 1,000 hours free. NDA available on request.</p>
     </div>
-    <p style="font-size:13px;color:var(--white-muted);">Samples delivered within 48 hours. No commitment required. NDA available on request.</p>
-  </section>
+  </aside>
+</div>
 
-  <script>
-(function () {
-  var tierNames = ["Consumer", "Student", "Professional", "High Value", "Elite"];
-  var harveRates = [10, 20, 65, 100, 165];
-  var mercorRates = [50, 65, 130, 200, 300];
+<section class="final-cta scroll-region" id="region-final" data-bg="linear-gradient(170deg, #0B1628 0%, #070F1A 100%)">
+  <h2 class="display">The data your model needs. Delivered every Monday.</h2>
+  <div class="final-btns">
+    <button type="button" class="btn-white js-scroll-form">Request your free data sample</button>
+    <button type="button" class="btn-ghost js-scroll-form">Talk to our data team</button>
+  </div>
+  <p style="font-size:12px;color:var(--white-muted);">Samples delivered within 48 hours. No commitment required. NDA available on request.</p>
+</section>
 
-  function formatMoney(n) {
-    return "$" + Math.round(n).toLocaleString("en-US");
+<script>
+(function(){
+  var tierNames=["Consumer","Student","Professional","High Value","Elite"];
+  var harveRates=[10,20,65,100,165];
+  var mercorRates=[50,65,130,200,300];
+  function fmt(n){return"$"+Math.round(n).toLocaleString("en-US")}
+  function updateRoi(){
+    var h=+document.getElementById("hours-range").value,t=+document.getElementById("tier-range").value;
+    document.getElementById("hours-val").textContent=h.toLocaleString("en-US")+" hours";
+    document.getElementById("tier-val").textContent=tierNames[t];
+    var hc=h*harveRates[t],mc=h*mercorRates[t],sv=mc-hc;
+    [["harve-cost",hc],["merc-cost",mc],["save-amt",sv]].forEach(function(p){document.getElementById(p[0]).textContent=fmt(p[1])});
+    document.getElementById("roi-sentence").textContent="At "+h.toLocaleString("en-US")+" hours of "+tierNames[t]+" data per month, Harve delivers for "+fmt(hc)+" vs "+fmt(mc)+" manual annotation.";
   }
-
-  function updateRoi() {
-    var hours = parseInt(document.getElementById("hours-range").value, 10);
-    var tier = parseInt(document.getElementById("tier-range").value, 10);
-    document.getElementById("hours-val").textContent = hours.toLocaleString("en-US") + " hours";
-    document.getElementById("tier-val").textContent = tierNames[tier];
-    var harve = hours * harveRates[tier];
-    var merc = hours * mercorRates[tier];
-    var save = merc - harve;
-    ["harve-cost", "merc-cost", "save-amt"].forEach(function (id, i) {
-      var el = document.getElementById(id);
-      var v = [harve, merc, save][i];
-      el.textContent = formatMoney(v);
-      el.classList.add("pulse");
-      setTimeout(function () { el.classList.remove("pulse"); }, 150);
-    });
-    document.getElementById("roi-sentence").textContent =
-      "At " + hours.toLocaleString("en-US") + " hours of " + tierNames[tier] + " data per month, HARVE delivers your pipeline on Monday for " +
-      formatMoney(harve) + " vs " + formatMoney(merc) + " via manual annotation.";
-  }
-
-  document.getElementById("hours-range").addEventListener("input", updateRoi);
-  document.getElementById("tier-range").addEventListener("input", updateRoi);
+  document.getElementById("hours-range").addEventListener("input",updateRoi);
+  document.getElementById("tier-range").addEventListener("input",updateRoi);
   updateRoi();
 
-  document.querySelectorAll(".buyer-card").forEach(function (card) {
-    card.addEventListener("click", function () {
-      var extra = card.getAttribute("data-extra");
-      var p = card.querySelector("p.extra");
-      document.querySelectorAll(".buyer-card").forEach(function (c) {
-        c.classList.remove("expanded");
-        var ex = c.querySelector("p.extra");
-        if (ex) { ex.setAttribute("hidden", ""); ex.textContent = ""; }
-      });
-      card.classList.add("expanded");
-      if (p) { p.removeAttribute("hidden"); p.textContent = extra; }
+  document.querySelectorAll(".buyer-card").forEach(function(c){
+    c.addEventListener("click",function(){
+      var ex=c.getAttribute("data-extra"),p=c.querySelector("p.extra");
+      document.querySelectorAll(".buyer-card").forEach(function(o){o.classList.remove("expanded");var e=o.querySelector("p.extra");if(e){e.setAttribute("hidden","");e.textContent=""}});
+      c.classList.add("expanded");if(p){p.removeAttribute("hidden");p.textContent=ex}
     });
   });
 
-  function scrollToForm() {
-    var el = document.getElementById("contact-form");
-    if (el) el.scrollIntoView({ behavior: "smooth", block: "center" });
-  }
-  document.getElementById("nav-request-sample").addEventListener("click", scrollToForm);
-  document.querySelectorAll(".js-scroll-form").forEach(function (b) {
-    b.addEventListener("click", scrollToForm);
-  });
+  function scrollToForm(){var el=document.getElementById("contact-form");if(el)el.scrollIntoView({behavior:"smooth",block:"center"})}
+  document.getElementById("nav-request-sample").addEventListener("click",scrollToForm);
+  document.querySelectorAll(".js-scroll-form").forEach(function(b){b.addEventListener("click",scrollToForm)});
+  document.getElementById("sales-form").addEventListener("submit",function(e){e.preventDefault();alert("Thank you. Our data team will respond within one business day.")});
 
-  document.getElementById("sales-form").addEventListener("submit", function (e) {
-    e.preventDefault();
-    alert("Thank you. Our data team will respond within one business day.");
-  });
-
-  var regions = document.querySelectorAll(".scroll-region");
-  function updateBg() {
-    var mid = window.innerHeight * 0.45;
-    var best = null;
-    var bestDist = Infinity;
-    regions.forEach(function (el) {
-      var r = el.getBoundingClientRect();
-      var c = r.top + r.height / 2;
-      var dist = Math.abs(c - mid);
-      if (r.bottom > 80 && r.top < window.innerHeight - 80 && dist < bestDist) {
-        bestDist = dist;
-        best = el;
-      }
-    });
-    if (best) {
-      var col = best.getAttribute("data-bg");
-      if (col) document.body.style.background = col;
-    }
+  /* ── smooth background transitions ── */
+  var overlay=document.getElementById("bg-overlay");
+  var regions=document.querySelectorAll(".scroll-region");
+  function updateBg(){
+    var mid=window.innerHeight*.45,best=null,bestDist=1e9;
+    regions.forEach(function(el){var r=el.getBoundingClientRect(),c=r.top+r.height/2,d=Math.abs(c-mid);if(r.bottom>60&&r.top<window.innerHeight-60&&d<bestDist){bestDist=d;best=el}});
+    if(best){var bg=best.getAttribute("data-bg");if(bg)overlay.style.background=bg}
   }
-  window.addEventListener("scroll", function () { requestAnimationFrame(updateBg); }, { passive: true });
-  window.addEventListener("resize", updateBg);
+  window.addEventListener("scroll",function(){requestAnimationFrame(updateBg)},{passive:true});
+  window.addEventListener("resize",updateBg);
   updateBg();
 
-  var ioBlocks = document.querySelectorAll(".io-block");
-  var ioAnim = new IntersectionObserver(
-    function (entries) {
-      entries.forEach(function (en) {
-        if (!en.isIntersecting || en.target.getAttribute("data-io-done")) return;
-        en.target.setAttribute("data-io-done", "1");
-        en.target.classList.remove("io-hidden");
-        en.target.classList.add("io-visible");
-        en.target.querySelectorAll(":scope > *").forEach(function (ch, i) {
-          ch.style.opacity = "0";
-          ch.style.transform = "translateY(20px)";
-          ch.style.transition = "opacity 0.55s ease " + i * 0.08 + "s, transform 0.55s ease " + i * 0.08 + "s";
-          requestAnimationFrame(function () {
-            ch.style.opacity = "1";
-            ch.style.transform = "translateY(0)";
-          });
-        });
-      });
-    },
-    { threshold: 0.15, rootMargin: "0px 0px -10% 0px" }
-  );
-  ioBlocks.forEach(function (block) {
-    block.classList.add("io-hidden");
-    ioAnim.observe(block);
-  });
+  /* ── scroll-triggered reveal animations ── */
+  var reveals=document.querySelectorAll(".reveal");
+  var revealObs=new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      if(!en.isIntersecting)return;
+      var el=en.target;
+      if(el.classList.contains("visible"))return;
+      el.classList.add("visible");
+      var children=el.querySelectorAll(":scope > *");
+      children.forEach(function(ch,i){ch.style.transitionDelay=(i*0.1)+"s"});
+    });
+  },{threshold:0.12,rootMargin:"0px 0px -8% 0px"});
+  reveals.forEach(function(r){revealObs.observe(r)});
 })();
-  </script>
+</script>
 </body>
 </html>
