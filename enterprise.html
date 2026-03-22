@@ -40,8 +40,9 @@ a{color:inherit;text-decoration:none}
 .pill-bg{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
 .pill-ghost{position:absolute;border-radius:28px;border:1.5px solid rgba(255,255,255,.06);background:rgba(255,255,255,.02);will-change:transform;transition:none}
 .pill-ghost.hero-pill{width:420px;height:100px;border-radius:52px;border-width:2px;border-color:rgba(255,255,255,.07);background:rgba(255,255,255,.025)}
-.pill-ghost::after{content:"";position:absolute;left:5.5%;top:50%;transform:translateY(-50%);width:18%;aspect-ratio:1;border-radius:50%;border:1.5px solid rgba(255,255,255,.07)}
-.pill-ghost.hero-pill::after{border-width:2px;border-color:rgba(255,255,255,.08)}
+.pill-ghost::after{display:none}
+.pill-ghost .pill-logo{position:absolute;left:5.5%;top:50%;transform:translateY(-50%);width:18%;aspect-ratio:1;display:flex;align-items:center;justify-content:center}
+.pill-ghost .pill-logo svg{width:100%;height:100%;opacity:.45}
 .pill-ghost .dot{position:absolute;right:16%;top:50%;transform:translateY(-50%);width:7px;height:7px;border-radius:50%;background:rgba(46,204,140,.3)}
 .pill-ghost.hero-pill .dot{width:10px;height:10px;background:rgba(46,204,140,.35)}
 .pill-ghost .timer{position:absolute;right:5%;top:50%;transform:translateY(-50%);font-size:10px;font-family:ui-monospace,monospace;color:rgba(255,255,255,.09)}
@@ -469,22 +470,25 @@ pre.code-sample{margin-top:24px;padding:18px;border-radius:8px;background:rgba(0
   var pageH=document.documentElement.scrollHeight;
   var vh=window.innerHeight;
 
+  var logoSVG='<div class="pill-logo"><svg viewBox="0 0 20 20" fill="none"><defs><mask id="plg"><rect width="20" height="20" fill="black"/><circle cx="10" cy="10" r="9" fill="white"/><path d="M4 7.6C6.5 6.75 8.5 6.75 10 7.6 11.5 8.45 13.5 8.45 16 7.6" stroke="black" stroke-width="2.1" stroke-linecap="round" fill="none"/><path d="M4 10C6.5 9.15 8.5 9.15 10 10 11.5 10.85 13.5 10.85 16 10" stroke="black" stroke-width="2.1" stroke-linecap="round" fill="none"/><path d="M4 12.4C6.5 11.55 8.5 11.55 10 12.4 11.5 13.25 13.5 13.25 16 12.4" stroke="black" stroke-width="2.1" stroke-linecap="round" fill="none"/></mask></defs><g mask="url(#plg)"><circle cx="10" cy="10" r="9.2" fill="rgba(255,255,255,.55)"/></g></svg></div>';
+
   var pillDefs=[
-    {cls:"hero-pill",x:5,y:vh*.35,w:420,h:100,scale:1,speed:.22,rot:-4,op:.45},
-    {cls:"",x:62,y:vh*.6,w:200,h:48,scale:.85,speed:.18,rot:6,op:.3},
-    {cls:"",x:68,y:vh*1.8,w:180,h:44,scale:.75,speed:.25,rot:-3,op:.28},
-    {cls:"",x:72,y:vh*3.2,w:210,h:50,scale:.8,speed:.2,rot:8,op:.25},
-    {cls:"",x:8,y:vh*2.2,w:260,h:60,scale:.7,speed:.3,rot:-6,op:.2},
-    {cls:"",x:15,y:vh*4,w:240,h:56,scale:.65,speed:.28,rot:5,op:.18},
-    {cls:"",x:45,y:vh*5,w:190,h:46,scale:.6,speed:.2,rot:-7,op:.15},
-    {cls:"",x:75,y:vh*5.5,w:170,h:42,scale:.55,speed:.15,rot:4,op:.18},
-    {cls:"",x:3,y:vh*6.5,w:230,h:54,scale:.7,speed:.22,rot:-2,op:.2}
+    {cls:"hero-pill",x:4,y:vh*.3,w:420,h:100,scale:1,speed:.55,rot:-4,op:.45},
+    {cls:"hero-pill",x:8,y:vh*.7,w:380,h:90,scale:.9,speed:.48,rot:3,op:.35},
+    {cls:"",x:62,y:vh*.55,w:220,h:52,scale:.85,speed:.42,rot:6,op:.3},
+    {cls:"",x:70,y:vh*1.5,w:200,h:48,scale:.75,speed:.5,rot:-3,op:.28},
+    {cls:"",x:66,y:vh*2.8,w:210,h:50,scale:.8,speed:.45,rot:8,op:.25},
+    {cls:"",x:6,y:vh*2,w:280,h:66,scale:.7,speed:.6,rot:-6,op:.22},
+    {cls:"",x:12,y:vh*3.5,w:250,h:58,scale:.65,speed:.55,rot:5,op:.18},
+    {cls:"",x:42,y:vh*4.5,w:200,h:48,scale:.6,speed:.42,rot:-7,op:.16},
+    {cls:"",x:74,y:vh*4.8,w:190,h:46,scale:.55,speed:.38,rot:4,op:.18},
+    {cls:"",x:2,y:vh*5.8,w:240,h:56,scale:.7,speed:.5,rot:-2,op:.2}
   ];
 
   pillDefs.forEach(function(def){
     var d=document.createElement("div");
     d.className="pill-ghost"+(def.cls?" "+def.cls:"");
-    d.innerHTML='<div class="dot"></div><div class="timer">00:00</div>';
+    d.innerHTML=logoSVG+'<div class="dot"></div><div class="timer">00:00</div>';
     if(def.w)d.style.width=def.w+"px";
     if(def.h)d.style.height=def.h+"px";
     if(def.h)d.style.borderRadius=(def.h/2)+"px";
