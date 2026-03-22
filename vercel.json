@@ -1,6 +1,33 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
+  "redirects": [
+    { "source": "/privacy.html", "destination": "/privacy", "permanent": true },
+    { "source": "/terms.html", "destination": "/terms", "permanent": true },
+    { "source": "/support.html", "destination": "/support", "permanent": true },
+    { "source": "/auth-callback.html", "destination": "/auth-callback", "permanent": true }
+  ],
   "rewrites": [
-    { "source": "/", "destination": "/landing.html" }
+    { "source": "/", "destination": "/landing.html" },
+    { "source": "/privacy", "destination": "/privacy.html" },
+    { "source": "/privacy/", "destination": "/privacy.html" },
+    { "source": "/terms", "destination": "/terms.html" },
+    { "source": "/terms/", "destination": "/terms.html" },
+    { "source": "/support", "destination": "/support.html" },
+    { "source": "/support/", "destination": "/support.html" },
+    { "source": "/support/articles/:slug", "destination": "/support/articles/:slug.html" },
+    { "source": "/support/getting-started", "destination": "/support/getting-started.html" },
+    { "source": "/support/getting-started/", "destination": "/support/getting-started.html" },
+    { "source": "/support/account-sign-in", "destination": "/support/account-sign-in.html" },
+    { "source": "/support/account-sign-in/", "destination": "/support/account-sign-in.html" },
+    { "source": "/support/earnings-payouts", "destination": "/support/earnings-payouts.html" },
+    { "source": "/support/earnings-payouts/", "destination": "/support/earnings-payouts.html" },
+    { "source": "/support/recording-overlay", "destination": "/support/recording-overlay.html" },
+    { "source": "/support/recording-overlay/", "destination": "/support/recording-overlay.html" },
+    { "source": "/support/privacy-data", "destination": "/support/privacy-data.html" },
+    { "source": "/support/privacy-data/", "destination": "/support/privacy-data.html" },
+    { "source": "/support/troubleshooting", "destination": "/support/troubleshooting.html" },
+    { "source": "/support/troubleshooting/", "destination": "/support/troubleshooting.html" },
+    { "source": "/auth-callback", "destination": "/auth-callback.html" },
+    { "source": "/auth-callback/", "destination": "/auth-callback.html" }
   ]
 }

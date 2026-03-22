@@ -12,6 +12,12 @@ This folder is a **static** site (HTML/CSS). No `npm run build` required.
 
 `vercel.json` rewrites **`/` → `/landing.html`** so the homepage works without renaming files.
 
+### Clean URLs (no `.html` in the bar)
+
+Vercel **rewrites** map pretty paths to the real files, e.g. **`/privacy`** → `privacy.html`, **`/support/articles/install-harve`** → `…/install-harve.html`. **301 redirects** send old `*.html` links to the short form for SEO.
+
+You can share **`https://harve.ai/auth-callback`** with WorkOS (same page as `auth-callback.html`).
+
 ## 2. New project
 
 1. [vercel.com](https://vercel.com) → **Add New… → Project** → Import your Git repo.
