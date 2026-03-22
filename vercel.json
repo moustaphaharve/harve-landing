@@ -5,7 +5,8 @@
     { "source": "/terms.html", "destination": "/terms", "permanent": true },
     { "source": "/subprocessors.html", "destination": "/subprocessors", "permanent": true },
     { "source": "/support.html", "destination": "/support", "permanent": true },
-    { "source": "/auth-callback.html", "destination": "/auth-callback", "permanent": true }
+    { "source": "/auth-callback.html", "destination": "/auth-callback", "permanent": true },
+    { "source": "/enterprise.html", "destination": "/enterprise", "permanent": true }
   ],
   "rewrites": [
     { "source": "/", "destination": "/landing.html" },
@@ -15,6 +16,8 @@
     { "source": "/terms/", "destination": "/terms.html" },
     { "source": "/subprocessors", "destination": "/subprocessors.html" },
     { "source": "/subprocessors/", "destination": "/subprocessors.html" },
+    { "source": "/enterprise", "destination": "/enterprise.html" },
+    { "source": "/enterprise/", "destination": "/enterprise.html" },
     { "source": "/support", "destination": "/support.html" },
     { "source": "/support/", "destination": "/support.html" },
     { "source": "/support/articles/:slug", "destination": "/support/articles/:slug.html" },
