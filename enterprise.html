@@ -38,10 +38,14 @@ a{color:inherit;text-decoration:none}
 
 /* ── floating pill background ── */
 .pill-bg{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
-.pill-ghost{position:absolute;width:220px;height:52px;border-radius:28px;border:1px solid rgba(255,255,255,.04);background:rgba(255,255,255,.015);will-change:transform;transition:none}
-.pill-ghost::after{content:"";position:absolute;left:14px;top:50%;transform:translateY(-50%);width:22px;height:22px;border-radius:50%;border:1px solid rgba(255,255,255,.06)}
-.pill-ghost .dot{position:absolute;right:42px;top:50%;transform:translateY(-50%);width:6px;height:6px;border-radius:50%;background:rgba(46,204,140,.25)}
-.pill-ghost .timer{position:absolute;right:14px;top:50%;transform:translateY(-50%);font-size:10px;font-family:ui-monospace,monospace;color:rgba(255,255,255,.08)}
+.pill-ghost{position:absolute;border-radius:28px;border:1.5px solid rgba(255,255,255,.06);background:rgba(255,255,255,.02);will-change:transform;transition:none}
+.pill-ghost.hero-pill{width:420px;height:100px;border-radius:52px;border-width:2px;border-color:rgba(255,255,255,.07);background:rgba(255,255,255,.025)}
+.pill-ghost::after{content:"";position:absolute;left:5.5%;top:50%;transform:translateY(-50%);width:18%;aspect-ratio:1;border-radius:50%;border:1.5px solid rgba(255,255,255,.07)}
+.pill-ghost.hero-pill::after{border-width:2px;border-color:rgba(255,255,255,.08)}
+.pill-ghost .dot{position:absolute;right:16%;top:50%;transform:translateY(-50%);width:7px;height:7px;border-radius:50%;background:rgba(46,204,140,.3)}
+.pill-ghost.hero-pill .dot{width:10px;height:10px;background:rgba(46,204,140,.35)}
+.pill-ghost .timer{position:absolute;right:5%;top:50%;transform:translateY(-50%);font-size:10px;font-family:ui-monospace,monospace;color:rgba(255,255,255,.09)}
+.pill-ghost.hero-pill .timer{font-size:14px;color:rgba(255,255,255,.1)}
 
 /* ── layout ── */
 .split{display:flex;max-width:1400px;margin:0 auto;padding:84px 32px 0;gap:52px;align-items:flex-start}
@@ -462,28 +466,43 @@ pre.code-sample{margin-top:24px;padding:18px;border-radius:8px;background:rgba(0
   /* ── floating pill ghosts ── */
   var pillContainer=document.getElementById("pill-bg");
   var pills=[];
-  var PILL_COUNT=6;
   var pageH=document.documentElement.scrollHeight;
-  for(var i=0;i<PILL_COUNT;i++){
-    var d=document.createElement("div");d.className="pill-ghost";
+  var vh=window.innerHeight;
+
+  var pillDefs=[
+    {cls:"hero-pill",x:5,y:vh*.35,w:420,h:100,scale:1,speed:.22,rot:-4,op:.45},
+    {cls:"",x:62,y:vh*.6,w:200,h:48,scale:.85,speed:.18,rot:6,op:.3},
+    {cls:"",x:68,y:vh*1.8,w:180,h:44,scale:.75,speed:.25,rot:-3,op:.28},
+    {cls:"",x:72,y:vh*3.2,w:210,h:50,scale:.8,speed:.2,rot:8,op:.25},
+    {cls:"",x:8,y:vh*2.2,w:260,h:60,scale:.7,speed:.3,rot:-6,op:.2},
+    {cls:"",x:15,y:vh*4,w:240,h:56,scale:.65,speed:.28,rot:5,op:.18},
+    {cls:"",x:45,y:vh*5,w:190,h:46,scale:.6,speed:.2,rot:-7,op:.15},
+    {cls:"",x:75,y:vh*5.5,w:170,h:42,scale:.55,speed:.15,rot:4,op:.18},
+    {cls:"",x:3,y:vh*6.5,w:230,h:54,scale:.7,speed:.22,rot:-2,op:.2}
+  ];
+
+  pillDefs.forEach(function(def){
+    var d=document.createElement("div");
+    d.className="pill-ghost"+(def.cls?" "+def.cls:"");
     d.innerHTML='<div class="dot"></div><div class="timer">00:00</div>';
-    var x=10+Math.random()*70;
-    var startY=200+i*(pageH/PILL_COUNT)+Math.random()*300;
-    var scale=.6+Math.random()*.5;
-    var speed=.15+Math.random()*.25;
-    var rot=-8+Math.random()*16;
-    d.style.left=x+"%";d.style.top=startY+"px";d.style.transform="scale("+scale+") rotate("+rot+"deg)";d.style.opacity=String(.25+Math.random()*.2);
+    if(def.w)d.style.width=def.w+"px";
+    if(def.h)d.style.height=def.h+"px";
+    if(def.h)d.style.borderRadius=(def.h/2)+"px";
+    d.style.left=def.x+"%";
+    d.style.top=def.y+"px";
+    d.style.opacity=String(def.op);
+    d.style.transform="scale("+def.scale+") rotate("+def.rot+"deg)";
     pillContainer.appendChild(d);
-    pills.push({el:d,baseY:startY,speed:speed,scale:scale,rot:rot,x:x});
-  }
+    pills.push({el:d,baseY:def.y,speed:def.speed,scale:def.scale,rot:def.rot});
+  });
+
   var lastSY=0;
   function movePills(){
     var sy=window.scrollY;
-    if(Math.abs(sy-lastSY)<1)return;lastSY=sy;
+    if(Math.abs(sy-lastSY)<.5)return;lastSY=sy;
     for(var j=0;j<pills.length;j++){
       var p=pills[j];
-      var y=p.baseY+sy*p.speed;
-      p.el.style.transform="translate3d(0,"+(-sy*p.speed*.4)+"px,0) scale("+p.scale+") rotate("+p.rot+"deg)";
+      p.el.style.transform="translate3d(0,"+(-sy*p.speed)+"px,0) scale("+p.scale+") rotate("+p.rot+"deg)";
     }
   }
   window.addEventListener("scroll",function(){requestAnimationFrame(movePills)},{passive:true});
