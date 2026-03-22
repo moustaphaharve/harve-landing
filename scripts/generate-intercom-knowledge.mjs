@@ -55,6 +55,7 @@ function buildSeedHtml(urls) {
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Harve Help — Knowledge index (for Intercom / crawlers)</title>
 <meta name="robots" content="noindex, follow">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <link rel="stylesheet" href="support.css">
 </head>
 <body>
