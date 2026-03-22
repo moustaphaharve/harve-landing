@@ -3,6 +3,7 @@
   "redirects": [
     { "source": "/privacy.html", "destination": "/privacy", "permanent": true },
     { "source": "/terms.html", "destination": "/terms", "permanent": true },
+    { "source": "/subprocessors.html", "destination": "/subprocessors", "permanent": true },
     { "source": "/support.html", "destination": "/support", "permanent": true },
     { "source": "/auth-callback.html", "destination": "/auth-callback", "permanent": true }
   ],
@@ -12,6 +13,8 @@
     { "source": "/privacy/", "destination": "/privacy.html" },
     { "source": "/terms", "destination": "/terms.html" },
     { "source": "/terms/", "destination": "/terms.html" },
+    { "source": "/subprocessors", "destination": "/subprocessors.html" },
+    { "source": "/subprocessors/", "destination": "/subprocessors.html" },
     { "source": "/support", "destination": "/support.html" },
     { "source": "/support/", "destination": "/support.html" },
     { "source": "/support/articles/:slug", "destination": "/support/articles/:slug.html" },

@@ -25,6 +25,7 @@ Big products use **Intercom** (or Zendesk, Crisp, etc.) because the messenger, i
 
 | Path | Purpose |
 |------|---------|
+| `/subprocessors` | Third-party subprocessors (transparency / DPA) |
 | `/support.html` | Hub + search + category cards + **Intercom snippet** |
 | `/support/*.html` | Collection list pages (article rows) |
 | `/support/articles/*.html` | Individual articles |
