@@ -94,6 +94,116 @@ a{color:inherit;text-decoration:none}
 /* ── cursor glow ── */
 #cursor-glow{position:fixed;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,rgba(59,127,232,.12) 0%,rgba(59,127,232,.04) 35%,transparent 70%);pointer-events:none;z-index:0;transform:translate(-50%,-50%);transition:opacity .3s;opacity:0;will-change:transform}
 #cursor-glow.active{opacity:1}
+
+/* ── Form success overlay (replaces alert) ── */
+.form-success{
+  position:fixed;inset:0;z-index:10040;display:flex;align-items:center;justify-content:center;padding:24px;
+  pointer-events:none;opacity:0;visibility:hidden;
+  transition:opacity .5s cubic-bezier(.22,1,.36,1),visibility .5s;
+}
+.form-success.is-open{pointer-events:auto;opacity:1;visibility:visible}
+.form-success__dim{
+  position:absolute;inset:0;background:rgba(4,10,22,.82);
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  animation:successDimIn .55s ease both;
+}
+@keyframes successDimIn{from{opacity:0}to{opacity:1}}
+.form-success__flare{
+  position:absolute;left:50%;top:42%;width:min(140vmin,900px);height:min(140vmin,900px);transform:translate(-50%,-50%);
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(255,255,255,.14) 0%,rgba(120,170,255,.06) 35%,transparent 62%);
+  pointer-events:none;opacity:0;filter:blur(2px);
+  animation:successFlare 1.15s cubic-bezier(.22,1,.36,1) .05s both;
+}
+@keyframes successFlare{
+  0%{opacity:0;transform:translate(-50%,-50%) scale(.35)}
+  55%{opacity:1;transform:translate(-50%,-50%) scale(1.06)}
+  100%{opacity:.75;transform:translate(-50%,-50%) scale(1)}
+}
+.form-success__ring{
+  position:absolute;left:50%;top:50%;width:min(92vmin,560px);height:min(92vmin,560px);transform:translate(-50%,-50%);
+  border-radius:50%;pointer-events:none;border:1px solid rgba(255,255,255,.12);
+  opacity:0;animation:successRing .9s cubic-bezier(.22,1,.36,1) .2s both;
+  box-shadow:0 0 80px rgba(59,127,232,.15),inset 0 0 60px rgba(255,255,255,.04);
+}
+@keyframes successRing{
+  from{opacity:0;transform:translate(-50%,-50%) scale(.88)}
+  to{opacity:1;transform:translate(-50%,-50%) scale(1)}
+}
+.form-success__light{
+  position:fixed;width:min(480px,85vw);height:min(480px,85vw);border-radius:50%;pointer-events:none;z-index:10042;
+  transform:translate(-50%,-50%);
+  background:radial-gradient(circle,rgba(255,255,255,.22) 0%,rgba(200,220,255,.1) 30%,rgba(59,127,232,.06) 48%,transparent 72%);
+  opacity:0;transition:opacity .45s ease;mix-blend-mode:screen;filter:blur(1px);
+}
+.form-success.is-open .form-success__light{opacity:1}
+.form-success__card{
+  position:relative;z-index:10045;max-width:440px;width:100%;
+  padding:36px 32px 32px;border-radius:18px;text-align:center;
+  background:linear-gradient(165deg,rgba(255,255,255,.09) 0%,rgba(255,255,255,.03) 100%);
+  border:1px solid rgba(255,255,255,.14);
+  box-shadow:0 24px 80px rgba(0,0,0,.45),0 0 0 1px rgba(255,255,255,.06) inset,0 1px 0 rgba(255,255,255,.1) inset;
+  animation:successCard .75s cubic-bezier(.22,1,.36,1) .12s both;
+  overflow:hidden;
+}
+.form-success__card::before{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(105deg,transparent 0%,transparent 40%,rgba(255,255,255,.07) 50%,transparent 60%,transparent 100%);
+  background-size:220% 100%;animation:successShimmer 2.2s ease-in-out .6s infinite;
+}
+@keyframes successShimmer{
+  0%,100%{background-position:120% 0;opacity:0}
+  40%{opacity:1}
+  60%{background-position:-20% 0;opacity:1}
+}
+@keyframes successCard{
+  from{opacity:0;transform:translateY(28px) scale(.94);filter:blur(6px)}
+  to{opacity:1;transform:translateY(0) scale(1);filter:blur(0)}
+}
+.form-success__check{
+  width:52px;height:52px;margin:0 auto 18px;border-radius:50%;
+  background:linear-gradient(145deg,rgba(46,204,140,.35),rgba(59,127,232,.25));
+  border:1px solid rgba(255,255,255,.2);
+  display:flex;align-items:center;justify-content:center;
+  animation:successPop .55s cubic-bezier(.34,1.56,.64,1) .35s both;
+  box-shadow:0 8px 32px rgba(46,204,140,.2);
+}
+@keyframes successPop{from{opacity:0;transform:scale(.2)}to{opacity:1;transform:scale(1)}}
+.form-success__check svg{width:24px;height:24px;color:rgba(255,255,255,.95)}
+.form-success__eyebrow{
+  font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:10px;font-weight:600;
+  animation:successLine .5s ease .45s both;
+  opacity:0;
+}
+.form-success__title{
+  font-family:"Instrument Serif",Georgia,serif;font-size:clamp(26px,5vw,34px);font-weight:400;line-height:1.15;margin-bottom:14px;
+  color:rgba(255,255,255,.96);
+  animation:successLine .55s ease .52s both;
+  opacity:0;
+}
+.form-success__lead{
+  font-size:15px;line-height:1.55;color:rgba(255,255,255,.72);margin-bottom:10px;
+  animation:successLine .55s ease .62s both;
+  opacity:0;
+}
+.form-success__sub{
+  font-size:13px;color:rgba(255,255,255,.48);margin-bottom:26px;
+  animation:successLine .55s ease .72s both;
+  opacity:0;
+}
+@keyframes successLine{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.form-success__btn{
+  width:100%;padding:13px 20px;border-radius:10px;border:1px solid rgba(255,255,255,.22);
+  background:rgba(255,255,255,.96);color:var(--navy-deep);font-weight:600;font-size:13px;font-family:inherit;cursor:pointer;
+  transition:transform .2s,box-shadow .2s,background .2s;
+  animation:successLine .55s ease .82s both;
+  opacity:0;
+}
+.form-success__btn:hover{background:#fff;transform:translateY(-1px);box-shadow:0 8px 28px rgba(0,0,0,.25)}
+@media (prefers-reduced-motion:reduce){
+  .form-success__card,.form-success__flare,.form-success__ring,.form-success__check,.form-success__eyebrow,.form-success__title,.form-success__lead,.form-success__sub,.form-success__btn,.form-success__card::before{animation:none!important;opacity:1!important;transform:none!important}
+  .form-success__card::before{display:none}
+}
 .field textarea{min-height:64px;resize:vertical}
 .field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:rgba(59,127,232,.5)}
 .form-submit{width:100%;margin-top:6px;padding:13px;font-weight:600;cursor:pointer;background:var(--white);color:var(--navy-deep);border:none;border-radius:8px;font-size:13px;font-family:inherit;transition:opacity .2s}
@@ -543,6 +653,23 @@ pre.code-sample{margin-top:24px;padding:18px;border-radius:8px;background:rgba(0
   <p style="font-size:12px;color:var(--white-muted);">Samples delivered within 48 hours. No commitment required. NDA available on request.</p>
 </section>
 
+<div id="form-success-overlay" class="form-success" aria-hidden="true">
+  <div class="form-success__dim" aria-hidden="true"></div>
+  <div class="form-success__flare" aria-hidden="true"></div>
+  <div class="form-success__ring" aria-hidden="true"></div>
+  <div id="form-success-light" class="form-success__light" aria-hidden="true"></div>
+  <div class="form-success__card" role="dialog" aria-modal="true" aria-labelledby="form-success-title">
+    <div class="form-success__check" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+    </div>
+    <p class="form-success__eyebrow">Request received</p>
+    <h2 id="form-success-title" class="form-success__title display">You’re shaping what’s next.</h2>
+    <p class="form-success__lead">Thank you for helping build the future of professional behavioral data.</p>
+    <p class="form-success__sub">Our data team will reach out shortly.</p>
+    <button type="button" class="form-success__btn" id="form-success-close">Continue</button>
+  </div>
+</div>
+
 <script>
 (function(){
   var tierNames=["Consumer","Student","Professional","High Value","Elite"];
@@ -580,7 +707,42 @@ pre.code-sample{margin-top:24px;padding:18px;border-radius:8px;background:rgba(0
   function scrollToForm(){var el=document.getElementById("contact-form");if(el)el.scrollIntoView({behavior:"smooth",block:"center"})}
   document.getElementById("nav-request-sample").addEventListener("click",scrollToForm);
   document.querySelectorAll(".js-scroll-form").forEach(function(b){b.addEventListener("click",scrollToForm)});
-  document.getElementById("sales-form").addEventListener("submit",function(e){e.preventDefault();alert("Thank you. Our data team will respond within one business day.")});
+  var formSuccess=document.getElementById("form-success-overlay");
+  var formSuccessLight=document.getElementById("form-success-light");
+  var formSuccessClose=document.getElementById("form-success-close");
+  function positionSuccessLight(clientX,clientY){
+    if(!formSuccessLight)return;
+    formSuccessLight.style.left=clientX+"px";
+    formSuccessLight.style.top=clientY+"px";
+  }
+  function openFormSuccess(){
+    formSuccess.classList.add("is-open");
+    formSuccess.setAttribute("aria-hidden","false");
+    document.body.style.overflow="hidden";
+    positionSuccessLight(window.innerWidth/2,window.innerHeight/2);
+    setTimeout(function(){if(formSuccessClose)formSuccessClose.focus();},120);
+  }
+  function closeFormSuccess(){
+    formSuccess.classList.remove("is-open");
+    formSuccess.setAttribute("aria-hidden","true");
+    document.body.style.overflow="";
+  }
+  function onSuccessPointer(e){
+    positionSuccessLight(e.clientX,e.clientY);
+  }
+  document.getElementById("sales-form").addEventListener("submit",function(e){
+    e.preventDefault();
+    var f=e.target;
+    if(!f.checkValidity()){f.reportValidity();return;}
+    openFormSuccess();
+  });
+  formSuccessClose.addEventListener("click",closeFormSuccess);
+  formSuccess.querySelector(".form-success__dim").addEventListener("click",closeFormSuccess);
+  document.addEventListener("keydown",function(e){
+    if(e.key==="Escape"&&formSuccess.classList.contains("is-open"))closeFormSuccess();
+  });
+  formSuccess.addEventListener("pointermove",onSuccessPointer,{passive:true});
+  formSuccess.addEventListener("pointerenter",onSuccessPointer,{passive:true});
 
   /* ── smooth background transitions ── */
   var overlay=document.getElementById("bg-overlay");
