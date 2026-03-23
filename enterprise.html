@@ -13,6 +13,8 @@
   --navy-deep: #0B1628; --navy-mid: #0F2040; --navy-warm: #152A52; --navy-cool: #0D1E3A; --navy-black: #070F1A;
   --white: #FFFFFF; --white-muted: rgba(255,255,255,0.55); --white-dim: rgba(255,255,255,0.12);
   --blue-accent: #3B7FE8; --green-accent: #2ECC8C; --gold-accent: #C9963A; --border: rgba(255,255,255,0.09);
+  /* ROI sliders: unfilled track = navy glass (never flat white) */
+  --roi-track-empty: rgba(13, 30, 58, 0.92);
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth;scrollbar-color:rgba(255,255,255,.12) transparent}
@@ -118,6 +120,30 @@ a{color:inherit;text-decoration:none}
 .reveal>*{opacity:0;transform:translateY(24px);transition:opacity .7s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1)}
 .reveal.visible>*{opacity:1;transform:translateY(0)}
 
+/* Scroll away / reappear — only .scroll-sections blocks + #region-final (hero + form untouched) */
+.scroll-sections > section.scroll-region,
+#region-final{
+  opacity:0;
+  transform:translateY(44px);
+  filter:blur(4px);
+  pointer-events:none;
+  transition:opacity .6s cubic-bezier(.16,1,.3,1),transform .62s cubic-bezier(.16,1,.3,1),filter .5s ease;
+  will-change:opacity,transform;
+}
+.scroll-sections > section.scroll-region.section-scroll-visible,
+#region-final.section-scroll-visible{
+  opacity:1;
+  transform:translateY(0);
+  filter:none;
+  pointer-events:auto;
+}
+@media (prefers-reduced-motion:reduce){
+  .scroll-sections > section.scroll-region,
+  #region-final{transition:opacity .35s ease;filter:none;transform:none}
+  .scroll-sections > section.scroll-region:not(.section-scroll-visible),
+  #region-final:not(.section-scroll-visible){opacity:.2}
+}
+
 .big-num{font-family:"Instrument Serif",serif;font-size:clamp(56px,11vw,88px);line-height:1;margin-bottom:10px}
 .stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin:32px 0}
 @media(max-width:900px){.stat-grid{grid-template-columns:repeat(2,1fr)}}
@@ -136,7 +162,60 @@ a{color:inherit;text-decoration:none}
 .roi-sliders{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:20px 0}
 @media(max-width:600px){.roi-sliders{grid-template-columns:1fr}}
 .roi-sliders label{font-size:11px;color:var(--white-muted);display:block;margin-bottom:6px}
-.roi-sliders input[type="range"]{width:100%;accent-color:var(--blue-accent)}
+/* Range sliders: navy unfilled + blue fill via --range-pct (set in JS). No white track. */
+.roi-sliders input[type="range"].roi-range{
+  -webkit-appearance:none;
+  appearance:none;
+  width:100%;
+  height:10px;
+  border-radius:999px;
+  border:1px solid rgba(59,127,232,.12);
+  outline:none;
+  cursor:pointer;
+  background:linear-gradient(90deg,rgba(59,127,232,.45) 0%,rgba(59,127,232,.28) var(--range-pct,50%),var(--roi-track-empty) var(--range-pct,50%),var(--roi-track-empty) 100%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.04);
+}
+.roi-sliders input[type="range"].roi-range::-webkit-slider-runnable-track{
+  height:10px;
+  border-radius:999px;
+  background:transparent;
+}
+.roi-sliders input[type="range"].roi-range::-webkit-slider-thumb{
+  -webkit-appearance:none;
+  appearance:none;
+  width:18px;
+  height:18px;
+  margin-top:-4px;
+  border-radius:50%;
+  background:linear-gradient(160deg,rgba(91,156,245,.95),rgba(45,107,201,.98));
+  border:1px solid rgba(255,255,255,.25);
+  box-shadow:0 2px 12px rgba(0,0,0,.45),0 0 0 1px rgba(0,0,0,.25) inset;
+}
+.roi-sliders input[type="range"].roi-range:hover::-webkit-slider-thumb{
+  background:linear-gradient(160deg,rgba(110,170,255,.98),rgba(59,127,232,1));
+  box-shadow:0 3px 16px rgba(59,127,232,.4);
+}
+.roi-sliders input[type="range"].roi-range:focus-visible::-webkit-slider-thumb{
+  box-shadow:0 0 0 3px rgba(59,127,232,.4),0 2px 12px rgba(0,0,0,.45);
+}
+.roi-sliders input[type="range"].roi-range::-moz-range-track{
+  height:10px;
+  border-radius:999px;
+  background:transparent;
+}
+.roi-sliders input[type="range"].roi-range::-moz-range-thumb{
+  width:18px;
+  height:18px;
+  border:none;
+  border-radius:50%;
+  background:linear-gradient(160deg,rgba(91,156,245,.95),rgba(45,107,201,.98));
+  border:1px solid rgba(255,255,255,.25);
+  box-shadow:0 2px 12px rgba(0,0,0,.45);
+  cursor:pointer;
+}
+.roi-sliders input[type="range"].roi-range:hover::-moz-range-thumb{
+  background:linear-gradient(160deg,rgba(110,170,255,.98),rgba(59,127,232,1));
+}
 .roi-figures{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:24px 0}
 .roi-figures .box{padding:14px;border:1px solid var(--border);border-radius:8px}
 .roi-figures .box .val{font-family:"Instrument Serif",serif;font-size:26px;transition:transform .15s}
@@ -229,12 +308,12 @@ pre.code-sample{margin-top:24px;padding:18px;border-radius:8px;background:rgba(0
           <div class="roi-sliders">
             <div>
               <label for="hours-range">Hours of professional data per month</label>
-              <input type="range" id="hours-range" min="1000" max="500000" step="1000" value="50000" />
+              <input type="range" id="hours-range" class="roi-range" min="1000" max="500000" step="1000" value="50000" />
               <div id="hours-val" style="font-size:12px;color:var(--white-muted);margin-top:5px;">50,000 hours</div>
             </div>
             <div>
               <label for="tier-range">Your tier</label>
-              <input type="range" id="tier-range" min="0" max="4" step="1" value="2" />
+              <input type="range" id="tier-range" class="roi-range" min="0" max="4" step="1" value="2" />
               <div id="tier-val" style="font-size:12px;color:var(--white-muted);margin-top:5px;">Professional</div>
             </div>
           </div>
@@ -457,8 +536,16 @@ pre.code-sample{margin-top:24px;padding:18px;border-radius:8px;background:rgba(0
   var harveRates=[10,20,65,100,165];
   var mercorRates=[50,65,130,200,300];
   function fmt(n){return"$"+Math.round(n).toLocaleString("en-US")}
+  function setRangePct(input){
+    if(!input)return;
+    var min=+input.min,max=+input.max,val=+input.value;
+    var pct=max===min?0:((val-min)/(max-min))*100;
+    input.style.setProperty("--range-pct",pct+"%");
+  }
   function updateRoi(){
-    var h=+document.getElementById("hours-range").value,t=+document.getElementById("tier-range").value;
+    var hr=document.getElementById("hours-range"),tr=document.getElementById("tier-range");
+    var h=+hr.value,t=+tr.value;
+    setRangePct(hr);setRangePct(tr);
     document.getElementById("hours-val").textContent=h.toLocaleString("en-US")+" hours";
     document.getElementById("tier-val").textContent=tierNames[t];
     var hc=h*harveRates[t],mc=h*mercorRates[t],sv=mc-hc;
@@ -508,6 +595,23 @@ pre.code-sample{margin-top:24px;padding:18px;border-radius:8px;background:rgba(0
   },{threshold:0.12,rootMargin:"0px 0px -8% 0px"});
   reveals.forEach(function(r){revealObs.observe(r)});
 
+  /* ── scroll-sections + final CTA: fade out when off-screen; late fade-in when back (hero + form excluded) ── */
+  var sectionBlocks=document.querySelectorAll(".scroll-sections > section.scroll-region, #region-final");
+  var lateRevealMs=220;
+  var sectionIO=new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      var el=en.target;
+      if(en.isIntersecting){
+        clearTimeout(el._sectionLate);
+        el._sectionLate=setTimeout(function(){el.classList.add("section-scroll-visible");},lateRevealMs);
+      }else{
+        clearTimeout(el._sectionLate);
+        el.classList.remove("section-scroll-visible");
+      }
+    });
+  },{threshold:0,rootMargin:"-5% 0px -10% 0px"});
+  sectionBlocks.forEach(function(el){sectionIO.observe(el);});
+
   /* ── floating pill ghosts ── */
   var pillContainer=document.getElementById("pill-bg");
   var pills=[];
@@ -520,8 +624,16 @@ pre.code-sample{margin-top:24px;padding:18px;border-radius:8px;background:rgba(0
     // hero area — 2 big overlapping on left
     {cls:"hero-pill",x:4,y:vh*.3,w:420,h:100,scale:1,speed:.55,rot:-4,op:.45},
     {cls:"hero-pill",x:8,y:vh*.7,w:380,h:90,scale:.9,speed:.48,rot:3,op:.35},
-    // right side near form
-    {cls:"",x:62,y:vh*.55,w:220,h:52,scale:.85,speed:.42,rot:6,op:.3},
+    // right side — large hero-style pills (match / exceed left)
+    {cls:"hero-pill",x:54,y:vh*.22,w:460,h:108,scale:1,speed:.5,rot:5,op:.4},
+    {cls:"hero-pill",x:58,y:vh*.85,w:430,h:102,scale:.98,speed:.48,rot:-4,op:.38},
+    {cls:"hero-pill",x:52,y:vh*1.65,w:440,h:105,scale:1,speed:.52,rot:6,op:.36},
+    {cls:"hero-pill",x:60,y:vh*2.45,w:420,h:100,scale:.95,speed:.46,rot:-3,op:.34},
+    {cls:"hero-pill",x:56,y:vh*3.35,w:450,h:110,scale:1.02,speed:.5,rot:4,op:.37},
+    {cls:"hero-pill",x:62,y:vh*4.2,w:400,h:98,scale:.92,speed:.47,rot:-6,op:.32},
+    {cls:"hero-pill",x:50,y:vh*5.1,w:470,h:112,scale:1,speed:.49,rot:5,op:.35},
+    // right side near form (mid)
+    {cls:"hero-pill",x:64,y:vh*.55,w:380,h:96,scale:.88,speed:.44,rot:7,op:.33},
     {cls:"",x:70,y:vh*1.5,w:200,h:48,scale:.75,speed:.5,rot:-3,op:.28},
     {cls:"",x:66,y:vh*2.8,w:210,h:50,scale:.8,speed:.45,rot:8,op:.25},
     // mid-page scattered
