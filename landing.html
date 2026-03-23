@@ -460,10 +460,21 @@ a.nav-cta, a.cta-primary, a.cta-secondary {
 }
 
 .nav { animation: fade-down 600ms cubic-bezier(0.22,1,0.36,1) both; animation-delay: 100ms; }
+/* Used when replaying entrance after bfcache / back navigation */
+.nav.anim-replay-reset {
+  animation: none !important;
+  opacity: 0;
+  transform: translateY(-16px);
+}
 
 .hero-anim {
   opacity: 0;
   animation: fade-up 700ms cubic-bezier(0.22,1,0.36,1) both;
+}
+.hero-anim.anim-replay-reset {
+  animation: none !important;
+  opacity: 0;
+  transform: translateY(24px);
 }
 .hero-anim:nth-child(1) { animation-delay: 200ms; }
 .hero-anim:nth-child(2) { animation-delay: 420ms; }
@@ -735,6 +746,11 @@ a.nav-cta, a.cta-primary, a.cta-secondary {
 
 <script>
 (function(){
+  // Don't restore scroll position on back/forward — keeps hero in view so entrance CSS can play like a fresh visit
+  try {
+    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  } catch (e) {}
+
   // Pill timer + earnings ticker (pauses when Pause clicked)
   var secs = 0, earnings = 786.23, rate = 0.00278, paused = false, micMuted = false;
   var timerEl = document.getElementById('pill-timer');
@@ -831,15 +847,51 @@ a.nav-cta, a.cta-primary, a.cta-secondary {
 
   // Scroll reveal via IntersectionObserver
   var reveals = document.querySelectorAll('.reveal');
-  var observer = new IntersectionObserver(function(entries) {
+  var revealObserver = new IntersectionObserver(function(entries) {
     entries.forEach(function(entry) {
       if (entry.isIntersecting) {
         entry.target.classList.add('visible');
-        observer.unobserve(entry.target);
+        revealObserver.unobserve(entry.target);
       }
     });
   }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
-  reveals.forEach(function(el) { observer.observe(el); });
+  reveals.forEach(function(el) { revealObserver.observe(el); });
+
+  /** Replay hero + nav entrance + scroll reveals (e.g. returning from /enterprise via browser back + bfcache). */
+  function replayLandingEntrance() {
+    window.scrollTo(0, 0);
+    var navEl = document.querySelector('.nav');
+    if (navEl) {
+      navEl.classList.remove('nav-hidden');
+      navEl.classList.add('anim-replay-reset');
+    }
+    document.querySelectorAll('.hero-anim').forEach(function(el) {
+      el.classList.add('anim-replay-reset');
+    });
+    void document.documentElement.offsetHeight;
+    requestAnimationFrame(function() {
+      requestAnimationFrame(function() {
+        if (navEl) navEl.classList.remove('anim-replay-reset');
+        document.querySelectorAll('.hero-anim').forEach(function(el) {
+          el.classList.remove('anim-replay-reset');
+        });
+      });
+    });
+    document.querySelectorAll('.reveal').forEach(function(el) {
+      el.classList.remove('visible');
+      revealObserver.observe(el);
+    });
+    document.querySelectorAll('.faq-item.open').forEach(function(el) {
+      el.classList.remove('open');
+    });
+    if (typeof updateProofOpacity === 'function') updateProofOpacity();
+  }
+
+  window.addEventListener('pageshow', function(ev) {
+    if (ev.persisted) {
+      replayLandingEntrance();
+    }
+  });
 
   // Hide header on scroll down, show on scroll up
   var nav = document.querySelector('.nav');
