@@ -16,6 +16,12 @@ function escAttr(s) {
   return s.replace(/&/g, '&amp;').replace(/"/g, '&quot;');
 }
 
+/** If env is unset, keep repo file (e.g. committed site key). Only overwrite when TURNSTILE_SITE_KEY is set. */
+if (!key) {
+  console.log('[inject-turnstile] TURNSTILE_SITE_KEY unset — leaving enterprise.html as-is.');
+  process.exit(0);
+}
+
 let html = fs.readFileSync(file, 'utf8');
 const re = /(<meta\s+name="turnstile-site-key"\s+content=")([^"]*)("\s*\/?>)/i;
 if (!re.test(html)) {
@@ -24,8 +30,4 @@ if (!re.test(html)) {
 }
 html = html.replace(re, `$1${escAttr(key)}$3`);
 fs.writeFileSync(file, html);
-if (key) {
-  console.log('[inject-turnstile] Site key injected (length ' + key.length + ').');
-} else {
-  console.log('[inject-turnstile] TURNSTILE_SITE_KEY empty — captcha widget off (set env in Vercel to enable).');
-}
+console.log('[inject-turnstile] Site key injected from env (length ' + key.length + ').');
