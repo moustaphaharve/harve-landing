@@ -19,6 +19,31 @@
     align-items: center;
     justify-content: center;
   }
+  .topbar {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 16px 24px;
+  }
+  .logout-btn {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    color: #8B95A8;
+    background: none;
+    border: 1px solid #E2E6EF;
+    border-radius: 8px;
+    padding: 7px 14px;
+    cursor: pointer;
+    transition: all 150ms ease;
+  }
+  .logout-btn:hover {
+    color: #0A1C5C;
+    border-color: #C8CDD8;
+    background: #F8F9FB;
+  }
   .container {
     text-align: center;
     max-width: 420px;
@@ -72,6 +97,10 @@
 </head>
 <body>
 
+<div class="topbar">
+  <button class="logout-btn" id="logoutBtn">Wrong account? Log out</button>
+</div>
+
 <div class="container" id="openingView">
   <div class="logo">
     <svg width="48" height="48" viewBox="0 0 20 20" fill="none">
@@ -91,18 +120,15 @@
   </p>
   <div class="divider"></div>
   <p class="secondary">
-    Wrong account? Sign out from the Harve app and sign in again.
-  </p>
-  <p class="secondary" style="margin-top: 12px">
     Don't have Harve installed? <a href="/">Download now</a>.
   </p>
   <p class="help"><a href="mailto:support@harve.ai">Need help?</a></p>
 </div>
 
 <script>
-(function() {
-  setTimeout(function() { window.close(); }, 2500);
-})();
+document.getElementById('logoutBtn').addEventListener('click', function() {
+  window.location.href = 'http://localhost:4174/reauth';
+});
 </script>
 </body>
 </html>
