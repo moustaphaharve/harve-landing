@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Enterprise — Harve Professional Behavioral Data</title>
+  <meta name="harve-api-base" content="https://api.harve.ai" />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -206,8 +207,18 @@ a{color:inherit;text-decoration:none}
 }
 .field textarea{min-height:64px;resize:vertical}
 .field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:rgba(59,127,232,.5)}
-.form-submit{width:100%;margin-top:6px;padding:13px;font-weight:600;cursor:pointer;background:var(--white);color:var(--navy-deep);border:none;border-radius:8px;font-size:13px;font-family:inherit;transition:opacity .2s}
+.form-submit{width:100%;margin-top:6px;padding:13px;font-weight:600;cursor:pointer;background:var(--white);color:var(--navy-deep);border:1px solid transparent;border-radius:8px;font-size:13px;font-family:inherit;transition:background .45s cubic-bezier(.22,1,.36,1),color .45s,border-color .45s,box-shadow .45s,opacity .2s}
 .form-submit:hover{opacity:.9}
+.form-submit--done{
+  background:transparent!important;
+  color:var(--white)!important;
+  border-color:rgba(255,255,255,.38)!important;
+  box-shadow:none!important;
+  cursor:default;
+  opacity:1;
+}
+.form-submit--done:hover{opacity:1}
+#sales-form-error{display:none;font-size:12px;color:#f0a8a8;margin-top:10px;line-height:1.4}
 .form-foot{font-size:10px;color:var(--white-muted);margin-top:12px;line-height:1.45}
 
 /* ── sections ── */
@@ -637,7 +648,8 @@ pre.code-sample{margin-top:24px;padding:18px;border-radius:8px;background:rgba(0
           </div>
         </div>
         <div class="field"><label for="notes">Anything specific? (optional)</label><textarea id="notes" name="notes" rows="2"></textarea></div>
-        <button type="submit" class="form-submit">Request a data sample</button>
+        <p id="sales-form-error" role="alert"></p>
+        <button type="submit" class="form-submit" id="sales-form-submit">Request a data sample</button>
       </form>
       <p class="form-foot">Samples delivered within 48 hours. First 1,000 hours free. NDA available on request.</p>
     </div>
@@ -730,11 +742,84 @@ pre.code-sample{margin-top:24px;padding:18px;border-radius:8px;background:rgba(0
   function onSuccessPointer(e){
     positionSuccessLight(e.clientX,e.clientY);
   }
+  function getApiBase(){
+    var m=document.querySelector('meta[name="harve-api-base"]');
+    if(m&&m.content&&String(m.content).trim())return String(m.content).replace(/\/$/,"");
+    return "https://api.harve.ai";
+  }
+  function resetCustomSelects(){
+    document.querySelectorAll("#sales-form .custom-select").forEach(function(sel){
+      var trigger=sel.querySelector(".sel-trigger");
+      var hidden=sel.querySelector("input[type=hidden]");
+      var opts=sel.querySelectorAll(".sel-opt");
+      if(trigger){trigger.textContent="Select";trigger.classList.add("placeholder");}
+      if(hidden)hidden.value="";
+      opts.forEach(function(o){o.classList.remove("active");});
+    });
+  }
+  var salesFormErr=document.getElementById("sales-form-error");
   document.getElementById("sales-form").addEventListener("submit",function(e){
     e.preventDefault();
     var f=e.target;
+    if(salesFormErr){salesFormErr.style.display="none";salesFormErr.textContent="";}
     if(!f.checkValidity()){f.reportValidity();return;}
-    openFormSuccess();
+    var building=f.querySelector('input[name="building"]');
+    var volume=f.querySelector('input[name="volume"]');
+    if(!building||!volume||!String(building.value).trim()||!String(volume.value).trim()){
+      if(salesFormErr){salesFormErr.textContent="Please select what you’re building and monthly volume.";salesFormErr.style.display="block";}
+      return;
+    }
+    var submitBtn=document.getElementById("sales-form-submit");
+    if(submitBtn&&submitBtn.classList.contains("form-submit--done"))return;
+
+    var payload={
+      name:f.querySelector('[name="name"]').value.trim(),
+      email:f.querySelector('[name="email"]').value.trim(),
+      phone:f.querySelector('[name="phone"]').value.trim(),
+      company:f.querySelector('[name="company"]').value.trim(),
+      building:String(building.value).trim(),
+      volume:String(volume.value).trim(),
+      notes:(f.querySelector('[name="notes"]')&&f.querySelector('[name="notes"]').value)||""
+    };
+    var prevText=submitBtn?submitBtn.textContent:"Request a data sample";
+    if(submitBtn){submitBtn.disabled=true;submitBtn.textContent="Sending…";}
+
+    fetch(getApiBase()+"/api/public/enterprise-lead",{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify(payload)
+    }).then(function(r){
+      return r.text().then(function(text){
+        var j=null;
+        try{j=text?JSON.parse(text):null;}catch(_){}
+        return {r:r,j:j};
+      });
+    }).then(function(x){
+      if(!x.r.ok){
+        if(x.r.status===429)throw new Error("Too many submissions. Please try again in a few minutes.");
+        throw new Error((x.j&&x.j.error)||"Something went wrong. Please try again.");
+      }
+      return x.j;
+    }).then(function(){
+      f.reset();
+      resetCustomSelects();
+      if(submitBtn){
+        submitBtn.textContent="Thank you";
+        submitBtn.classList.add("form-submit--done");
+        submitBtn.disabled=true;
+        submitBtn.setAttribute("type","button");
+      }
+      openFormSuccess();
+    }).catch(function(err){
+      if(salesFormErr){
+        salesFormErr.textContent=(err&&err.message)?err.message:"Request failed.";
+        salesFormErr.style.display="block";
+      }
+      if(submitBtn){
+        submitBtn.disabled=false;
+        submitBtn.textContent=prevText;
+      }
+    });
   });
   formSuccessClose.addEventListener("click",closeFormSuccess);
   formSuccess.querySelector(".form-success__dim").addEventListener("click",closeFormSuccess);
