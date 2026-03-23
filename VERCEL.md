@@ -22,10 +22,9 @@ You can share **`https://harve.ai/auth-callback`** with WorkOS (same page as `au
 
 1. [vercel.com](https://vercel.com) → **Add New… → Project** → Import your Git repo.
 2. **Framework Preset:** Other (or “No framework”).
-3. **Build Command:** `npm run build` (injects Turnstile site key into `enterprise.html`; safe if env empty).
+3. **Build Command:** leave **empty** (not needed).
 4. **Output Directory:** leave default / `.` — Vercel serves files from the project root.
-5. **Environment variables:** optional **`TURNSTILE_SITE_KEY`** = Cloudflare Turnstile **Site Key** (public). Matches Railway **`TURNSTILE_SECRET_KEY`** on `harve-backend`. If unset, enterprise captcha stays off.
-6. **Deploy.**
+5. **Deploy.**
 
 After deploy you get a URL like `https://harve-landing-xxx.vercel.app`. Click through `/`, `/support`, `/auth-callback`.
 

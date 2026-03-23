@@ -1,8 +1,0 @@
-{
-  "name": "harve-landing",
-  "private": true,
-  "type": "module",
-  "scripts": {
-    "build": "node scripts/inject-turnstile.mjs"
-  }
-}
