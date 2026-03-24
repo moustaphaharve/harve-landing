@@ -9,6 +9,16 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+  <script>
+  (function () {
+    if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+    try {
+      window.scrollTo({ left: 0, top: 0, behavior: "instant" });
+    } catch (_) {
+      window.scrollTo(0, 0);
+    }
+  })();
+  </script>
   <style>
 :root {
   --navy-deep: #0B1628; --navy-mid: #0F2040; --navy-warm: #152A52; --navy-cool: #0D1E3A; --navy-black: #070F1A;
@@ -684,6 +694,41 @@ pre.code-sample{margin-top:24px;padding:18px;border-radius:8px;background:rgba(0
 
 <script>
 (function(){
+  /* Full reload / refresh: stay at top and replay scroll-driven reveals like a first visit (no restored scroll position). */
+  if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+  function scrollTopInstant() {
+    try {
+      window.scrollTo({ left: 0, top: 0, behavior: "instant" });
+    } catch (_) {
+      window.scrollTo(0, 0);
+    }
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+  }
+  scrollTopInstant();
+  document.querySelectorAll(".section-scroll-visible").forEach(function (el) {
+    el.classList.remove("section-scroll-visible");
+  });
+  document.querySelectorAll(".reveal.visible").forEach(function (el) {
+    el.classList.remove("visible");
+    el.querySelectorAll(":scope > *").forEach(function (ch) {
+      ch.style.transitionDelay = "";
+    });
+  });
+
+  window.addEventListener(
+    "load",
+    function () {
+      scrollTopInstant();
+    },
+    { once: true }
+  );
+  window.addEventListener("pageshow", function (e) {
+    if (e.persisted) {
+      scrollTopInstant();
+    }
+  });
+
   var tierNames=["Consumer","Student","Professional","High Value","Elite"];
   var harveRates=[10,20,65,100,165];
   var mercorRates=[50,65,130,200,300];
