@@ -822,7 +822,7 @@ a.nav-cta, a.cta-primary, a.cta-secondary {
       <span style="color:#10B981;font-weight:600;font-size:14px;font-family:'DM Sans',sans-serif">Downloaded</span>
     </div>
     <h2 id="mac-install-title" style="font-size:24px;font-weight:700;color:#0A1C5C;font-family:'Alice',serif;margin:0 0 28px;letter-spacing:-0.02em">How to install Harve.</h2>
-    <div class="mac-install-steps">
+    <div id="install-steps-mac" class="mac-install-steps" hidden>
       <div class="mac-step-panel">
         <div class="mac-step-illu">
           <svg width="120" height="80" viewBox="0 0 120 80" fill="none" aria-hidden="true">
@@ -874,6 +874,51 @@ a.nav-cta, a.cta-primary, a.cta-secondary {
         <div style="text-align:center">
           <div class="mac-step-label">Step 3</div>
           <p class="mac-step-text">Open the Harve app from your Applications folder</p>
+        </div>
+      </div>
+    </div>
+    <div id="install-steps-win" class="mac-install-steps" hidden>
+      <div class="mac-step-panel">
+        <div class="mac-step-illu">
+          <svg width="120" height="80" viewBox="0 0 120 80" fill="none" aria-hidden="true">
+            <rect x="10" y="10" width="100" height="60" rx="6" fill="white" stroke="#0078D4" stroke-width="1.5"/>
+            <rect x="10" y="10" width="100" height="14" rx="6" fill="#0078D4" opacity="0.9"/>
+            <rect x="18" y="32" width="52" height="10" rx="2" fill="#0A1C5C" opacity="0.2"/>
+            <rect x="18" y="48" width="84" height="8" rx="2" fill="#E2E6EF"/>
+            <rect x="18" y="60" width="64" height="8" rx="2" fill="#E2E6EF"/>
+          </svg>
+        </div>
+        <div style="text-align:center">
+          <div class="mac-step-label">Step 1</div>
+          <p class="mac-step-text">Open <strong>Harve-Setup.exe</strong> from your Downloads folder</p>
+        </div>
+      </div>
+      <div class="mac-step-panel">
+        <div class="mac-step-illu">
+          <svg width="120" height="80" viewBox="0 0 120 80" fill="none" aria-hidden="true">
+            <rect x="20" y="18" width="80" height="44" rx="6" fill="#FFF8E6" stroke="#F59E0B" stroke-width="1.5"/>
+            <text x="60" y="40" text-anchor="middle" fill="#92400E" font-size="9" font-family="sans-serif" font-weight="600">Windows protected your PC</text>
+            <rect x="32" y="48" width="56" height="10" rx="3" fill="#0078D4"/>
+            <text x="60" y="55" text-anchor="middle" fill="white" font-size="7" font-family="sans-serif">More info → Run anyway</text>
+          </svg>
+        </div>
+        <div style="text-align:center">
+          <div class="mac-step-label">Step 2</div>
+          <p class="mac-step-text">If SmartScreen appears: <strong>More info</strong> → <strong>Run anyway</strong></p>
+        </div>
+      </div>
+      <div class="mac-step-panel">
+        <div class="mac-step-illu">
+          <svg width="120" height="80" viewBox="0 0 120 80" fill="none" aria-hidden="true">
+            <rect x="44" y="12" width="32" height="28" rx="6" fill="#0A1C5C" opacity="0.9"/>
+            <text x="60" y="30" text-anchor="middle" fill="white" font-size="12" font-family="sans-serif" font-weight="700">H</text>
+            <rect x="38" y="46" width="44" height="22" rx="4" fill="#E2E6EF"/>
+            <circle cx="60" cy="57" r="4" fill="#10B981"/>
+          </svg>
+        </div>
+        <div style="text-align:center">
+          <div class="mac-step-label">Step 3</div>
+          <p class="mac-step-text">Launch Harve from the <strong>system tray</strong> or Start menu</p>
         </div>
       </div>
     </div>
@@ -975,6 +1020,8 @@ a.nav-cta, a.cta-primary, a.cta-secondary {
   var macIcon = '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:-2px;margin-right:6px" aria-hidden="true"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>';
   var appStoreIcon = '<svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:-3px;margin-right:6px" aria-hidden="true"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>';
   var playIcon = '<svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:-3px;margin-right:6px" aria-hidden="true"><path d="M3 20.5v-17c0-.59.34-1.11.84-1.35L21.41 11.4c.92.46.92 1.78 0 2.24L3.84 21.85c-.5.24-1.09.01-1.35-.5-.1-.19-.15-.4-.15-.61z"/></svg>';
+  var macBtnHtml = macIcon + 'Download for Mac';
+  var winBtnHtml = winIcon + 'Download for Windows';
 
   function replaceBtnWithLink(btn, href, html) {
     var a = document.createElement('a');
@@ -999,7 +1046,24 @@ a.nav-cta, a.cta-primary, a.cta-secondary {
     document.body.removeChild(a);
   }
 
-  function openMacInstallModal() {
+  /** Prefer Windows when UA is ambiguous (e.g. reduced strings); refine async via User-Agent Client Hints when available. */
+  var installModalPlatform = 'mac';
+
+  function detectIsMacDesktop() {
+    var u = navigator.userAgent || '';
+    var plat = (navigator.platform || '').trim();
+    var win = /Windows|Win64|Win32|WOW64/i.test(u) || /^Win/i.test(plat);
+    if (win) return false;
+    var mac = /Mac OS X|Macintosh/i.test(u) || /^Mac/i.test(plat) || plat === 'MacIntel';
+    return mac;
+  }
+
+  function openInstallModal(platform) {
+    installModalPlatform = platform === 'win' ? 'win' : 'mac';
+    var macSteps = document.getElementById('install-steps-mac');
+    var winSteps = document.getElementById('install-steps-win');
+    if (macSteps) macSteps.hidden = installModalPlatform !== 'mac';
+    if (winSteps) winSteps.hidden = installModalPlatform !== 'win';
     var m = document.getElementById('mac-install-modal');
     if (m) {
       m.classList.add('is-open');
@@ -1019,11 +1083,66 @@ a.nav-cta, a.cta-primary, a.cta-secondary {
 
   function handleMacDownload() {
     triggerFileDownload(MAC_DL);
-    openMacInstallModal();
+    openInstallModal('mac');
   }
 
   function handleWinDownload() {
     triggerFileDownload(WIN_DL);
+    openInstallModal('win');
+  }
+
+  function wireDesktopDownloadUi(isMacDesktop) {
+    document.querySelectorAll('.cta-download-row').forEach(function (row) {
+      var mac = row.querySelector('.btn-download-mac');
+      var win = row.querySelector('.btn-download-windows');
+      if (!mac || !win) return;
+      if (isMacDesktop) {
+        mac.style.display = '';
+        win.style.display = 'none';
+        mac.className = 'cta-primary btn-download-mac';
+        win.className = 'cta-secondary btn-download-windows';
+      } else {
+        mac.style.display = 'none';
+        win.style.display = '';
+        mac.className = 'cta-secondary btn-download-mac';
+        win.className = 'cta-primary btn-download-windows';
+      }
+    });
+
+    document.querySelectorAll('.btn-download-mac').forEach(function (btn) {
+      btn.innerHTML = macBtnHtml;
+      btn.replaceWith(btn.cloneNode(true));
+    });
+    document.querySelectorAll('.btn-download-mac').forEach(function (btn) {
+      btn.addEventListener('click', function (e) {
+        e.preventDefault();
+        handleMacDownload();
+      });
+    });
+    document.querySelectorAll('.btn-download-windows').forEach(function (btn) {
+      btn.innerHTML = winBtnHtml;
+      btn.replaceWith(btn.cloneNode(true));
+    });
+    document.querySelectorAll('.btn-download-windows').forEach(function (btn) {
+      btn.addEventListener('click', function (e) {
+        e.preventDefault();
+        handleWinDownload();
+      });
+    });
+
+    var navEl = document.getElementById('nav-download');
+    if (navEl) {
+      navEl.innerHTML = isMacDesktop ? macBtnHtml : winBtnHtml;
+      navEl.replaceWith(navEl.cloneNode(true));
+    }
+    navEl = document.getElementById('nav-download');
+    if (navEl) {
+      navEl.addEventListener('click', function (e) {
+        e.preventDefault();
+        if (isMacDesktop) handleMacDownload();
+        else handleWinDownload();
+      });
+    }
   }
 
   if (isMobileStore) {
@@ -1039,40 +1158,14 @@ a.nav-cta, a.cta-primary, a.cta-secondary {
       btn.style.display = 'none';
     });
   } else {
-    var isMacDesktop = (/Mac OS X|Macintosh/.test(ua) || (navigator.platform || '').indexOf('Mac') === 0) && !/Windows|Win64|Win32/i.test(ua);
-    var macBtnHtml = macIcon + 'Download for Mac';
-    var winBtnHtml = winIcon + 'Download for Windows';
+    wireDesktopDownloadUi(detectIsMacDesktop());
 
-    document.querySelectorAll('.cta-download-row').forEach(function (row) {
-      var mac = row.querySelector('.btn-download-mac');
-      var win = row.querySelector('.btn-download-windows');
-      if (!mac || !win) return;
-      if (!isMacDesktop) row.insertBefore(win, mac);
-    });
-
-    document.querySelectorAll('.btn-download-mac').forEach(function (btn) {
-      btn.innerHTML = macBtnHtml;
-      btn.addEventListener('click', function (e) {
-        e.preventDefault();
-        handleMacDownload();
-      });
-    });
-    document.querySelectorAll('.btn-download-windows').forEach(function (btn) {
-      btn.innerHTML = winBtnHtml;
-      btn.addEventListener('click', function (e) {
-        e.preventDefault();
-        handleWinDownload();
-      });
-    });
-
-    var navEl = document.getElementById('nav-download');
-    if (navEl) {
-      navEl.innerHTML = isMacDesktop ? macBtnHtml : winBtnHtml;
-      navEl.addEventListener('click', function (e) {
-        e.preventDefault();
-        if (isMacDesktop) handleMacDownload();
-        else handleWinDownload();
-      });
+    if (navigator.userAgentData && typeof navigator.userAgentData.getHighEntropyValues === 'function') {
+      navigator.userAgentData.getHighEntropyValues(['platform']).then(function (h) {
+        var p = (h.platform || '').toLowerCase();
+        if (p === 'windows') wireDesktopDownloadUi(false);
+        else if (p === 'macos') wireDesktopDownloadUi(true);
+      }).catch(function () {});
     }
 
     var modal = document.getElementById('mac-install-modal');
@@ -1086,7 +1179,7 @@ a.nav-cta, a.cta-primary, a.cta-secondary {
     if (closeBtn) closeBtn.addEventListener('click', closeMacInstallModal);
     if (againBtn) {
       againBtn.addEventListener('click', function () {
-        triggerFileDownload(MAC_DL);
+        triggerFileDownload(installModalPlatform === 'win' ? WIN_DL : MAC_DL);
         closeMacInstallModal();
       });
     }
