@@ -70,7 +70,16 @@ const TimerDisplay = ({ seconds }) => {
   const h = Math.floor(seconds / 3600);
   const m = Math.floor((seconds % 3600) / 60);
   return (
-    <span style={{ fontFamily: "'SF Mono', Menlo, Consolas, monospace", fontSize: 12, fontWeight: 500, color: "rgba(80,110,150,0.9)", fontVariantNumeric: "tabular-nums", letterSpacing: 0.5, lineHeight: 1.2 }}>
+    <span style={{
+      fontFamily: "'JetBrains Mono', ui-monospace, 'SF Mono', 'Segoe UI Mono', Menlo, Consolas, monospace",
+      fontSize: 13,
+      fontWeight: 600,
+      fontVariantNumeric: "tabular-nums",
+      fontFeatureSettings: '"tnum" 1',
+      letterSpacing: "0.06em",
+      color: "rgba(52, 62, 78, 0.92)",
+      lineHeight: 1.15,
+    }}>
       {String(h).padStart(2, "0")}:{String(m).padStart(2, "0")}
     </span>
   );
@@ -391,7 +400,7 @@ export default function HarveFullDemo({ play = false }) {
       borderRadius: 18, lineHeight: "normal",
     }}>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap');
         @keyframes pulseDot{0%,100%{opacity:1;box-shadow:0 0 6px rgba(52,211,153,0.6)}50%{opacity:0.6;box-shadow:0 0 2px rgba(52,211,153,0.3)}}
         @keyframes avatarShine{0%,70%,100%{left:-100%}85%{left:100%}}
         .harve-demo-root-inner *{box-sizing:border-box}

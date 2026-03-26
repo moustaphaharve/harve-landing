@@ -9,7 +9,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Alice&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700;9..40,800&display=swap" rel="stylesheet">
 <style>
 :root {
-  --demo-zone-fade: 0;
   --text-primary:   rgba(10, 28, 92, 0.92);
   --text-secondary: rgba(40, 75, 155, 0.60);
   --text-muted:     rgba(80, 110, 175, 0.50);
@@ -24,18 +23,23 @@ body {
   font-family: 'DM Sans', sans-serif;
   color: var(--text-primary);
   min-height: 100vh;
+  /* Baked-in vertical wash: soft white through mid-page → back to site blue (no extra divs / scroll math) */
   background:
     linear-gradient(
-      to bottom,
-      rgba(255, 255, 255, calc(var(--demo-zone-fade, 0) * 0.96)) 0%,
-      rgba(255, 255, 255, calc(var(--demo-zone-fade, 0) * 0.92)) 38%,
-      rgba(255, 255, 255, calc(var(--demo-zone-fade, 0) * 0.78)) 100%
+      180deg,
+      rgba(255, 255, 255, 0.18) 0%,
+      rgba(255, 255, 255, 0.08) 18%,
+      rgba(255, 255, 255, 0.38) 38%,
+      rgba(255, 255, 255, 0.52) 52%,
+      rgba(255, 255, 255, 0.4) 64%,
+      rgba(245, 249, 255, 0.22) 78%,
+      rgba(220, 232, 248, 0.06) 92%,
+      rgba(200, 218, 240, 0) 100%
     ),
     radial-gradient(ellipse at 30% 20%, rgba(255,255,255,0.55) 0%, transparent 55%),
     radial-gradient(ellipse at 75% 80%, rgba(180,200,235,0.45) 0%, transparent 50%),
     linear-gradient(160deg, #dce8f8 0%, #c8d9f0 40%, #bccde8 70%, #c8d4e5 100%);
   background-attachment: fixed;
-  transition: background 0.2s ease-out;
 }
 
 /* ── Navbar ── */
@@ -482,24 +486,7 @@ a.nav-cta, a.cta-primary, a.cta-secondary {
 }
 
 /* ── How It Works ── */
-.how { padding: 12px 48px 72px; max-width: 1200px; margin: 0 auto; text-align: center; }
-/* Soft blend from white (How it works) into page blue — avoids hard cut above earnings */
-.section-wash-gradient {
-  display: block;
-  width: 100%;
-  height: min(120px, 18vh);
-  background: linear-gradient(
-    180deg,
-    #ffffff 0%,
-    rgba(252, 253, 255, 0.95) 22%,
-    rgba(236, 245, 255, 0.55) 52%,
-    rgba(218, 232, 248, 0.22) 82%,
-    rgba(200, 220, 240, 0) 100%
-  );
-  margin: 0;
-  padding: 0;
-  pointer-events: none;
-}
+.how { padding: 12px 48px 96px; max-width: 1200px; margin: 0 auto; text-align: center; }
 .section-label {
   font: 500 11px 'DM Sans', sans-serif; color: var(--text-muted);
   letter-spacing: 0.10em; text-transform: uppercase; margin-bottom: 16px;
@@ -906,8 +893,6 @@ a.nav-cta, a.cta-primary, a.cta-secondary {
   </div>
 </section>
 
-<div class="section-wash-gradient" aria-hidden="true"></div>
-
 <!-- Earnings Table -->
 <section class="earnings-section">
   <div class="section-headline reveal">What people are earning</div>
@@ -1167,29 +1152,6 @@ a.nav-cta, a.cta-primary, a.cta-secondary {
   try {
     if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
   } catch (e) {}
-
-  // Page background: strong white near demo; below demo (How it works) stays pure white; fades back when scrolling away
-  function updateDemoZoneFade() {
-    var sec = document.querySelector('.mac-demo-section');
-    var how = document.querySelector('.how');
-    if (!sec) return;
-    var rect = sec.getBoundingClientRect();
-    var vh = window.innerHeight || 1;
-    var center = (rect.top + rect.bottom) / 2;
-    var dist = Math.abs(center - vh / 2) / (vh * 0.72);
-    var t = Math.max(0, Math.min(1, 1 - dist));
-    if (how) {
-      var hr = how.getBoundingClientRect();
-      if (hr.top < vh * 0.94 && hr.top > -vh * 0.15) {
-        var tHow = 1 - Math.min(1, Math.max(0, hr.top) / (vh * 0.85));
-        t = Math.max(t, 0.82 + tHow * 0.18);
-      }
-    }
-    document.documentElement.style.setProperty('--demo-zone-fade', Math.min(1, t).toFixed(3));
-  }
-  updateDemoZoneFade();
-  window.addEventListener('scroll', updateDemoZoneFade, { passive: true });
-  window.addEventListener('resize', updateDemoZoneFade);
 
   // Pill timer + earnings ticker (pauses when Pause clicked)
   var secs = 0, earnings = 786.23, rate = 0.00278, paused = false, micMuted = false;
