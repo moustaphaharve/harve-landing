@@ -107,6 +107,13 @@ a.nav-cta, a.cta-primary, a.cta-secondary {
   max-width: 480px; margin-bottom: 36px;
 }
 .cta-row { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+.cta-download-row {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 100%;
+}
 .cta-primary {
   background: var(--cta-bg); color: #fff;
   font: 600 15px 'DM Sans', sans-serif;
@@ -500,6 +507,62 @@ a.nav-cta, a.cta-primary, a.cta-secondary {
 .reveal-stagger > .reveal:nth-child(6) { transition-delay: 500ms; }
 
 /* ── Responsive ── */
+/* Mac install guide modal */
+.mac-install-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  padding: 24px;
+  box-sizing: border-box;
+}
+.mac-install-modal.is-open { display: flex; }
+.mac-install-card {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 36px 40px;
+  width: 100%;
+  max-width: 580px;
+  position: relative;
+  box-shadow: 0 24px 80px rgba(0,0,0,0.18);
+  max-height: min(92vh, 900px);
+  overflow-y: auto;
+}
+.mac-install-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: none;
+  background: #F0F1F5;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  color: #666;
+  line-height: 1;
+  padding: 0;
+}
+.mac-install-close:hover { background: #E2E6EF; }
+.mac-install-steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 28px;
+}
+@media (max-width: 600px) {
+  .mac-install-steps { grid-template-columns: 1fr; }
+  .mac-install-card { padding: 28px 22px; }
+}
+
 @media (max-width: 768px) {
   .hero h1 { font-size: 44px; }
   .cards { grid-template-columns: 1fr; }
@@ -581,8 +644,10 @@ a.nav-cta, a.cta-primary, a.cta-secondary {
   <h1 class="hero-anim">Get paid to do nothing.</h1>
   <p class="hero-sub hero-anim">Harve runs quietly in the background while you work, study, or live your day.</p>
   <div class="cta-row hero-anim">
-    <button class="cta-primary">Download for Mac</button>
-    <button class="cta-secondary">Download for Windows</button>
+    <div class="cta-download-row">
+      <button type="button" class="cta-primary btn-download-mac">Download for Mac</button>
+      <button type="button" class="cta-secondary btn-download-windows">Download for Windows</button>
+    </div>
     <div class="cta-note">Free to start &middot; No credit card required</div>
   </div>
   <!-- Social Proof Carousel (horizontal rolling ticker) -->
@@ -673,8 +738,10 @@ a.nav-cta, a.cta-primary, a.cta-secondary {
   <h2 class="reveal">Start earning today.</h2>
   <p class="reveal">Your data has always had value.<br>Now it pays you.</p>
   <div class="cta-row reveal">
-    <button class="cta-primary">Download for Mac</button>
-    <button class="cta-secondary">Download for Windows</button>
+    <div class="cta-download-row">
+      <button type="button" class="cta-primary btn-download-mac">Download for Mac</button>
+      <button type="button" class="cta-secondary btn-download-windows">Download for Windows</button>
+    </div>
     <div class="cta-note">Free to start &middot; No credit card required</div>
   </div>
 </section>
@@ -744,6 +811,116 @@ a.nav-cta, a.cta-primary, a.cta-secondary {
   </div>
 </footer>
 
+<div id="mac-install-modal" class="mac-install-modal" aria-hidden="true" role="dialog" aria-labelledby="mac-install-title">
+  <div class="mac-install-card" role="document">
+    <button type="button" class="mac-install-close" id="mac-install-close" aria-label="Close">&times;</button>
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+        <circle cx="10" cy="10" r="10" fill="#10B981"/>
+        <path d="M5.5 10l3 3 6-6" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span style="color:#10B981;font-weight:600;font-size:14px;font-family:'DM Sans',sans-serif">Downloaded</span>
+    </div>
+    <h2 id="mac-install-title" style="font-size:24px;font-weight:700;color:#0A1C5C;font-family:'Alice',serif;margin:0 0 28px;letter-spacing:-0.02em">How to install Harve.</h2>
+    <div class="mac-install-steps">
+      <div class="mac-step-panel">
+        <div class="mac-step-illu">
+          <svg width="120" height="80" viewBox="0 0 120 80" fill="none" aria-hidden="true">
+            <rect x="10" y="8" width="100" height="64" rx="8" fill="white" stroke="#E2E6EF" stroke-width="1.5"/>
+            <rect x="10" y="8" width="100" height="20" rx="8" fill="#F0F1F5"/>
+            <rect x="10" y="20" width="100" height="8" fill="#F0F1F5"/>
+            <circle cx="24" cy="18" r="4" fill="#FF5F56"/>
+            <circle cx="36" cy="18" r="4" fill="#FFBD2E"/>
+            <circle cx="48" cy="18" r="4" fill="#27C93F"/>
+            <rect x="20" y="36" width="80" height="8" rx="4" fill="#0A1C5C" opacity="0.15"/>
+            <rect x="20" y="50" width="60" height="8" rx="4" fill="#E2E6EF"/>
+            <rect x="18" y="34" width="84" height="12" rx="4" fill="#0A1C5C" opacity="0.08"/>
+          </svg>
+        </div>
+        <div style="text-align:center">
+          <div class="mac-step-label">Step 1</div>
+          <p class="mac-step-text">Open Harve.dmg from your Downloads folder</p>
+        </div>
+      </div>
+      <div class="mac-step-panel">
+        <div class="mac-step-illu">
+          <svg width="120" height="80" viewBox="0 0 120 80" fill="none" aria-hidden="true">
+            <rect x="12" y="24" width="32" height="32" rx="8" fill="#0A1C5C" opacity="0.85"/>
+            <text x="28" y="45" text-anchor="middle" fill="white" font-size="14" font-family="sans-serif" font-weight="700">H</text>
+            <path d="M50 40 L70 40" stroke="#10B981" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M65 35 L70 40 L65 45" stroke="#10B981" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <rect x="76" y="24" width="32" height="32" rx="8" fill="#4A90D9" opacity="0.85"/>
+            <text x="92" y="43" text-anchor="middle" fill="white" font-size="9" font-family="sans-serif" font-weight="600">Apps</text>
+          </svg>
+        </div>
+        <div style="text-align:center">
+          <div class="mac-step-label">Step 2</div>
+          <p class="mac-step-text">Drag the Harve icon into your Applications folder</p>
+        </div>
+      </div>
+      <div class="mac-step-panel">
+        <div class="mac-step-illu">
+          <svg width="120" height="80" viewBox="0 0 120 80" fill="none" aria-hidden="true">
+            <rect x="16" y="16" width="24" height="24" rx="6" fill="#0A1C5C" opacity="0.9"/>
+            <rect x="48" y="16" width="24" height="24" rx="6" fill="#E2E6EF"/>
+            <rect x="80" y="16" width="24" height="24" rx="6" fill="#E2E6EF"/>
+            <rect x="16" y="48" width="24" height="24" rx="6" fill="#E2E6EF"/>
+            <rect x="48" y="48" width="24" height="24" rx="6" fill="#E2E6EF"/>
+            <rect x="80" y="48" width="24" height="24" rx="6" fill="#E2E6EF"/>
+            <text x="28" y="33" text-anchor="middle" fill="white" font-size="11" font-family="sans-serif" font-weight="700">H</text>
+            <rect x="14" y="14" width="28" height="28" rx="7" fill="none" stroke="#10B981" stroke-width="2"/>
+          </svg>
+        </div>
+        <div style="text-align:center">
+          <div class="mac-step-label">Step 3</div>
+          <p class="mac-step-text">Open the Harve app from your Applications folder</p>
+        </div>
+      </div>
+    </div>
+    <div style="text-align:center">
+      <button type="button" id="mac-install-again" style="background:none;border:none;color:#8B95A8;font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;text-decoration:underline">Problem? Download again</button>
+    </div>
+  </div>
+</div>
+<style>
+.mac-step-panel {
+  background: #F8F9FC;
+  border-radius: 14px;
+  padding: 20px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+.mac-step-illu {
+  width: 100%;
+  aspect-ratio: 4/3;
+  border-radius: 10px;
+  background: #ECEEF4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.mac-step-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: #10B981;
+  letter-spacing: 0.08em;
+  margin-bottom: 4px;
+  font-family: 'DM Sans', sans-serif;
+  text-transform: uppercase;
+}
+.mac-step-text {
+  font-size: 13px;
+  color: #3B4255;
+  margin: 0;
+  line-height: 1.5;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 500;
+}
+</style>
+
 <script>
 (function(){
   // Don't restore scroll position on back/forward — keeps hero in view so entrance CSS can play like a fresh visit
@@ -810,30 +987,109 @@ a.nav-cta, a.cta-primary, a.cta-secondary {
     btn.parentNode.replaceChild(a, btn);
   }
 
+  var MAC_DL = 'https://api.harve.ai/api/download/mac';
+  var WIN_DL = 'https://api.harve.ai/api/download/windows';
+
+  function triggerFileDownload(url) {
+    var a = document.createElement('a');
+    a.href = url;
+    a.style.display = 'none';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }
+
+  function openMacInstallModal() {
+    var m = document.getElementById('mac-install-modal');
+    if (m) {
+      m.classList.add('is-open');
+      m.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+  }
+
+  function closeMacInstallModal() {
+    var m = document.getElementById('mac-install-modal');
+    if (m) {
+      m.classList.remove('is-open');
+      m.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+  }
+
+  function handleMacDownload() {
+    triggerFileDownload(MAC_DL);
+    openMacInstallModal();
+  }
+
+  function handleWinDownload() {
+    triggerFileDownload(WIN_DL);
+  }
+
   if (isMobileStore) {
     var storeUrl = isIOS ? HARVE_APP_STORE_URL : HARVE_PLAY_STORE_URL;
     var navHtml = isIOS ? (appStoreIcon + 'App&nbsp;Store') : (playIcon + 'Google&nbsp;Play');
     var heroHtml = isIOS ? (appStoreIcon + 'Download on the App Store') : (playIcon + 'Get it on Google Play');
     var navBtn = document.getElementById('nav-download');
     if (navBtn) replaceBtnWithLink(navBtn, storeUrl, navHtml);
-    Array.prototype.slice.call(document.querySelectorAll('.cta-primary')).forEach(function (btn) {
+    document.querySelectorAll('.btn-download-mac').forEach(function (btn) {
       replaceBtnWithLink(btn, storeUrl, heroHtml);
     });
-    document.querySelectorAll('.cta-secondary').forEach(function (btn) {
+    document.querySelectorAll('.btn-download-windows').forEach(function (btn) {
       btn.style.display = 'none';
     });
   } else {
     var isMacDesktop = (/Mac OS X|Macintosh/.test(ua) || (navigator.platform || '').indexOf('Mac') === 0) && !/Windows|Win64|Win32/i.test(ua);
-    var icon = isMacDesktop ? macIcon : winIcon;
-    var label = isMacDesktop ? 'Download for Mac' : 'Download for Windows';
+    var macBtnHtml = macIcon + 'Download for Mac';
+    var winBtnHtml = winIcon + 'Download for Windows';
+
+    document.querySelectorAll('.cta-download-row').forEach(function (row) {
+      var mac = row.querySelector('.btn-download-mac');
+      var win = row.querySelector('.btn-download-windows');
+      if (!mac || !win) return;
+      if (!isMacDesktop) row.insertBefore(win, mac);
+    });
+
+    document.querySelectorAll('.btn-download-mac').forEach(function (btn) {
+      btn.innerHTML = macBtnHtml;
+      btn.addEventListener('click', function (e) {
+        e.preventDefault();
+        handleMacDownload();
+      });
+    });
+    document.querySelectorAll('.btn-download-windows').forEach(function (btn) {
+      btn.innerHTML = winBtnHtml;
+      btn.addEventListener('click', function (e) {
+        e.preventDefault();
+        handleWinDownload();
+      });
+    });
+
     var navEl = document.getElementById('nav-download');
-    if (navEl) navEl.innerHTML = icon + label;
-    document.querySelectorAll('.cta-primary').forEach(function (btn) {
-      btn.innerHTML = icon + label;
-    });
-    document.querySelectorAll('.cta-secondary').forEach(function (btn) {
-      btn.style.display = 'none';
-    });
+    if (navEl) {
+      navEl.innerHTML = isMacDesktop ? macBtnHtml : winBtnHtml;
+      navEl.addEventListener('click', function (e) {
+        e.preventDefault();
+        if (isMacDesktop) handleMacDownload();
+        else handleWinDownload();
+      });
+    }
+
+    var modal = document.getElementById('mac-install-modal');
+    var closeBtn = document.getElementById('mac-install-close');
+    var againBtn = document.getElementById('mac-install-again');
+    if (modal) {
+      modal.addEventListener('click', function (e) {
+        if (e.target === modal) closeMacInstallModal();
+      });
+    }
+    if (closeBtn) closeBtn.addEventListener('click', closeMacInstallModal);
+    if (againBtn) {
+      againBtn.addEventListener('click', function () {
+        triggerFileDownload(MAC_DL);
+        closeMacInstallModal();
+      });
+    }
   }
 
   // FAQ accordion
