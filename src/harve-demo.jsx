@@ -102,9 +102,9 @@ const HarveWindow = ({ show, blur = 0 }) => {
   ];
   return (
     <div style={{
-      position: "absolute", top: 36, left: "50%", transform: show ? "translateX(-50%) scale(1)" : "translateX(-50%) scale(0.9)",
-      width: "calc(100% - 32px)", maxWidth: 640, height: "calc(100% - 88px)",
-      background: "#111114", borderRadius: 10, overflow: "hidden",
+      position: "absolute", top: 32, left: "50%", transform: show ? "translateX(-50%) scale(1)" : "translateX(-50%) scale(0.9)",
+      width: "calc(100% - 20px)", maxWidth: 748, height: "calc(100% - 84px)",
+      background: "#111114", borderRadius: 12, overflow: "hidden",
       boxShadow: "0 20px 60px rgba(0,0,0,0.4), 0 6px 20px rgba(0,0,0,0.2)",
       opacity: show ? 1 : 0,
       filter: blur > 0 ? `blur(${blur}px)` : "none",
@@ -113,8 +113,8 @@ const HarveWindow = ({ show, blur = 0 }) => {
       display: "flex", flexDirection: "column", zIndex: 20,
       minHeight: 0,
     }}>
-      <div style={{ paddingTop: 4, background: "#111114", flexShrink: 0 }}>
-        <div style={{ padding: "5px 12px 6px 12px", display: "flex", alignItems: "center", gap: 8, minHeight: 34 }}>
+      <div style={{ paddingTop: 6, background: "#111114", flexShrink: 0 }}>
+        <div style={{ padding: "8px 14px 8px 14px", display: "flex", alignItems: "center", gap: 10, minHeight: 38 }}>
           <div style={{ display: "flex", gap: 6, marginRight: 4, alignItems: "center", flexShrink: 0 }}>
             {["#FF5F57","#FEBC2E","#28C840"].map(c => <div key={c} style={{ width: 12, height: 12, borderRadius: "50%", background: c }} />)}
           </div>
@@ -123,34 +123,34 @@ const HarveWindow = ({ show, blur = 0 }) => {
           <Avatar letter="A" />
         </div>
         <div style={{ height: 1, background: "linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.07) 12%, rgba(255,255,255,0.07) 88%, transparent 100%)" }} />
-        <div style={{ height: 6 }} />
+        <div style={{ height: 4 }} />
       </div>
       <div style={{ flex: 1, overflowY: "auto", overflowX: "hidden", minHeight: 0, WebkitOverflowScrolling: "touch" }}>
-        <div style={{ padding: "0 28px 20px", background: "#111114" }}>
-          <div style={{ padding: "16px 0 14px", display: "flex", flexDirection: "column", gap: 6 }}>
-            <div style={{ fontSize: 20, fontWeight: 600, lineHeight: 1.25, color: "#E4E4E8" }}>Hey, Alex</div>
-            <div style={{ fontSize: 13, color: "#5E5E6A", lineHeight: 1.4 }}>Available: $20.00 · Next payout Monday</div>
+        <div style={{ padding: "0 22px 22px", background: "#111114" }}>
+          <div style={{ padding: "18px 0 16px", display: "flex", flexDirection: "column", gap: 8 }}>
+            <div style={{ fontSize: 21, fontWeight: 600, lineHeight: 1.28, color: "#E4E4E8" }}>Hey, Alex</div>
+            <div style={{ fontSize: 13, color: "#5E5E6A", lineHeight: 1.45 }}>Available: $20.00 · Next payout Monday</div>
           </div>
-          <div style={{ marginBottom: 14, padding: "12px 16px", borderRadius: 12, background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.11)" }}>
-            <div style={{ fontSize: 13, fontWeight: 600, lineHeight: 1.45, color: "rgba(255,255,255,0.96)" }}>Your recent sessions are scoring as high-value professional work. That means higher payouts. Keep it up.</div>
-            <div style={{ fontSize: 12, fontWeight: 500, marginTop: 8, color: "rgba(255,255,255,0.58)", lineHeight: 1.35 }}>Average quality score: 88/100.</div>
+          <div style={{ marginBottom: 16, padding: "14px 18px", borderRadius: 12, background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.11)" }}>
+            <div style={{ fontSize: 13, fontWeight: 600, lineHeight: 1.5, color: "rgba(255,255,255,0.96)" }}>Your recent sessions are scoring as high-value professional work. That means higher payouts. Keep it up.</div>
+            <div style={{ fontSize: 12, fontWeight: 500, marginTop: 10, color: "rgba(255,255,255,0.58)", lineHeight: 1.4 }}>Average quality score: 88/100.</div>
           </div>
-          <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-            <div style={{ padding: 20, borderRadius: 14, background: "linear-gradient(135deg, #0F1B3D 0%, #1A2F6B 40%, #2845A0 100%)", position: "relative", overflow: "hidden" }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+            <div style={{ padding: 22, borderRadius: 14, background: "linear-gradient(135deg, #0F1B3D 0%, #1A2F6B 40%, #2845A0 100%)", position: "relative", overflow: "hidden" }}>
               <div style={{ position: "absolute", top: 0, right: 0, width: "50%", height: "100%", background: "linear-gradient(135deg, transparent, rgba(59,130,246,0.15))" }} />
-              <div style={{ fontSize: 16, fontWeight: 600, color: "white", position: "relative", lineHeight: 1.3, marginBottom: 8 }}>Start earning now</div>
-              <div style={{ fontSize: 12, color: "rgba(255,255,255,0.5)", marginBottom: 14, lineHeight: 1.45, position: "relative" }}>Longer sessions pay more. Start recording and forget.</div>
-              <div style={{ display: "inline-flex", padding: "8px 16px", borderRadius: 8, fontSize: 12, fontWeight: 600, color: "white", background: "rgba(255,255,255,0.10)", border: "1px solid rgba(255,255,255,0.12)", position: "relative" }}>● Start Recording</div>
+              <div style={{ fontSize: 17, fontWeight: 600, color: "white", position: "relative", lineHeight: 1.32, marginBottom: 10 }}>Start earning now</div>
+              <div style={{ fontSize: 13, color: "rgba(255,255,255,0.55)", marginBottom: 16, lineHeight: 1.48, position: "relative" }}>Longer sessions pay more. Start recording and forget.</div>
+              <div style={{ display: "inline-flex", padding: "9px 18px", borderRadius: 8, fontSize: 12, fontWeight: 600, color: "white", background: "rgba(255,255,255,0.10)", border: "1px solid rgba(255,255,255,0.12)", position: "relative" }}>● Start Recording</div>
             </div>
-            <div style={{ padding: "18px 20px", borderRadius: 14, background: "rgba(255,255,255,0.03)" }}>
-              <div style={{ fontSize: 11, fontWeight: 500, marginBottom: 6, color: "#5E5E6A", lineHeight: 1.2 }}>Earned today</div>
-              <div style={{ fontSize: 26, fontWeight: 700, lineHeight: 1.15 }}>$20.00</div>
-              <div style={{ fontSize: 12, color: "#5E5E6A", marginTop: 8, lineHeight: 1.35 }}>Next payout: Monday</div>
+            <div style={{ padding: "20px 22px", borderRadius: 14, background: "rgba(255,255,255,0.03)" }}>
+              <div style={{ fontSize: 11, fontWeight: 500, marginBottom: 8, color: "#5E5E6A", lineHeight: 1.25 }}>Earned today</div>
+              <div style={{ fontSize: 28, fontWeight: 700, lineHeight: 1.12 }}>$20.00</div>
+              <div style={{ fontSize: 12, color: "#5E5E6A", marginTop: 10, lineHeight: 1.4 }}>Next payout: Monday</div>
             </div>
           </div>
         </div>
-        <div style={{ background: "#0C0C0F", borderRadius: "14px 14px 0 0", minHeight: 120 }}>
-          <div style={{ padding: "16px 28px 20px" }}>
+        <div style={{ background: "#0C0C0F", borderRadius: "14px 14px 0 0", minHeight: 128 }}>
+          <div style={{ padding: "18px 22px 22px" }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
               <div style={{ fontSize: 14, fontWeight: 600, lineHeight: 1.2 }}>Recordings</div>
               <div style={{ fontSize: 12, color: "#5E5E6A" }}>19 total</div>
@@ -176,16 +176,16 @@ const HarveWindow = ({ show, blur = 0 }) => {
 
 const Pill = ({ expanded, showGreeting, greetingOp, showPanel, showPraise, praiseOp, timerSec, pillOp, solidOp }) => {
   const br = expanded && !showPraise ? 18 : 100;
-  const pad = expanded && !showPraise ? "0 18px 14px" : "0 18px";
+  const pad = expanded && !showPraise ? "0 18px 16px" : "0 18px";
   return (
     <div style={{
-      width: 280, margin: "0 auto", overflow: "hidden",
+      width: 288, margin: "0 auto", overflow: "hidden",
       background: "linear-gradient(145deg, rgba(225,240,255,0.28) 0%, rgba(180,215,255,0.16) 100%)",
       backdropFilter: "blur(32px) saturate(180%) brightness(1.04)",
       WebkitBackdropFilter: "blur(32px) saturate(180%) brightness(1.04)",
       borderRadius: br, padding: pad,
-      border: "1px solid rgba(255,255,255,0.35)",
-      boxShadow: "0 8px 32px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.3)",
+      border: "1px solid rgba(255,255,255,0.28)",
+      boxShadow: "0 8px 28px rgba(0,0,0,0.1), 0 2px 8px rgba(0,0,0,0.06)",
       opacity: pillOp,
       transition: "border-radius 0.48s cubic-bezier(0.4,0,0.2,1), padding 0.48s cubic-bezier(0.4,0,0.2,1), opacity 0.34s ease-out",
       position: "relative",
@@ -199,20 +199,20 @@ const Pill = ({ expanded, showGreeting, greetingOp, showPanel, showPraise, prais
         <div style={{ display: "flex", alignItems: "center", gap: 6, flexShrink: 0 }}><PulseDot /><TimerDisplay seconds={timerSec} /></div>
       </div>
       {expanded && (
-        <div style={{ maxHeight: showPanel ? 230 : 0, opacity: showPanel ? 1 : 0, overflow: "hidden", transition: "max-height 0.28s cubic-bezier(0.4,0,0.2,1), opacity 0.28s ease-out" }}>
-          <div style={{ background: "rgba(242,250,255,0.42)", border: "1px solid rgba(255,255,255,0.7)", borderRadius: 13, padding: "11px 14px", marginBottom: 10, backdropFilter: "blur(8px)" }}>
-            <div style={{ fontSize: 10, fontWeight: 600, color: "rgba(60,80,110,0.6)", letterSpacing: 0.8, textTransform: "uppercase", marginBottom: 4 }}>THIS SESSION</div>
-            <div style={{ fontSize: 36, fontWeight: 700, color: "rgba(20,40,70,0.9)", fontVariantNumeric: "tabular-nums", lineHeight: 1.1, fontFamily: "-apple-system, 'SF Pro Display', 'Helvetica Neue', sans-serif" }}>$397.45</div>
-            <div style={{ fontSize: 11, fontWeight: 500, color: "rgba(60,80,110,0.55)", marginTop: 3 }}>Quality score <span style={{ color: "rgba(52,150,100,0.8)" }}>82</span>/100 · High Value</div>
+        <div style={{ maxHeight: showPanel ? 268 : 0, opacity: showPanel ? 1 : 0, overflow: "hidden", transition: "max-height 0.32s cubic-bezier(0.4,0,0.2,1), opacity 0.28s ease-out" }}>
+          <div style={{ background: "rgba(242,250,255,0.42)", border: "1px solid rgba(255,255,255,0.65)", borderRadius: 13, padding: "12px 16px", marginBottom: 12, backdropFilter: "blur(8px)" }}>
+            <div style={{ fontSize: 10, fontWeight: 600, color: "rgba(60,80,110,0.6)", letterSpacing: 0.8, textTransform: "uppercase", marginBottom: 6 }}>THIS SESSION</div>
+            <div style={{ fontSize: 34, fontWeight: 700, color: "rgba(20,40,70,0.9)", fontVariantNumeric: "tabular-nums", lineHeight: 1.12, fontFamily: "-apple-system, 'SF Pro Display', 'Helvetica Neue', sans-serif" }}>$397.45</div>
+            <div style={{ fontSize: 11, fontWeight: 500, color: "rgba(60,80,110,0.55)", marginTop: 6, lineHeight: 1.35 }}>Quality score <span style={{ color: "rgba(52,150,100,0.8)" }}>82</span>/100 · High Value</div>
           </div>
-          <div style={{ display: "flex", gap: 6, alignItems: "center" }}>
-            <button type="button" style={{ flex: 1, height: 34, borderRadius: 10, border: "1px solid rgba(180,200,225,0.4)", background: "rgba(240,248,255,0.5)", backdropFilter: "blur(6px)", display: "flex", alignItems: "center", justifyContent: "center", gap: 6, fontSize: 12, fontWeight: 600, color: "rgba(40,60,90,0.75)", cursor: "default", fontFamily: "-apple-system, sans-serif" }}>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: 8, alignItems: "center", paddingBottom: 2 }}>
+            <button type="button" style={{ flex: "1 1 120px", minHeight: 36, borderRadius: 10, border: "1px solid rgba(180,200,225,0.4)", background: "rgba(240,248,255,0.5)", backdropFilter: "blur(6px)", display: "flex", alignItems: "center", justifyContent: "center", gap: 6, fontSize: 12, fontWeight: 600, color: "rgba(40,60,90,0.75)", cursor: "default", fontFamily: "-apple-system, sans-serif", padding: "0 10px" }}>
               <span style={{ fontSize: 10 }}>❚❚</span> Pause
             </button>
-            <button type="button" style={{ width: 38, height: 34, borderRadius: 10, border: "1px solid rgba(180,200,225,0.4)", background: "rgba(240,248,255,0.5)", backdropFilter: "blur(6px)", display: "flex", alignItems: "center", justifyContent: "center", cursor: "default", flexShrink: 0 }}>
+            <button type="button" style={{ width: 40, minHeight: 36, borderRadius: 10, border: "1px solid rgba(180,200,225,0.4)", background: "rgba(240,248,255,0.5)", backdropFilter: "blur(6px)", display: "flex", alignItems: "center", justifyContent: "center", cursor: "default", flexShrink: 0 }}>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(40,60,90,0.7)" strokeWidth="2" strokeLinecap="round"><rect x="9" y="1" width="6" height="12" rx="3" /><path d="M5 10a7 7 0 0014 0" /><line x1="12" y1="17" x2="12" y2="21" /></svg>
             </button>
-            <button type="button" style={{ width: 38, height: 34, borderRadius: 10, border: "1px solid rgba(100,140,200,0.4)", background: "linear-gradient(135deg, rgba(80,130,220,0.6), rgba(60,110,200,0.7))", display: "flex", alignItems: "center", justifyContent: "center", cursor: "default", flexShrink: 0 }}>
+            <button type="button" style={{ width: 40, minHeight: 36, borderRadius: 10, border: "1px solid rgba(100,140,200,0.4)", background: "linear-gradient(135deg, rgba(80,130,220,0.6), rgba(60,110,200,0.7))", display: "flex", alignItems: "center", justifyContent: "center", cursor: "default", flexShrink: 0 }}>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" /></svg>
             </button>
           </div>
@@ -272,7 +272,7 @@ export default function HarveFullDemo({ play = false }) {
     setPillVisible(true); setPillPhase("idle");
     await sleep(T.IDLE);
     if (myRun !== runIdRef.current || !mountedRef.current) return;
-    setPillPhase("zooming"); setZoom(2.6); setBgBlur(6);
+    setPillPhase("zooming"); setZoom(2.08); setBgBlur(6);
     await sleep(T.ZOOM);
     if (myRun !== runIdRef.current || !mountedRef.current) return;
     setPillPhase("greeting"); setShowGreeting(true); setSolidOp(1);
@@ -348,7 +348,7 @@ export default function HarveFullDemo({ play = false }) {
 
   return (
     <div style={{
-      width: "100%", maxWidth: 880, aspectRatio: "16 / 10", maxHeight: "min(56vh, 520px)",
+      width: "100%", maxWidth: 980, aspectRatio: "16 / 10", maxHeight: "min(62vh, 620px)",
       margin: "0 auto", position: "relative", overflow: "hidden", background: "#FFF",
       fontFamily: "-apple-system, 'SF Pro Display', 'Helvetica Neue', 'Inter', sans-serif",
       borderRadius: 18, lineHeight: "normal",
@@ -363,15 +363,19 @@ export default function HarveFullDemo({ play = false }) {
         ::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.08);border-radius:3px}
         ::-webkit-scrollbar-thumb:hover{background:rgba(255,255,255,0.14)}
       `}</style>
-      <div className="harve-demo-root-inner" style={{ position: "absolute", inset: 0, lineHeight: "normal" }}>
+      <div className="harve-demo-root-inner" style={{
+        position: "absolute", inset: 0, lineHeight: "normal",
+        overflow: "hidden", borderRadius: 18, isolation: "isolate",
+      }}>
         <Wallpaper show={wallIn} />
         <TopBar show={menuIn} />
         <HarveWindow show={windowIn} blur={bgBlur} />
         <div style={{
-          position: "absolute", top: 30, left: "50%",
+          position: "absolute", top: 28, left: "50%",
           transform: `translateX(-50%) scale(${zoom})`, transformOrigin: "top center",
           transition: "transform 1s cubic-bezier(0.4,0,0.2,1)",
-          width: 280, height: 280, zIndex: 200, pointerEvents: "none",
+          width: 288, minHeight: 52, zIndex: 200, pointerEvents: "none",
+          maxWidth: "calc(100% - 16px)",
         }}>
           <div style={{ transform: pillVisible ? "translateY(0)" : "translateY(-20px)", opacity: pillVisible ? 1 : 0, transition: "transform 0.3s ease-out, opacity 0.3s ease-out" }}>
             <Pill expanded={expanded} showGreeting={showGreeting} greetingOp={greetingOp}
