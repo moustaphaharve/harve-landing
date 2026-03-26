@@ -552,229 +552,208 @@ a.nav-cta, a.cta-primary, a.cta-secondary {
 }
 .card-body { font: 400 15px/1.7 'DM Sans', sans-serif; color: var(--text-secondary); margin-top: 10px; }
 
-/* ── Earnings explorer (interactive scroll + hours slider) ── */
-.earnings-section { padding: 0 48px 100px; max-width: 920px; margin: 0 auto; text-align: center; }
-.earnings-section .section-headline { margin-bottom: 28px; }
-.earnings-explorer {
+/* ── Earnings: dark band (enterprise-adjacent) + seamless slider + spotlight ── */
+.earnings-dark-band {
+  --earn-navy: #070F1A;
+  --earn-navy-mid: #0B1628;
+  --earn-border: rgba(255, 255, 255, 0.09);
+  --earn-muted: rgba(255, 255, 255, 0.52);
+  --earn-dim: rgba(255, 255, 255, 0.38);
+  --earn-track: rgba(13, 30, 58, 0.95);
+  --earn-accent: #3B7FE8;
+  --earn-scroll: 1;
   position: relative;
+  padding: 100px 48px 72px;
+  max-width: none;
+  margin: 0;
+  background:
+    radial-gradient(ellipse 90% 55% at 50% -10%, rgba(59, 127, 232, 0.14) 0%, transparent 52%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(7, 15, 26, 0.88) 12%, var(--earn-navy) 28%, var(--earn-navy-mid) 100%);
+}
+.earnings-dark-band-fade {
+  height: 64px;
+  margin: 0;
+  background: linear-gradient(180deg, var(--earn-navy-mid) 0%, rgba(220, 232, 248, 0.35) 55%, rgba(248, 250, 255, 0.55) 100%);
+  pointer-events: none;
+}
+.earnings-section {
+  max-width: 640px;
   margin: 0 auto;
-  max-width: 880px;
-  text-align: left;
+  text-align: center;
+  padding: 0;
 }
-.earnings-explorer-range {
-  margin-bottom: 20px;
-  padding: 18px 20px 20px;
-  border-radius: 18px;
-  background: linear-gradient(145deg, rgba(235,245,255,0.28) 0%, rgba(210,230,255,0.14) 100%);
-  border: 1px solid rgba(255,255,255,0.65);
-  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-  box-shadow: 0 8px 32px rgba(10, 28, 92, 0.08), inset 0 1px 0 rgba(255,255,255,0.75);
+.earnings-dark-band .earnings-headline {
+  font: normal clamp(32px, 5vw, 44px) 'Alice', serif;
+  color: rgba(255, 255, 255, 0.96);
+  margin-bottom: 12px;
+  letter-spacing: -0.02em;
 }
-.earnings-explorer-range label {
+.earnings-sub {
+  font: 400 15px 'DM Sans', sans-serif;
+  color: var(--earn-muted);
+  margin-bottom: 40px;
+  line-height: 1.5;
+}
+.earnings-explorer {
+  text-align: center;
+}
+.earnings-slider-block {
+  margin-bottom: 36px;
+  transition: transform 0.2s ease-out, opacity 0.2s ease-out;
+  transform: translateY(calc(12px * (1 - var(--earn-scroll, 1))));
+  opacity: calc(0.45 + 0.55 * var(--earn-scroll, 1));
+}
+.earnings-explorer label[for="earnings-hrs-slider"] {
   display: block;
   font: 600 11px 'DM Sans', sans-serif;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--text-muted);
-  margin-bottom: 10px;
+  color: var(--earn-dim);
+  margin-bottom: 18px;
 }
-.earnings-range-row {
+.earnings-slider-row {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 20px;
   flex-wrap: wrap;
+  justify-content: center;
 }
-.earnings-range {
+.earnings-range-dark {
   flex: 1;
-  min-width: 160px;
+  min-width: 200px;
+  max-width: 420px;
   height: 8px;
   -webkit-appearance: none;
   appearance: none;
-  border-radius: 8px;
-  background: linear-gradient(90deg, rgba(180,200,235,0.35), rgba(80,120,200,0.45));
+  border-radius: 99px;
+  background: transparent;
   outline: none;
+  cursor: pointer;
 }
-.earnings-range::-webkit-slider-thumb {
+.earnings-range-dark::-webkit-slider-runnable-track {
+  height: 6px;
+  border-radius: 99px;
+  background: var(--earn-track);
+  border: 1px solid var(--earn-border);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.35);
+}
+.earnings-range-dark::-webkit-slider-thumb {
   -webkit-appearance: none;
-  width: 22px; height: 22px;
+  width: 28px;
+  height: 28px;
+  margin-top: -11px;
   border-radius: 50%;
-  background: linear-gradient(145deg, #5b8def, #3b6fd4);
-  box-shadow: 0 2px 12px rgba(55,100,200,0.45), inset 0 1px 0 rgba(255,255,255,0.35);
+  background: linear-gradient(145deg, #5a9cff, var(--earn-accent));
+  border: 2px solid rgba(255, 255, 255, 0.95);
+  box-shadow:
+    0 0 0 4px rgba(59, 127, 232, 0.22),
+    0 0 28px rgba(59, 127, 232, 0.45),
+    0 6px 18px rgba(0, 0, 0, 0.45);
   cursor: grab;
-  border: 2px solid rgba(255,255,255,0.9);
 }
-.earnings-range::-moz-range-thumb {
-  width: 22px; height: 22px;
+.earnings-range-dark::-moz-range-track {
+  height: 6px;
+  border-radius: 99px;
+  background: var(--earn-track);
+  border: 1px solid var(--earn-border);
+}
+.earnings-range-dark::-moz-range-thumb {
+  width: 28px;
+  height: 28px;
   border-radius: 50%;
-  background: linear-gradient(145deg, #5b8def, #3b6fd4);
-  box-shadow: 0 2px 12px rgba(55,100,200,0.45);
+  background: linear-gradient(145deg, #5a9cff, var(--earn-accent));
+  border: 2px solid rgba(255, 255, 255, 0.95);
+  box-shadow: 0 0 0 4px rgba(59, 127, 232, 0.22), 0 0 28px rgba(59, 127, 232, 0.45);
   cursor: grab;
-  border: 2px solid rgba(255,255,255,0.9);
 }
-.earnings-range-readout {
-  font: 600 15px 'DM Sans', sans-serif;
-  color: var(--text-primary);
+.earnings-range-readout-dark {
+  font: 600 16px 'DM Sans', sans-serif;
+  color: rgba(255, 255, 255, 0.92);
   font-variant-numeric: tabular-nums;
-  min-width: 7.5em;
-  text-align: right;
+  min-width: 8em;
+  text-align: left;
 }
-.earnings-range-readout span { color: var(--text-secondary); font-weight: 500; font-size: 13px; }
-.earnings-scroll-outer {
-  position: relative;
-  margin: 0 -8px;
-  padding: 8px 0 12px;
+.earnings-range-readout-dark .muted {
+  font-weight: 500;
+  font-size: 13px;
+  color: var(--earn-muted);
+  margin-left: 4px;
 }
-.earnings-scroll-outer::before,
-.earnings-scroll-outer::after {
-  content: '';
-  position: absolute;
-  top: 8px; bottom: 12px;
-  width: 36px;
-  z-index: 2;
-  pointer-events: none;
-  border-radius: 4px;
+.earnings-spotlight {
+  padding: 28px 0 8px;
+  border: none;
+  background: none;
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.75s cubic-bezier(0.22, 1, 0.36, 1), transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
 }
-.earnings-scroll-outer::before {
-  left: 0;
-  background: linear-gradient(90deg, rgba(255,255,255,0.95) 0%, transparent 100%);
+.earnings-dark-band.earnings-band--visible .earnings-spotlight {
+  opacity: 1;
+  transform: translateY(0);
 }
-.earnings-scroll-outer::after {
-  right: 0;
-  background: linear-gradient(270deg, rgba(255,255,255,0.95) 0%, transparent 100%);
+.earnings-spotlight.is-updating {
+  opacity: 0.45;
+  transition: opacity 0.15s ease;
 }
-@media (max-width: 600px) {
-  .earnings-scroll-outer::before,
-  .earnings-scroll-outer::after { width: 20px; }
-}
-.earnings-scroll {
-  display: flex;
-  gap: 14px;
-  overflow-x: auto;
-  overflow-y: hidden;
-  scroll-snap-type: x mandatory;
-  scroll-padding: 24px;
-  padding: 12px 24px 20px;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: thin;
-  scrollbar-color: rgba(80, 110, 175, 0.35) rgba(220, 232, 248, 0.35);
-}
-.earnings-scroll::-webkit-scrollbar { height: 8px; }
-.earnings-scroll::-webkit-scrollbar-track { background: rgba(220, 232, 248, 0.35); border-radius: 10px; }
-.earnings-scroll::-webkit-scrollbar-thumb { background: rgba(80, 110, 175, 0.35); border-radius: 10px; }
-.earnings-card-slide {
-  flex: 0 0 min(300px, calc(100vw - 120px));
-  max-width: 320px;
-  scroll-snap-align: center;
-  border-radius: 20px;
-  padding: 22px 22px 20px;
-  background: linear-gradient(155deg, rgba(248,252,255,0.55) 0%, rgba(220,235,255,0.22) 100%);
-  border: 1px solid rgba(255,255,255,0.78);
-  backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
-  box-shadow: 0 12px 40px rgba(10, 28, 92, 0.1), inset 0 1.5px 0 rgba(255,255,255,0.9);
-  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s ease, border-color 0.25s ease;
-}
-.earnings-card-slide.is-active {
-  transform: scale(1.02);
-  box-shadow: 0 16px 48px rgba(55, 100, 200, 0.16), inset 0 1.5px 0 rgba(255,255,255,0.95);
-  border-color: rgba(140, 170, 230, 0.65);
-}
-.earnings-card-slide:focus-visible {
-  outline: 2px solid rgba(59, 130, 246, 0.55);
-  outline-offset: 3px;
-}
-.ecs-role {
-  font: 700 clamp(17px, 2.8vw, 20px) 'Alice', serif;
-  color: var(--text-primary);
+.earnings-spotlight-role {
+  font: 500 clamp(22px, 4vw, 30px) 'Alice', serif;
+  color: rgba(255, 255, 255, 0.98);
   letter-spacing: -0.02em;
   line-height: 1.2;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
 }
-.ecs-hours {
-  display: inline-block;
-  font: 500 12px 'DM Sans', sans-serif;
-  color: var(--text-muted);
-  letter-spacing: 0.04em;
-  margin-bottom: 14px;
-  padding: 4px 10px;
-  border-radius: 100px;
-  background: rgba(255,255,255,0.45);
-  border: 1px solid rgba(255,255,255,0.65);
+.earnings-spotlight-meta {
+  font: 400 14px 'DM Sans', sans-serif;
+  color: var(--earn-muted);
+  margin-bottom: 20px;
 }
-.ecs-money {
-  font: 800 clamp(32px, 7vw, 40px) 'Alice', serif;
-  color: var(--text-primary);
+.earnings-spotlight-money {
+  font: 600 clamp(40px, 9vw, 56px) 'Alice', serif;
+  color: rgba(255, 255, 255, 0.98);
   font-variant-numeric: tabular-nums;
   letter-spacing: -0.03em;
-  line-height: 1;
+  line-height: 1.05;
 }
-.ecs-money .ecs-per {
-  font: 600 15px 'DM Sans', sans-serif;
-  color: var(--text-secondary);
-  margin-left: 2px;
-}
-.earnings-explorer-nav {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  margin-top: 4px;
-}
-.earnings-explorer-btn {
-  width: 42px; height: 42px;
-  border-radius: 50%;
-  border: 1px solid rgba(255,255,255,0.75);
-  background: rgba(255,255,255,0.5);
-  backdrop-filter: blur(10px);
-  color: var(--text-primary);
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  transition: background 0.2s, transform 0.15s;
-  box-shadow: 0 4px 14px rgba(10,28,92,0.08);
-}
-.earnings-explorer-btn:hover { background: rgba(255,255,255,0.85); transform: translateY(-1px); }
-.earnings-explorer-btn:active { transform: translateY(0); }
-.earnings-explorer-btn svg { width: 18px; height: 18px; }
-.earnings-dots {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 12px;
-  padding: 0 8px;
-}
-.earnings-dot {
-  width: 8px; height: 8px;
-  border-radius: 50%;
-  border: none;
-  padding: 0;
-  background: rgba(80, 110, 175, 0.25);
-  cursor: pointer;
-  transition: transform 0.2s, background 0.2s;
-}
-.earnings-dot.is-active {
-  background: rgba(10, 28, 92, 0.75);
-  transform: scale(1.25);
+.earnings-spotlight-money .earnings-per {
+  font: 500 17px 'DM Sans', sans-serif;
+  color: var(--earn-dim);
+  margin-left: 4px;
 }
 .earnings-explorer-hint {
   font: 400 13px 'DM Sans', sans-serif;
-  color: var(--text-muted);
-  text-align: center;
-  margin-top: 18px;
-  line-height: 1.5;
+  color: var(--earn-dim);
+  margin-top: 20px;
+  line-height: 1.55;
+  max-width: 480px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.earnings-disclaimer {
+  font: 400 12px 'DM Sans', sans-serif;
+  color: rgba(255, 255, 255, 0.42);
+  margin-top: 28px;
+  max-width: 520px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.55;
 }
 @media (prefers-reduced-motion: reduce) {
-  .earnings-card-slide { transition: none; }
-  .earnings-scroll { scroll-behavior: auto; }
+  .earnings-spotlight { transition: none; }
+  .earnings-dark-band.earnings-band--visible .earnings-spotlight { opacity: 1; transform: none; }
 }
 .table-note {
   font: 400 12px 'DM Sans', sans-serif; color: var(--text-muted);
-  margin-top: 20px; max-width: 560px; margin-left: auto; margin-right: auto;
+  margin-top: 16px; max-width: 560px; margin-left: auto; margin-right: auto;
 }
 
 /* ── Final CTA ── */
-.final-cta { padding: 100px 48px; text-align: center; }
+.final-cta {
+  padding: 100px 48px;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+  background: linear-gradient(180deg, rgba(248, 250, 255, 0.55) 0%, rgba(220, 232, 248, 0.2) 100%);
+}
 .final-cta h2 { font: normal 56px 'Alice', serif; color: var(--text-primary); margin-bottom: 12px; }
 .final-cta p { font: 400 18px/1.6 'DM Sans', sans-serif; color: var(--text-secondary); margin-bottom: 36px; }
 
@@ -962,7 +941,8 @@ a.nav-cta, a.cta-primary, a.cta-secondary {
   .cards { grid-template-columns: 1fr; }
   .nav { padding: 16px 24px; }
   .nav-links { display: none; }
-  .how, .earnings-section, .final-cta, .footer, .faq { padding-left: 24px; padding-right: 24px; }
+  .how, .final-cta, .footer, .faq { padding-left: 24px; padding-right: 24px; }
+  .earnings-dark-band { padding-left: 24px; padding-right: 24px; }
   .pill-wrap { width: 320px; }
   .footer-top { flex-direction: column; }
   .footer-cols { gap: 36px; flex-wrap: wrap; }
@@ -1116,79 +1096,30 @@ a.nav-cta, a.cta-primary, a.cta-secondary {
   </div>
 </section>
 
-<!-- Earnings: interactive horizontal scroll + hours slider -->
-<section class="earnings-section" id="earnings">
-  <div class="section-headline reveal">What people are earning</div>
-  <div class="earnings-explorer reveal">
-    <div class="earnings-explorer-range">
-      <label for="earnings-hrs-slider">Slide to match your monthly hours</label>
-      <div class="earnings-range-row">
-        <input type="range" id="earnings-hrs-slider" class="earnings-range" min="60" max="140" value="90" step="1" aria-valuetext="90 hours per month" />
-        <div class="earnings-range-readout" aria-live="polite"><strong id="earnings-hrs-readout">90</strong> <span>hrs / mo</span></div>
-      </div>
-    </div>
-    <div class="earnings-scroll-outer">
-      <div class="earnings-scroll" id="earnings-scroll" role="list" aria-label="Example monthly earnings by role">
-        <div class="earnings-card-slide" role="listitem" tabindex="-1" data-hours="110" data-monthly="165">
-          <div class="ecs-role">Student</div>
-          <div class="ecs-hours"><span class="ecs-h">110</span> hrs / month</div>
-          <div class="ecs-money">$165<span class="ecs-per">/mo</span></div>
-        </div>
-        <div class="earnings-card-slide" role="listitem" tabindex="-1" data-hours="132" data-monthly="594">
-          <div class="ecs-role">Student (verified)</div>
-          <div class="ecs-hours"><span class="ecs-h">132</span> hrs / month</div>
-          <div class="ecs-money">$594<span class="ecs-per">/mo</span></div>
-        </div>
-        <div class="earnings-card-slide" role="listitem" tabindex="-1" data-hours="68" data-monthly="204">
-          <div class="ecs-role">Office professional</div>
-          <div class="ecs-hours"><span class="ecs-h">68</span> hrs / month</div>
-          <div class="ecs-money">$204<span class="ecs-per">/mo</span></div>
-        </div>
-        <div class="earnings-card-slide" role="listitem" tabindex="-1" data-hours="90" data-monthly="855">
-          <div class="ecs-role">Engineer / Analyst</div>
-          <div class="ecs-hours"><span class="ecs-h">90</span> hrs / month</div>
-          <div class="ecs-money">$855<span class="ecs-per">/mo</span></div>
-        </div>
-        <div class="earnings-card-slide" role="listitem" tabindex="-1" data-hours="91" data-monthly="1934">
-          <div class="ecs-role">Lawyer / Doctor</div>
-          <div class="ecs-hours"><span class="ecs-h">91</span> hrs / month</div>
-          <div class="ecs-money">$1,934<span class="ecs-per">/mo</span></div>
-        </div>
-        <div class="earnings-card-slide" role="listitem" tabindex="-1" data-hours="72" data-monthly="288">
-          <div class="ecs-role">Designer / Creative</div>
-          <div class="ecs-hours"><span class="ecs-h">72</span> hrs / month</div>
-          <div class="ecs-money">$288<span class="ecs-per">/mo</span></div>
-        </div>
-        <div class="earnings-card-slide" role="listitem" tabindex="-1" data-hours="75" data-monthly="312">
-          <div class="ecs-role">Freelancer</div>
-          <div class="ecs-hours"><span class="ecs-h">75</span> hrs / month</div>
-          <div class="ecs-money">$312<span class="ecs-per">/mo</span></div>
-        </div>
-        <div class="earnings-card-slide" role="listitem" tabindex="-1" data-hours="95" data-monthly="428">
-          <div class="ecs-role">Researcher</div>
-          <div class="ecs-hours"><span class="ecs-h">95</span> hrs / month</div>
-          <div class="ecs-money">$428<span class="ecs-per">/mo</span></div>
-        </div>
-        <div class="earnings-card-slide" role="listitem" tabindex="-1" data-hours="120" data-monthly="380">
-          <div class="ecs-role">Content creator</div>
-          <div class="ecs-hours"><span class="ecs-h">120</span> hrs / month</div>
-          <div class="ecs-money">$380<span class="ecs-per">/mo</span></div>
+<!-- Earnings: dark band, seamless slider + spotlight (no carousel) -->
+<div class="earnings-dark-band" id="earnings-dark-band">
+  <section class="earnings-section" id="earnings">
+    <h2 class="earnings-headline reveal">What people are earning</h2>
+    <p class="earnings-sub reveal">Match the handle to your monthly professional hours — we interpolate to the nearest real community profile.</p>
+    <div class="earnings-explorer reveal">
+      <div class="earnings-slider-block">
+        <label for="earnings-hrs-slider">Monthly professional hours</label>
+        <div class="earnings-slider-row">
+          <input type="range" id="earnings-hrs-slider" class="earnings-range-dark" min="60" max="140" value="90" step="1" aria-valuetext="90 hours per month" />
+          <div class="earnings-range-readout-dark" aria-live="polite"><span id="earnings-hrs-readout">90</span><span class="muted"> hrs / mo</span></div>
         </div>
       </div>
+      <div class="earnings-spotlight" id="earnings-spotlight" aria-live="polite">
+        <div class="earnings-spotlight-role" id="earnings-role">Engineer / Analyst</div>
+        <div class="earnings-spotlight-meta"><span id="earnings-hrs-display">90</span> hrs / month · example profile</div>
+        <div class="earnings-spotlight-money"><span id="earnings-money">$855</span><span class="earnings-per">/mo</span></div>
+      </div>
+      <p class="earnings-explorer-hint">Figures are illustrative; actual payouts depend on batch pricing and your quality score.</p>
     </div>
-    <div class="earnings-explorer-nav">
-      <button type="button" class="earnings-explorer-btn" id="earnings-prev" aria-label="Previous example">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
-      </button>
-      <button type="button" class="earnings-explorer-btn" id="earnings-next" aria-label="Next example">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
-      </button>
-    </div>
-    <div class="earnings-dots" id="earnings-dots" role="group" aria-label="Jump to an example"></div>
-    <p class="earnings-explorer-hint">Swipe the cards, use the arrows, or drag the slider — we snap to the closest real profile. Estimates vary by activity and batch sales.</p>
-  </div>
-  <div class="table-note reveal">Earnings reflect 25% revenue share of actual batch sale price. Higher professional activity = higher sell rate = higher earnings.</div>
-</section>
+    <p class="earnings-disclaimer reveal">Earnings reflect 25% revenue share of actual batch sale price. Higher professional activity = higher sell rate = higher earnings.</p>
+  </section>
+</div>
+<div class="earnings-dark-band-fade" aria-hidden="true"></div>
 
 <!-- Final CTA -->
 <section class="final-cta">
@@ -1744,49 +1675,40 @@ a.nav-cta, a.cta-primary, a.cta-secondary {
   window.addEventListener('resize', updateProofOpacity);
   updateProofOpacity();
 
-  // ── Earnings explorer: slider + scroll-snap cards + dots ──
+  // ── Earnings: dark band visibility + slider → spotlight (no carousel) ──
   (function earningsExplorer() {
-    var strip = document.getElementById('earnings-scroll');
+    var band = document.getElementById('earnings-dark-band');
     var slider = document.getElementById('earnings-hrs-slider');
     var readout = document.getElementById('earnings-hrs-readout');
-    var dotsRoot = document.getElementById('earnings-dots');
-    var btnPrev = document.getElementById('earnings-prev');
-    var btnNext = document.getElementById('earnings-next');
-    if (!strip || !slider || !dotsRoot) return;
+    var roleEl = document.getElementById('earnings-role');
+    var hrsDisplay = document.getElementById('earnings-hrs-display');
+    var moneyEl = document.getElementById('earnings-money');
+    var spotlight = document.getElementById('earnings-spotlight');
+    if (!slider || !roleEl || !hrsDisplay || !moneyEl || !spotlight) return;
 
-    var cards = strip.querySelectorAll('.earnings-card-slide');
-    var n = cards.length;
-    if (!n) return;
+    var EARNINGS = [
+      { role: 'Student', hours: 110, monthly: 165 },
+      { role: 'Student (verified)', hours: 132, monthly: 594 },
+      { role: 'Office professional', hours: 68, monthly: 204 },
+      { role: 'Engineer / Analyst', hours: 90, monthly: 855 },
+      { role: 'Lawyer / Doctor', hours: 91, monthly: 1934 },
+      { role: 'Designer / Creative', hours: 72, monthly: 288 },
+      { role: 'Freelancer', hours: 75, monthly: 312 },
+      { role: 'Researcher', hours: 95, monthly: 428 },
+      { role: 'Content creator', hours: 120, monthly: 380 }
+    ];
+    var n = EARNINGS.length;
 
-    var fromSlider = false;
-    var scrollEndTimer;
-
-    function hoursFromCard(el) {
-      return parseInt(el.getAttribute('data-hours'), 10) || 0;
+    function formatMoney(m) {
+      if (m >= 1000) return '$' + m.toLocaleString('en-US');
+      return '$' + m;
     }
 
-    function closestIndexForHours(h) {
+    function closestIndex(h) {
       var best = 0;
       var bd = Infinity;
       for (var i = 0; i < n; i++) {
-        var diff = Math.abs(hoursFromCard(cards[i]) - h);
-        if (diff < bd) {
-          bd = diff;
-          best = i;
-        }
-      }
-      return best;
-    }
-
-    function activeIndexFromScroll() {
-      var sr = strip.getBoundingClientRect();
-      var mid = sr.left + sr.width / 2;
-      var best = 0;
-      var bd = Infinity;
-      for (var i = 0; i < n; i++) {
-        var r = cards[i].getBoundingClientRect();
-        var c = r.left + r.width / 2;
-        var d = Math.abs(c - mid);
+        var d = Math.abs(EARNINGS[i].hours - h);
         if (d < bd) {
           bd = d;
           best = i;
@@ -1795,78 +1717,49 @@ a.nav-cta, a.cta-primary, a.cta-secondary {
       return best;
     }
 
-    function setActiveVisual(idx) {
-      for (var i = 0; i < n; i++) {
-        cards[i].classList.toggle('is-active', i === idx);
-        var dot = dotsRoot.children[i];
-        if (dot) dot.classList.toggle('is-active', i === idx);
-      }
+    function applyIndex(idx) {
+      var row = EARNINGS[idx];
+      roleEl.textContent = row.role;
+      hrsDisplay.textContent = String(row.hours);
+      moneyEl.textContent = formatMoney(row.monthly);
     }
 
-    function syncSliderToIndex(idx) {
-      var h = hoursFromCard(cards[idx]);
-      slider.value = String(Math.max(+slider.min, Math.min(+slider.max, h)));
-      readout.textContent = slider.value;
-      slider.setAttribute('aria-valuetext', slider.value + ' hours per month');
-    }
-
-    function onScrollEnd() {
-      var idx = activeIndexFromScroll();
-      setActiveVisual(idx);
-      if (!fromSlider) syncSliderToIndex(idx);
-      fromSlider = false;
-    }
-
-    function debounceScroll() {
-      clearTimeout(scrollEndTimer);
-      scrollEndTimer = setTimeout(onScrollEnd, 60);
-    }
-
-    // Dots
-    for (var d = 0; d < n; d++) {
-      (function (di) {
-        var b = document.createElement('button');
-        b.type = 'button';
-        b.className = 'earnings-dot';
-        b.setAttribute('aria-label', 'Show example ' + (di + 1) + ' of ' + n);
-        b.addEventListener('click', function () {
-          cards[di].scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
-        });
-        dotsRoot.appendChild(b);
-      })(d);
-    }
-
-    slider.addEventListener('input', function () {
-      fromSlider = true;
+    function syncFromSlider() {
       var h = +slider.value;
       readout.textContent = String(h);
       slider.setAttribute('aria-valuetext', h + ' hours per month');
-      var idx = closestIndexForHours(h);
-      cards[idx].scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
-      setActiveVisual(idx);
-    });
-
-    strip.addEventListener('scroll', debounceScroll, { passive: true });
-
-    function step(dir) {
-      var idx = activeIndexFromScroll();
-      var next = Math.max(0, Math.min(n - 1, idx + dir));
-      cards[next].scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+      var idx = closestIndex(h);
+      spotlight.classList.add('is-updating');
+      window.setTimeout(function () {
+        applyIndex(idx);
+        spotlight.classList.remove('is-updating');
+      }, 100);
     }
-    if (btnPrev) btnPrev.addEventListener('click', function () { step(-1); });
-    if (btnNext) btnNext.addEventListener('click', function () { step(1); });
 
-    // Initial: center Engineer / Analyst (90 hrs)
-    var startIdx = closestIndexForHours(90);
-    requestAnimationFrame(function () {
-      cards[startIdx].scrollIntoView({ inline: 'center', block: 'nearest' });
-      setActiveVisual(startIdx);
-      syncSliderToIndex(startIdx);
-    });
+    slider.addEventListener('input', syncFromSlider);
 
-    window.addEventListener('resize', function () {
-      onScrollEnd();
-    });
+    applyIndex(closestIndex(+slider.value));
+    readout.textContent = slider.value;
+
+    if (band) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) band.classList.add('earnings-band--visible');
+        });
+      }, { threshold: 0.1, rootMargin: '0px 0px -6% 0px' });
+      io.observe(band);
+
+      function earningsScrollDrive() {
+        var r = band.getBoundingClientRect();
+        var vh = window.innerHeight || 800;
+        var center = r.top + r.height * 0.38;
+        var t = 1 - Math.min(1, Math.max(0, center / (vh * 0.88)));
+        band.style.setProperty('--earn-scroll', t.toFixed(4));
+      }
+      window.addEventListener('scroll', earningsScrollDrive, { passive: true });
+      window.addEventListener('resize', earningsScrollDrive);
+      earningsScrollDrive();
+    }
   })();
 })();
 </script>
