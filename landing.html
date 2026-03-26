@@ -10,6 +10,16 @@
 <link href="https://fonts.googleapis.com/css2?family=Alice&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700;9..40,800&display=swap" rel="stylesheet">
 <!-- Demo (harve-demo.jsx): load Inter + Nunito in head so @font-face is ready before demo-bundle paints bold numerals -->
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script>
+(function () {
+  try {
+    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+    window.scrollTo(0, 0);
+    if (document.documentElement) document.documentElement.scrollTop = 0;
+    if (document.body) document.body.scrollTop = 0;
+  } catch (e) {}
+})();
+</script>
 <style>
 :root {
   --text-primary:   rgba(10, 28, 92, 0.92);
@@ -236,6 +246,31 @@ a.nav-cta, a.cta-primary, a.cta-secondary {
 .btn-download-primary:hover::after {
   mix-blend-mode: overlay;
   opacity: 0.5;
+}
+/* Final CTA download primary: lighter blue + ambient glow (glare ::after unchanged) */
+.final-cta .cta-download-row .btn-download-primary {
+  background: linear-gradient(
+    162deg,
+    rgba(72, 128, 235, 0.98) 0%,
+    rgba(45, 95, 210, 0.96) 38%,
+    rgba(32, 72, 185, 0.98) 100%
+  );
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  box-shadow:
+    0 0 0 1px rgba(120, 170, 255, 0.15),
+    0 10px 40px rgba(55, 120, 230, 0.42),
+    0 4px 14px rgba(10, 28, 92, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.28),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.12);
+}
+.final-cta .cta-download-row .btn-download-primary:hover {
+  background: rgba(255, 255, 255, 0.96);
+  color: var(--cta-bg);
+  border-color: rgba(255, 255, 255, 0.75);
+  box-shadow:
+    0 10px 36px rgba(55, 120, 220, 0.28),
+    0 4px 16px rgba(10, 28, 92, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.98);
 }
 .cta-note {
   font: 400 12px 'DM Sans', sans-serif;
@@ -563,17 +598,33 @@ a.nav-cta, a.cta-primary, a.cta-secondary {
   --earn-accent: #3B7FE8;
   --earn-scroll: 1;
   position: relative;
-  padding: 100px 48px 72px;
+  padding: 120px 48px 88px;
   max-width: none;
   margin: 0;
   background:
-    radial-gradient(ellipse 90% 55% at 50% -10%, rgba(59, 127, 232, 0.14) 0%, transparent 52%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(7, 15, 26, 0.88) 12%, var(--earn-navy) 28%, var(--earn-navy-mid) 100%);
+    radial-gradient(ellipse 100% 70% at 50% -5%, rgba(59, 127, 232, 0.1) 0%, transparent 55%),
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(230, 238, 250, 0.12) 5%,
+      rgba(140, 160, 200, 0.22) 14%,
+      rgba(45, 58, 88, 0.55) 24%,
+      rgba(12, 20, 38, 0.92) 34%,
+      var(--earn-navy) 42%,
+      var(--earn-navy-mid) 100%
+    );
 }
 .earnings-dark-band-fade {
-  height: 64px;
+  height: 100px;
   margin: 0;
-  background: linear-gradient(180deg, var(--earn-navy-mid) 0%, rgba(220, 232, 248, 0.35) 55%, rgba(248, 250, 255, 0.55) 100%);
+  background: linear-gradient(
+    180deg,
+    #0a1528 0%,
+    #0d1a30 18%,
+    rgba(200, 215, 238, 0.42) 62%,
+    rgba(236, 242, 252, 0.75) 88%,
+    rgba(248, 250, 255, 0.92) 100%
+  );
   pointer-events: none;
 }
 .earnings-section {
@@ -639,17 +690,24 @@ a.nav-cta, a.cta-primary, a.cta-secondary {
 }
 .earnings-range-dark::-webkit-slider-thumb {
   -webkit-appearance: none;
-  width: 28px;
-  height: 28px;
-  margin-top: -11px;
+  width: 26px;
+  height: 26px;
+  margin-top: -10px;
   border-radius: 50%;
-  background: linear-gradient(145deg, #5a9cff, var(--earn-accent));
-  border: 2px solid rgba(255, 255, 255, 0.95);
+  background: linear-gradient(155deg, #1c2838 0%, #0e141c 55%, #121a24 100%);
+  border: 2px solid rgba(255, 255, 255, 0.22);
   box-shadow:
-    0 0 0 4px rgba(59, 127, 232, 0.22),
-    0 0 28px rgba(59, 127, 232, 0.45),
-    0 6px 18px rgba(0, 0, 0, 0.45);
+    0 0 0 1px rgba(0, 0, 0, 0.45),
+    0 2px 10px rgba(0, 0, 0, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.14);
   cursor: grab;
+}
+.earnings-range-dark::-webkit-slider-thumb:hover {
+  border-color: rgba(255, 255, 255, 0.35);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.06),
+    0 4px 16px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18);
 }
 .earnings-range-dark::-moz-range-track {
   height: 6px;
@@ -658,12 +716,12 @@ a.nav-cta, a.cta-primary, a.cta-secondary {
   border: 1px solid var(--earn-border);
 }
 .earnings-range-dark::-moz-range-thumb {
-  width: 28px;
-  height: 28px;
+  width: 26px;
+  height: 26px;
   border-radius: 50%;
-  background: linear-gradient(145deg, #5a9cff, var(--earn-accent));
-  border: 2px solid rgba(255, 255, 255, 0.95);
-  box-shadow: 0 0 0 4px rgba(59, 127, 232, 0.22), 0 0 28px rgba(59, 127, 232, 0.45);
+  background: linear-gradient(155deg, #1c2838 0%, #0e141c 55%, #121a24 100%);
+  border: 2px solid rgba(255, 255, 255, 0.22);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.45), 0 2px 10px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.14);
   cursor: grab;
 }
 .earnings-range-readout-dark {
@@ -727,15 +785,6 @@ a.nav-cta, a.cta-primary, a.cta-secondary {
   max-width: 480px;
   margin-left: auto;
   margin-right: auto;
-}
-.earnings-disclaimer {
-  font: 400 12px 'DM Sans', sans-serif;
-  color: rgba(255, 255, 255, 0.42);
-  margin-top: 28px;
-  max-width: 520px;
-  margin-left: auto;
-  margin-right: auto;
-  line-height: 1.55;
 }
 @media (prefers-reduced-motion: reduce) {
   .earnings-spotlight { transition: none; }
@@ -824,6 +873,21 @@ a.nav-cta, a.cta-primary, a.cta-secondary {
   display: flex; justify-content: space-between; align-items: center;
 }
 .footer-copy { font: 400 12px 'DM Sans', sans-serif; color: var(--text-muted); }
+
+/* Whole sections: rise in on scroll (transform only — keeps inner reveal / IO working) */
+.section-scroll-in {
+  transform: translateY(44px);
+  transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.section-scroll-in.is-in-view {
+  transform: translateY(0);
+}
+@media (prefers-reduced-motion: reduce) {
+  .section-scroll-in {
+    transform: none;
+    transition: none;
+  }
+}
 
 /* ── Entrance animations ── */
 @keyframes fade-up {
@@ -1065,7 +1129,7 @@ a.nav-cta, a.cta-primary, a.cta-secondary {
 </section>
 
 <!-- How It Works -->
-<section class="how">
+<section class="how section-scroll-in">
   <div class="section-label reveal">HOW IT WORKS</div>
   <div class="section-headline reveal">Three steps. Zero effort.</div>
   <div class="cards reveal-stagger">
@@ -1097,10 +1161,10 @@ a.nav-cta, a.cta-primary, a.cta-secondary {
 </section>
 
 <!-- Earnings: dark band, seamless slider + spotlight (no carousel) -->
-<div class="earnings-dark-band" id="earnings-dark-band">
+<div class="earnings-dark-band section-scroll-in" id="earnings-dark-band">
   <section class="earnings-section" id="earnings">
     <h2 class="earnings-headline reveal">What people are earning</h2>
-    <p class="earnings-sub reveal">Match the handle to your monthly professional hours — we interpolate to the nearest real community profile.</p>
+    <p class="earnings-sub reveal">Drag the handle to your monthly professional hours — we match to the nearest real community profile.</p>
     <div class="earnings-explorer reveal">
       <div class="earnings-slider-block">
         <label for="earnings-hrs-slider">Monthly professional hours</label>
@@ -1116,13 +1180,12 @@ a.nav-cta, a.cta-primary, a.cta-secondary {
       </div>
       <p class="earnings-explorer-hint">Figures are illustrative; actual payouts depend on batch pricing and your quality score.</p>
     </div>
-    <p class="earnings-disclaimer reveal">Earnings reflect 25% revenue share of actual batch sale price. Higher professional activity = higher sell rate = higher earnings.</p>
   </section>
 </div>
 <div class="earnings-dark-band-fade" aria-hidden="true"></div>
 
 <!-- Final CTA -->
-<section class="final-cta">
+<section class="final-cta section-scroll-in">
   <h2 class="reveal">Start earning today.</h2>
   <p class="reveal">Your data has always had value.<br>Now it pays you.</p>
   <div class="cta-row reveal">
@@ -1135,7 +1198,7 @@ a.nav-cta, a.cta-primary, a.cta-secondary {
 </section>
 
 <!-- FAQ -->
-<section class="faq reveal-stagger">
+<section class="faq reveal-stagger section-scroll-in">
   <div class="faq-headline reveal">Frequently asked questions</div>
   <div class="faq-item reveal">
     <button class="faq-q">What exactly does Harve do?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
@@ -1164,7 +1227,7 @@ a.nav-cta, a.cta-primary, a.cta-secondary {
 </section>
 
 <!-- Footer -->
-<footer class="footer">
+<footer class="footer section-scroll-in">
   <div class="footer-top">
     <div class="footer-brand">
       <div class="brand-mark brand-mark--sm">
@@ -1360,6 +1423,19 @@ a.nav-cta, a.cta-primary, a.cta-secondary {
   try {
     if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
   } catch (e) {}
+
+  function scrollTopHard() {
+    try {
+      window.scrollTo(0, 0);
+      if (document.documentElement) document.documentElement.scrollTop = 0;
+      if (document.body) document.body.scrollTop = 0;
+    } catch (e) {}
+  }
+  scrollTopHard();
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', scrollTopHard);
+  }
+  window.addEventListener('load', scrollTopHard, { once: true });
 
   // Pill timer + earnings ticker (pauses when Pause clicked)
   var secs = 0, earnings = 786.23, rate = 0.00278, paused = false, micMuted = false;
@@ -1598,9 +1674,20 @@ a.nav-cta, a.cta-primary, a.cta-secondary {
   }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
   reveals.forEach(function(el) { revealObserver.observe(el); });
 
+  var sectionScrollEls = document.querySelectorAll('.section-scroll-in');
+  var sectionScrollIo = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-in-view');
+        sectionScrollIo.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.06, rootMargin: '0px 0px -6% 0px' });
+  sectionScrollEls.forEach(function(el) { sectionScrollIo.observe(el); });
+
   /** Replay hero + nav entrance + scroll reveals (e.g. returning from /enterprise via browser back + bfcache). */
   function replayLandingEntrance() {
-    window.scrollTo(0, 0);
+    scrollTopHard();
     var navEl = document.querySelector('.nav');
     if (navEl) {
       navEl.classList.remove('nav-hidden');
@@ -1621,6 +1708,10 @@ a.nav-cta, a.cta-primary, a.cta-secondary {
     document.querySelectorAll('.reveal').forEach(function(el) {
       el.classList.remove('visible');
       revealObserver.observe(el);
+    });
+    document.querySelectorAll('.section-scroll-in').forEach(function(el) {
+      el.classList.remove('is-in-view');
+      sectionScrollIo.observe(el);
     });
     document.querySelectorAll('.faq-item.open').forEach(function(el) {
       el.classList.remove('open');
