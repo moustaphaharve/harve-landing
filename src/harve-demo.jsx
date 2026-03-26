@@ -184,7 +184,9 @@ const HarveWindow = ({ show, blur = 0 }) => {
           <div style={{ padding: "14px 0 10px", display: "flex", flexDirection: "column", gap: 6 }}>
             <div style={{ fontSize: 20, fontWeight: 600, lineHeight: 1.28, color: "#E4E4E8" }}>Hey, Alex</div>
             <div style={{ fontSize: 13, fontWeight: 400, color: "#5E5E6A", lineHeight: 1.45 }}>
-              Available: {DEMO_BALANCE} · Next payout Monday
+              Available:{" "}
+              <span style={{ fontFamily: font.round, fontWeight: 700, color: "#A8A8B2" }}>{DEMO_BALANCE}</span>
+              {" "}· Next payout Monday
             </div>
           </div>
           <div style={{ marginBottom: 12, padding: "12px 16px", borderRadius: 12, background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.11)" }}>
@@ -250,7 +252,7 @@ const HarveWindow = ({ show, blur = 0 }) => {
               <div
                 style={{
                   fontSize: 22,
-                  fontWeight: 400,
+                  fontWeight: 700,
                   fontFamily: font.round,
                   fontVariantNumeric: "tabular-nums",
                   lineHeight: 1.1,
@@ -277,7 +279,7 @@ const HarveWindow = ({ show, blur = 0 }) => {
                 </div>
                 <div style={{ display: "flex", alignItems: "center", gap: 14, flexShrink: 0, marginLeft: "auto" }}>
                   <span style={{ fontSize: 10, fontWeight: 600, textTransform: "uppercase", color: "#5E5E6A", lineHeight: 1.2, paddingTop: 2 }}>SUBMITTED</span>
-                  <span style={{ fontSize: 13, fontWeight: 600, lineHeight: 1.2, minWidth: 52, textAlign: "right" }}>{r.amt}</span>
+                  <span style={{ fontSize: 13, fontWeight: 700, fontFamily: font.round, fontVariantNumeric: "tabular-nums", lineHeight: 1.2, minWidth: 52, textAlign: "right" }}>{r.amt}</span>
                 </div>
               </div>
             ))}
@@ -333,7 +335,7 @@ const Pill = ({ expanded, showGreeting, greetingOp, showPanel, showPraise, prais
             <div
               style={{
                 fontSize: 30,
-                fontWeight: 400,
+                fontWeight: 700,
                 fontFamily: font.round,
                 color: "rgba(22,42,72,0.94)",
                 fontVariantNumeric: "tabular-nums",
@@ -543,7 +545,7 @@ export default function HarveFullDemo({ play = false }) {
       }}
     >
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Nunito:wght@400;500;600&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Nunito:wght@400;500;600;700&display=swap');
         @keyframes pulseDot{0%,100%{opacity:1;box-shadow:0 0 6px rgba(52,211,153,0.6)}50%{opacity:0.6;box-shadow:0 0 2px rgba(52,211,153,0.3)}}
         @keyframes avatarShine{0%,70%,100%{left:-100%}85%{left:100%}}
         .harve-demo-root-inner *{box-sizing:border-box}
