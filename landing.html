@@ -45,8 +45,9 @@ body {
   padding: 16px 48px;
   max-width: 960px; margin: 12px auto 0;
   border-radius: 14px;
-  background: rgba(220, 232, 248, 0.82);
-  backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+  background: rgba(248, 250, 255, 0.58);
+  backdrop-filter: blur(22px); -webkit-backdrop-filter: blur(22px);
+  border: 1px solid rgba(255, 255, 255, 0.45);
   transition: transform 0.35s ease;
 }
 .nav.nav-hidden {
@@ -481,7 +482,24 @@ a.nav-cta, a.cta-primary, a.cta-secondary {
 }
 
 /* ── How It Works ── */
-.how { padding: 12px 48px 120px; max-width: 1200px; margin: 0 auto; text-align: center; }
+.how { padding: 12px 48px 72px; max-width: 1200px; margin: 0 auto; text-align: center; }
+/* Soft blend from white (How it works) into page blue — avoids hard cut above earnings */
+.section-wash-gradient {
+  display: block;
+  width: 100%;
+  height: min(120px, 18vh);
+  background: linear-gradient(
+    180deg,
+    #ffffff 0%,
+    rgba(252, 253, 255, 0.95) 22%,
+    rgba(236, 245, 255, 0.55) 52%,
+    rgba(218, 232, 248, 0.22) 82%,
+    rgba(200, 220, 240, 0) 100%
+  );
+  margin: 0;
+  padding: 0;
+  pointer-events: none;
+}
 .section-label {
   font: 500 11px 'DM Sans', sans-serif; color: var(--text-muted);
   letter-spacing: 0.10em; text-transform: uppercase; margin-bottom: 16px;
@@ -887,6 +905,8 @@ a.nav-cta, a.cta-primary, a.cta-secondary {
     </div>
   </div>
 </section>
+
+<div class="section-wash-gradient" aria-hidden="true"></div>
 
 <!-- Earnings Table -->
 <section class="earnings-section">

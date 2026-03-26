@@ -3,8 +3,8 @@ import { useState, useEffect, useRef, useCallback } from "react";
 const T = {
   WALL_IN: 700, MENU_IN: 350, DOCK_IN: 400, APP_DELAY: 500, APP_IN: 400,
   PILL_DELAY: 600, IDLE: 1800, ZOOM: 1000, GREET_HOLD: 1700, GREET_OUT: 400,
-  POST_GREET: 400, EXPAND: 380, EXPANDED: 750, SUBMIT: 120, PRAISE_IN: 80,
-  PRAISE_HOLD: 900, PRAISE_OUT: 280, PAUSE_NORMAL: 420, POST_ZOOM_REST: 280,
+  POST_GREET: 400, EXPAND: 480, EXPANDED: 2000, SUBMIT: 180, PRAISE_IN: 80,
+  PRAISE_HOLD: 1400, PRAISE_OUT: 450, HARD_CUT: 250,
 };
 
 const HARVE_LOGO_SRC = "/harve-logo-white.png";
@@ -66,12 +66,11 @@ const PulseDot = () => (
   <span style={{ display: "inline-block", width: 7, height: 7, borderRadius: "50%", background: "#34D399", boxShadow: "0 0 6px rgba(52,211,153,0.6)", animation: "pulseDot 2s ease-in-out infinite" }} />
 );
 
-const TimerDisplay = ({ seconds, light = false }) => {
+const TimerDisplay = ({ seconds }) => {
   const h = Math.floor(seconds / 3600);
   const m = Math.floor((seconds % 3600) / 60);
-  const color = light ? "rgba(255,255,255,0.82)" : "rgba(80,110,150,0.9)";
   return (
-    <span style={{ fontFamily: "'SF Mono', Menlo, Consolas, monospace", fontSize: 12, fontWeight: 500, color, fontVariantNumeric: "tabular-nums", letterSpacing: 0.5, lineHeight: 1.2 }}>
+    <span style={{ fontFamily: "'SF Mono', Menlo, Consolas, monospace", fontSize: 12, fontWeight: 500, color: "rgba(80,110,150,0.9)", fontVariantNumeric: "tabular-nums", letterSpacing: 0.5, lineHeight: 1.2 }}>
       {String(h).padStart(2, "0")}:{String(m).padStart(2, "0")}
     </span>
   );
@@ -87,8 +86,8 @@ const Avatar = ({ letter = "A", size = 26 }) => (
 const TopBar = ({ show }) => (
   <div style={{
     position: "absolute", top: 0, left: 0, right: 0, height: 26, zIndex: 10,
-    background: "rgba(0,0,0,0.52)", backdropFilter: "blur(28px) saturate(160%)", WebkitBackdropFilter: "blur(28px) saturate(160%)",
-    borderBottom: "1px solid rgba(255,255,255,0.08)",
+    background: "rgba(0,0,0,0.28)", backdropFilter: "blur(36px) saturate(150%)", WebkitBackdropFilter: "blur(36px) saturate(150%)",
+    borderBottom: "1px solid rgba(255,255,255,0.12)",
     display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0 12px",
     opacity: show ? 1 : 0, transform: show ? "translateY(0)" : "translateY(-26px)",
     transition: "all 0.35s cubic-bezier(0.4,0,0.2,1)",
@@ -104,8 +103,8 @@ const TopBar = ({ show }) => (
 const Dock = ({ show }) => (
   <div style={{ position: "absolute", bottom: 8, left: "50%", transform: "translateX(-50%)", zIndex: 10, opacity: show ? 1 : 0, transition: "opacity 0.4s ease" }}>
     <div style={{
-      width: 54, height: 62, borderRadius: 13, background: "rgba(0,0,0,0.38)",
-      backdropFilter: "blur(28px) saturate(160%)", WebkitBackdropFilter: "blur(28px) saturate(160%)",
+      width: 54, height: 62, borderRadius: 13, background: "rgba(0,0,0,0.22)",
+      backdropFilter: "blur(32px) saturate(150%)", WebkitBackdropFilter: "blur(32px) saturate(150%)",
       border: "1px solid rgba(255,255,255,0.12)", display: "flex", alignItems: "center", justifyContent: "center",
       transform: show ? "translateY(0)" : "translateY(30px)", transition: "transform 0.45s cubic-bezier(0.34,1.56,0.64,1) 0.15s",
     }}>
@@ -218,68 +217,47 @@ const Pill = ({ expanded, showGreeting, greetingOp, showPanel, showPraise, prais
   return (
     <div style={{
       width: 288, margin: "0 auto", overflow: "hidden",
-      background: "linear-gradient(155deg, rgba(10, 28, 92, 0.78) 0%, rgba(8, 22, 72, 0.72) 45%, rgba(12, 32, 98, 0.68) 100%)",
-      backdropFilter: "blur(28px) saturate(150%)",
-      WebkitBackdropFilter: "blur(28px) saturate(150%)",
+      background: "linear-gradient(145deg, rgba(225,240,255,0.28) 0%, rgba(180,215,255,0.16) 100%)",
+      backdropFilter: "blur(32px) saturate(180%) brightness(1.04)",
+      WebkitBackdropFilter: "blur(32px) saturate(180%) brightness(1.04)",
       borderRadius: br, padding: pad,
-      border: "1px solid rgba(255,255,255,0.16)",
-      boxShadow: "0 12px 40px rgba(5, 18, 68, 0.35), 0 2px 12px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.12)",
+      border: "1px solid rgba(255,255,255,0.28)",
+      boxShadow: "0 8px 28px rgba(0,0,0,0.1), 0 2px 8px rgba(0,0,0,0.06)",
       opacity: pillOp,
-      transition: "border-radius 0.42s cubic-bezier(0.4,0,0.2,1), padding 0.42s cubic-bezier(0.4,0,0.2,1), opacity 0.34s ease-out",
+      transition: "border-radius 0.48s cubic-bezier(0.4,0,0.2,1), padding 0.48s cubic-bezier(0.4,0,0.2,1), opacity 0.34s ease-out",
       position: "relative",
     }}>
-      <div style={{
-        position: "absolute", inset: 0,
-        background: "linear-gradient(155deg, rgba(10, 28, 92, 0.55) 0%, rgba(8, 22, 80, 0.45) 100%)",
-        borderRadius: "inherit", opacity: solidOp, transition: "opacity 0.38s ease-out", pointerEvents: "none", zIndex: 0,
-      }} />
+      <div style={{ position: "absolute", inset: 0, background: "linear-gradient(145deg, #E8F0FF 0%, #D4E4FA 100%)", borderRadius: "inherit", opacity: solidOp, transition: "opacity 0.4s ease-out", pointerEvents: "none", zIndex: 0 }} />
       <div style={{ height: 48, display: "flex", alignItems: "center", gap: 8, position: "relative", zIndex: 2 }}>
-        <HarveLogoBlueBadge outer={32} logo={19} />
+        <HarveLogoGhost size={22} />
         <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", minWidth: 0 }}>
-          {showGreeting && (
-            <span style={{
-              fontSize: 14, fontWeight: 600, color: "rgba(255,255,255,0.92)", opacity: greetingOp,
-              transition: "opacity 0.4s ease-out", whiteSpace: "nowrap",
-            }}>Hey, Alex.</span>
-          )}
+          {showGreeting && <span style={{ fontSize: 14, fontWeight: 600, color: "rgba(30,50,80,0.85)", opacity: greetingOp, transition: "opacity 0.4s ease-out", whiteSpace: "nowrap" }}>Hey, Alex.</span>}
         </div>
-        <div style={{ display: "flex", alignItems: "center", gap: 6, flexShrink: 0 }}>
-          <PulseDot /><TimerDisplay seconds={timerSec} light />
-        </div>
+        <div style={{ display: "flex", alignItems: "center", gap: 6, flexShrink: 0 }}><PulseDot /><TimerDisplay seconds={timerSec} /></div>
       </div>
       {expanded && (
-        <div style={{
-          maxHeight: showPanel ? 268 : 0, opacity: showPanel ? 1 : 0, overflow: "hidden",
-          transition: showPanel
-            ? "max-height 0.32s cubic-bezier(0.4,0,0.2,1), opacity 0.24s ease-out"
-            : "max-height 0.2s cubic-bezier(0.4,0,0.2,1), opacity 0.18s ease-out",
-        }}>
-          <div style={{
-            background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.2)", borderRadius: 13,
-            padding: "12px 16px", marginBottom: 12, backdropFilter: "blur(10px)",
-          }}>
-            <div style={{ fontSize: 10, fontWeight: 600, color: "rgba(200,215,255,0.65)", letterSpacing: 0.8, textTransform: "uppercase", marginBottom: 6 }}>THIS SESSION</div>
-            <div style={{ fontSize: 34, fontWeight: 700, color: "rgba(255,255,255,0.96)", fontVariantNumeric: "tabular-nums", lineHeight: 1.12, fontFamily: "-apple-system, 'SF Pro Display', 'Helvetica Neue', sans-serif" }}>$397.45</div>
-            <div style={{ fontSize: 11, fontWeight: 500, color: "rgba(200,210,245,0.65)", marginTop: 6, lineHeight: 1.35 }}>
-              Quality score <span style={{ color: "rgba(52,211,153,0.95)" }}>82</span>/100 · High Value
-            </div>
+        <div style={{ maxHeight: showPanel ? 268 : 0, opacity: showPanel ? 1 : 0, overflow: "hidden", transition: "max-height 0.32s cubic-bezier(0.4,0,0.2,1), opacity 0.28s ease-out" }}>
+          <div style={{ background: "rgba(242,250,255,0.42)", border: "1px solid rgba(255,255,255,0.65)", borderRadius: 13, padding: "12px 16px", marginBottom: 12, backdropFilter: "blur(8px)" }}>
+            <div style={{ fontSize: 10, fontWeight: 600, color: "rgba(60,80,110,0.6)", letterSpacing: 0.8, textTransform: "uppercase", marginBottom: 6 }}>THIS SESSION</div>
+            <div style={{ fontSize: 34, fontWeight: 700, color: "rgba(20,40,70,0.9)", fontVariantNumeric: "tabular-nums", lineHeight: 1.12, fontFamily: "-apple-system, 'SF Pro Display', 'Helvetica Neue', sans-serif" }}>$397.45</div>
+            <div style={{ fontSize: 11, fontWeight: 500, color: "rgba(60,80,110,0.55)", marginTop: 6, lineHeight: 1.35 }}>Quality score <span style={{ color: "rgba(52,150,100,0.8)" }}>82</span>/100 · High Value</div>
           </div>
           <div style={{ display: "flex", flexWrap: "wrap", gap: 8, alignItems: "center", paddingBottom: 2 }}>
-            <button type="button" style={{ flex: "1 1 120px", minHeight: 36, borderRadius: 10, border: "1px solid rgba(255,255,255,0.2)", background: "rgba(255,255,255,0.12)", backdropFilter: "blur(6px)", display: "flex", alignItems: "center", justifyContent: "center", gap: 6, fontSize: 12, fontWeight: 600, color: "rgba(255,255,255,0.88)", cursor: "default", fontFamily: "-apple-system, sans-serif", padding: "0 10px" }}>
+            <button type="button" style={{ flex: "1 1 120px", minHeight: 36, borderRadius: 10, border: "1px solid rgba(180,200,225,0.4)", background: "rgba(240,248,255,0.5)", backdropFilter: "blur(6px)", display: "flex", alignItems: "center", justifyContent: "center", gap: 6, fontSize: 12, fontWeight: 600, color: "rgba(40,60,90,0.75)", cursor: "default", fontFamily: "-apple-system, sans-serif", padding: "0 10px" }}>
               <span style={{ fontSize: 10 }}>❚❚</span> Pause
             </button>
-            <button type="button" style={{ width: 40, minHeight: 36, borderRadius: 10, border: "1px solid rgba(255,255,255,0.2)", background: "rgba(255,255,255,0.1)", backdropFilter: "blur(6px)", display: "flex", alignItems: "center", justifyContent: "center", cursor: "default", flexShrink: 0 }}>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.85)" strokeWidth="2" strokeLinecap="round"><rect x="9" y="1" width="6" height="12" rx="3" /><path d="M5 10a7 7 0 0014 0" /><line x1="12" y1="17" x2="12" y2="21" /></svg>
+            <button type="button" style={{ width: 40, minHeight: 36, borderRadius: 10, border: "1px solid rgba(180,200,225,0.4)", background: "rgba(240,248,255,0.5)", backdropFilter: "blur(6px)", display: "flex", alignItems: "center", justifyContent: "center", cursor: "default", flexShrink: 0 }}>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(40,60,90,0.7)" strokeWidth="2" strokeLinecap="round"><rect x="9" y="1" width="6" height="12" rx="3" /><path d="M5 10a7 7 0 0014 0" /><line x1="12" y1="17" x2="12" y2="21" /></svg>
             </button>
-            <button type="button" style={{ width: 40, minHeight: 36, borderRadius: 10, border: "1px solid rgba(100,140,220,0.5)", background: "linear-gradient(135deg, rgba(37,99,235,0.85), rgba(29,78,216,0.9))", display: "flex", alignItems: "center", justifyContent: "center", cursor: "default", flexShrink: 0 }}>
+            <button type="button" style={{ width: 40, minHeight: 36, borderRadius: 10, border: "1px solid rgba(100,140,200,0.4)", background: "linear-gradient(135deg, rgba(80,130,220,0.6), rgba(60,110,200,0.7))", display: "flex", alignItems: "center", justifyContent: "center", cursor: "default", flexShrink: 0 }}>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" /></svg>
             </button>
           </div>
         </div>
       )}
       {showPraise && (
-        <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", zIndex: 10, opacity: praiseOp, transition: "opacity 0.4s ease-out" }}>
-          <span style={{ fontSize: 15, fontWeight: 600, color: "rgba(255,255,255,0.95)" }}>Nice work!</span>
+        <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", zIndex: 10, opacity: praiseOp, transition: "opacity 0.52s ease-out" }}>
+          <span style={{ fontSize: 15, fontWeight: 600, color: "rgba(30,60,100,0.85)" }}>Nice work!</span>
         </div>
       )}
     </div>
@@ -322,24 +300,12 @@ export default function HarveFullDemo({ play = false }) {
     setTimerSec(322); setZoom(1); setBgBlur(0); setPillPhase("hidden");
   }, []);
 
-  /** Between loops: keep pill visible, reset inner state for next zoom-in. */
-  const softResetPillState = useCallback(() => {
-    setExpanded(false); setShowPanel(false); setShowGreeting(false);
-    setGreetingOp(0); setSolidOp(0); setShowPraise(false); setPraiseOp(0); setPillOp(1);
-    setTimerSec(322); setPillPhase("idle");
-  }, []);
-
-  const runPillCycle = useCallback(async function runPillCycleLoop(skipIntro = false) {
+  const runPillCycle = useCallback(async () => {
     const myRun = runIdRef.current;
     if (!mountedRef.current) return;
-    if (!skipIntro) {
-      resetPill();
-      await sleep(150);
-      if (myRun !== runIdRef.current || !mountedRef.current) return;
-    } else {
-      softResetPillState();
-      if (myRun !== runIdRef.current || !mountedRef.current) return;
-    }
+    resetPill();
+    await sleep(150);
+    if (myRun !== runIdRef.current || !mountedRef.current) return;
     setPillVisible(true); setPillPhase("idle");
     await sleep(T.IDLE);
     if (myRun !== runIdRef.current || !mountedRef.current) return;
@@ -355,36 +321,24 @@ export default function HarveFullDemo({ play = false }) {
     await sleep(T.POST_GREET);
     if (myRun !== runIdRef.current || !mountedRef.current) return;
     setPillPhase("expanding"); setExpanded(true);
-    await sleep(40); setShowPanel(true);
-    await sleep(T.EXPAND + 120);
+    await sleep(50); setShowPanel(true);
+    await sleep(T.EXPAND + 150);
     if (myRun !== runIdRef.current || !mountedRef.current) return;
     setPillPhase("expanded"); await sleep(T.EXPANDED);
     if (myRun !== runIdRef.current || !mountedRef.current) return;
-    setPillPhase("submitting");
-    setShowPanel(false);
-    await sleep(T.SUBMIT);
-    if (myRun !== runIdRef.current || !mountedRef.current) return;
-    setExpanded(false);
-    setShowPraise(true); setSolidOp(1);
+    setPillPhase("submitting"); await sleep(T.SUBMIT);
+    setShowPanel(false); setExpanded(false); setShowPraise(true); setSolidOp(1);
     setPillPhase("praise");
     await sleep(T.PRAISE_IN); setPraiseOp(1);
     await sleep(T.PRAISE_HOLD);
     if (myRun !== runIdRef.current || !mountedRef.current) return;
-    setPraiseOp(0);
+    setPraiseOp(0); setPillOp(0);
     await sleep(T.PRAISE_OUT);
     if (myRun !== runIdRef.current || !mountedRef.current) return;
-    setShowPraise(false);
-    setSolidOp(0);
-    await sleep(T.PAUSE_NORMAL);
+    await sleep(T.HARD_CUT);
     if (myRun !== runIdRef.current || !mountedRef.current) return;
-    setPillPhase("unzooming");
-    setZoom(1); setBgBlur(0);
-    await sleep(T.ZOOM);
-    if (myRun !== runIdRef.current || !mountedRef.current) return;
-    await sleep(T.POST_ZOOM_REST);
-    if (myRun !== runIdRef.current || !mountedRef.current) return;
-    await runPillCycleLoop(true);
-  }, [resetPill, softResetPillState]);
+    runPillCycle();
+  }, [resetPill]);
 
   useEffect(() => {
     mountedRef.current = true;
