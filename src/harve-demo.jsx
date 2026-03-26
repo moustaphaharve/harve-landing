@@ -185,7 +185,7 @@ const HarveWindow = ({ show, blur = 0 }) => {
             <div style={{ fontSize: 20, fontWeight: 600, lineHeight: 1.28, color: "#E4E4E8" }}>Hey, Alex</div>
             <div style={{ fontSize: 13, fontWeight: 400, color: "#5E5E6A", lineHeight: 1.45 }}>
               Available:{" "}
-              <span style={{ fontFamily: font.round, fontWeight: 700, color: "#A8A8B2" }}>{DEMO_BALANCE}</span>
+              <span className="harve-demo-dollar" style={{ color: "#A8A8B2" }}>{DEMO_BALANCE}</span>
               {" "}· Next payout Monday
             </div>
           </div>
@@ -250,10 +250,9 @@ const HarveWindow = ({ show, blur = 0 }) => {
             >
               <div style={{ fontSize: 10, fontWeight: 500, marginBottom: 4, color: "#5E5E6A", lineHeight: 1.2, letterSpacing: "0.02em" }}>Earned today</div>
               <div
+                className="harve-demo-dollar"
                 style={{
                   fontSize: 22,
-                  fontWeight: 700,
-                  fontFamily: font.round,
                   fontVariantNumeric: "tabular-nums",
                   lineHeight: 1.1,
                   color: "#E4E4E8",
@@ -279,7 +278,7 @@ const HarveWindow = ({ show, blur = 0 }) => {
                 </div>
                 <div style={{ display: "flex", alignItems: "center", gap: 14, flexShrink: 0, marginLeft: "auto" }}>
                   <span style={{ fontSize: 10, fontWeight: 600, textTransform: "uppercase", color: "#5E5E6A", lineHeight: 1.2, paddingTop: 2 }}>SUBMITTED</span>
-                  <span style={{ fontSize: 13, fontWeight: 700, fontFamily: font.round, fontVariantNumeric: "tabular-nums", lineHeight: 1.2, minWidth: 52, textAlign: "right" }}>{r.amt}</span>
+                  <span className="harve-demo-dollar" style={{ fontSize: 13, fontVariantNumeric: "tabular-nums", lineHeight: 1.2, minWidth: 52, textAlign: "right" }}>{r.amt}</span>
                 </div>
               </div>
             ))}
@@ -333,10 +332,9 @@ const Pill = ({ expanded, showGreeting, greetingOp, showPanel, showPraise, prais
           <div style={{ background: "rgba(242,250,255,0.42)", border: "1px solid rgba(255,255,255,0.65)", borderRadius: 12, padding: "10px 14px 8px", marginBottom: 8, backdropFilter: "blur(8px)" }}>
             <div style={{ fontSize: 9, fontWeight: 500, fontFamily: font.ui, color: "rgba(60,80,110,0.55)", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 4 }}>THIS SESSION</div>
             <div
+              className="harve-demo-dollar"
               style={{
                 fontSize: 30,
-                fontWeight: 700,
-                fontFamily: font.round,
                 color: "rgba(22,42,72,0.94)",
                 fontVariantNumeric: "tabular-nums",
                 lineHeight: 1.08,
@@ -545,11 +543,11 @@ export default function HarveFullDemo({ play = false }) {
       }}
     >
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Nunito:wght@400;500;600;700&display=swap');
         @keyframes pulseDot{0%,100%{opacity:1;box-shadow:0 0 6px rgba(52,211,153,0.6)}50%{opacity:0.6;box-shadow:0 0 2px rgba(52,211,153,0.3)}}
         @keyframes avatarShine{0%,70%,100%{left:-100%}85%{left:100%}}
         .harve-demo-root-inner *{box-sizing:border-box}
         .harve-demo-root-inner button{font:inherit}
+        .harve-demo-root-inner .harve-demo-dollar{font-family:'Nunito','Inter',system-ui,sans-serif!important;font-weight:700!important;font-style:normal!important}
         ::-webkit-scrollbar{width:6px}
         ::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.08);border-radius:3px}
         ::-webkit-scrollbar-thumb:hover{background:rgba(255,255,255,0.14)}
