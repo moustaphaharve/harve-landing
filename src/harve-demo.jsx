@@ -35,7 +35,7 @@ const TimerDisplay = ({ seconds }) => {
   const h = Math.floor(seconds / 3600);
   const m = Math.floor((seconds % 3600) / 60);
   return (
-    <span style={{ fontFamily: "'SF Mono', Menlo, Consolas, monospace", fontSize: 12, fontWeight: 500, color: "rgba(80,110,150,0.9)", fontVariantNumeric: "tabular-nums", letterSpacing: 0.5 }}>
+    <span style={{ fontFamily: "'SF Mono', Menlo, Consolas, monospace", fontSize: 12, fontWeight: 500, color: "rgba(80,110,150,0.9)", fontVariantNumeric: "tabular-nums", letterSpacing: 0.5, lineHeight: 1.2 }}>
       {String(h).padStart(2, "0")}:{String(m).padStart(2, "0")}
     </span>
   );
@@ -102,8 +102,8 @@ const HarveWindow = ({ show, blur = 0 }) => {
   ];
   return (
     <div style={{
-      position: "absolute", top: 40, left: "50%", transform: show ? "translateX(-50%) scale(1)" : "translateX(-50%) scale(0.9)",
-      width: "min(860px, 80%)", height: "calc(100% - 100px)",
+      position: "absolute", top: 36, left: "50%", transform: show ? "translateX(-50%) scale(1)" : "translateX(-50%) scale(0.9)",
+      width: "calc(100% - 32px)", maxWidth: 640, height: "calc(100% - 88px)",
       background: "#111114", borderRadius: 10, overflow: "hidden",
       boxShadow: "0 20px 60px rgba(0,0,0,0.4), 0 6px 20px rgba(0,0,0,0.2)",
       opacity: show ? 1 : 0,
@@ -111,58 +111,60 @@ const HarveWindow = ({ show, blur = 0 }) => {
       transition: "opacity 0.4s cubic-bezier(0.16,1,0.3,1), transform 0.4s cubic-bezier(0.16,1,0.3,1), filter 0.8s ease",
       fontFamily: "'Inter', -apple-system, sans-serif", color: "#E4E4E8",
       display: "flex", flexDirection: "column", zIndex: 20,
+      minHeight: 0,
     }}>
-      {/* Chrome: traffic lights left, logo, spacer, avatar right — NO window controls */}
       <div style={{ paddingTop: 4, background: "#111114", flexShrink: 0 }}>
         <div style={{ padding: "5px 12px 6px 12px", display: "flex", alignItems: "center", gap: 8, minHeight: 34 }}>
-          <div style={{ display: "flex", gap: 6, marginRight: 4, alignItems: "center" }}>
+          <div style={{ display: "flex", gap: 6, marginRight: 4, alignItems: "center", flexShrink: 0 }}>
             {["#FF5F57","#FEBC2E","#28C840"].map(c => <div key={c} style={{ width: 12, height: 12, borderRadius: "50%", background: c }} />)}
           </div>
           <HarveWaveMark size={22} />
-          <div style={{ flex: 1 }} />
+          <div style={{ flex: 1, minWidth: 8 }} />
           <Avatar letter="A" />
         </div>
         <div style={{ height: 1, background: "linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.07) 12%, rgba(255,255,255,0.07) 88%, transparent 100%)" }} />
         <div style={{ height: 6 }} />
       </div>
-      <div style={{ flex: 1, overflowY: "auto" }}>
+      <div style={{ flex: 1, overflowY: "auto", overflowX: "hidden", minHeight: 0, WebkitOverflowScrolling: "touch" }}>
         <div style={{ padding: "0 28px 20px", background: "#111114" }}>
-          <div style={{ padding: "16px 0 18px" }}>
-            <div style={{ fontSize: 22, fontWeight: 600, marginBottom: 4 }}>Hey, Alex</div>
-            <div style={{ fontSize: 13, color: "#5E5E6A" }}>Available: $20.00 · Next payout Monday</div>
+          <div style={{ padding: "16px 0 14px", display: "flex", flexDirection: "column", gap: 6 }}>
+            <div style={{ fontSize: 20, fontWeight: 600, lineHeight: 1.25, color: "#E4E4E8" }}>Hey, Alex</div>
+            <div style={{ fontSize: 13, color: "#5E5E6A", lineHeight: 1.4 }}>Available: $20.00 · Next payout Monday</div>
           </div>
-          <div style={{ marginBottom: 16, padding: "12px 16px", borderRadius: 12, background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.11)" }}>
-            <div style={{ fontSize: 13, fontWeight: 600, lineHeight: 1.5, color: "rgba(255,255,255,0.96)" }}>Your recent sessions are scoring as high-value professional work. That means higher payouts. Keep it up.</div>
-            <div style={{ fontSize: 12, fontWeight: 500, marginTop: 8, color: "rgba(255,255,255,0.58)" }}>Average quality score: 88/100.</div>
+          <div style={{ marginBottom: 14, padding: "12px 16px", borderRadius: 12, background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.11)" }}>
+            <div style={{ fontSize: 13, fontWeight: 600, lineHeight: 1.45, color: "rgba(255,255,255,0.96)" }}>Your recent sessions are scoring as high-value professional work. That means higher payouts. Keep it up.</div>
+            <div style={{ fontSize: 12, fontWeight: 500, marginTop: 8, color: "rgba(255,255,255,0.58)", lineHeight: 1.35 }}>Average quality score: 88/100.</div>
           </div>
-          <div style={{ display: "flex", gap: 14 }}>
-            <div style={{ flex: 2, padding: 28, borderRadius: 14, background: "linear-gradient(135deg, #0F1B3D 0%, #1A2F6B 40%, #2845A0 100%)", position: "relative", overflow: "hidden" }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+            <div style={{ padding: 20, borderRadius: 14, background: "linear-gradient(135deg, #0F1B3D 0%, #1A2F6B 40%, #2845A0 100%)", position: "relative", overflow: "hidden" }}>
               <div style={{ position: "absolute", top: 0, right: 0, width: "50%", height: "100%", background: "linear-gradient(135deg, transparent, rgba(59,130,246,0.15))" }} />
-              <div style={{ fontSize: 17, fontWeight: 600, color: "white", position: "relative" }}>Start earning now</div>
-              <div style={{ fontSize: 13, color: "rgba(255,255,255,0.5)", marginBottom: 16, lineHeight: 1.5, position: "relative" }}>Longer sessions pay more. Start recording and forget.</div>
-              <div style={{ display: "inline-flex", padding: "8px 18px", borderRadius: 8, fontSize: 13, fontWeight: 600, color: "white", background: "rgba(255,255,255,0.10)", border: "1px solid rgba(255,255,255,0.12)", position: "relative" }}>● Start Recording</div>
+              <div style={{ fontSize: 16, fontWeight: 600, color: "white", position: "relative", lineHeight: 1.3, marginBottom: 8 }}>Start earning now</div>
+              <div style={{ fontSize: 12, color: "rgba(255,255,255,0.5)", marginBottom: 14, lineHeight: 1.45, position: "relative" }}>Longer sessions pay more. Start recording and forget.</div>
+              <div style={{ display: "inline-flex", padding: "8px 16px", borderRadius: 8, fontSize: 12, fontWeight: 600, color: "white", background: "rgba(255,255,255,0.10)", border: "1px solid rgba(255,255,255,0.12)", position: "relative" }}>● Start Recording</div>
             </div>
-            <div style={{ flex: 1, padding: "22px 20px", borderRadius: 14, background: "rgba(255,255,255,0.03)" }}>
-              <div style={{ fontSize: 11, fontWeight: 500, marginBottom: 8, color: "#5E5E6A" }}>Earned today</div>
-              <div style={{ fontSize: 28, fontWeight: 700 }}>$20.00</div>
-              <div style={{ fontSize: 12, color: "#5E5E6A", marginTop: 8 }}>Next payout: Monday</div>
+            <div style={{ padding: "18px 20px", borderRadius: 14, background: "rgba(255,255,255,0.03)" }}>
+              <div style={{ fontSize: 11, fontWeight: 500, marginBottom: 6, color: "#5E5E6A", lineHeight: 1.2 }}>Earned today</div>
+              <div style={{ fontSize: 26, fontWeight: 700, lineHeight: 1.15 }}>$20.00</div>
+              <div style={{ fontSize: 12, color: "#5E5E6A", marginTop: 8, lineHeight: 1.35 }}>Next payout: Monday</div>
             </div>
           </div>
         </div>
-        <div style={{ background: "#0C0C0F", borderRadius: "14px 14px 0 0", minHeight: 200 }}>
-          <div style={{ padding: "20px 28px" }}>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 14 }}>
-              <div style={{ fontSize: 14, fontWeight: 600 }}>Recordings</div>
+        <div style={{ background: "#0C0C0F", borderRadius: "14px 14px 0 0", minHeight: 120 }}>
+          <div style={{ padding: "16px 28px 20px" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
+              <div style={{ fontSize: 14, fontWeight: 600, lineHeight: 1.2 }}>Recordings</div>
               <div style={{ fontSize: 12, color: "#5E5E6A" }}>19 total</div>
             </div>
             {recs.map((r, i) => (
-              <div key={i} style={{ padding: "12px 0", borderBottom: "1px solid rgba(255,255,255,0.04)", display: "flex", alignItems: "center", gap: 16 }}>
-                <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: 14, fontWeight: 500 }}>{r.date}</div>
-                  <div style={{ fontSize: 12, color: "#5E5E6A", marginTop: 2 }}>{r.meta}</div>
+              <div key={i} style={{ padding: "10px 0", borderBottom: "1px solid rgba(255,255,255,0.04)", display: "flex", flexWrap: "wrap", alignItems: "flex-start", gap: "8px 12px" }}>
+                <div style={{ flex: "1 1 200px", minWidth: 0 }}>
+                  <div style={{ fontSize: 13, fontWeight: 500, lineHeight: 1.35 }}>{r.date}</div>
+                  <div style={{ fontSize: 11, color: "#5E5E6A", marginTop: 4, lineHeight: 1.4 }}>{r.meta}</div>
                 </div>
-                <div style={{ fontSize: 11, fontWeight: 600, textTransform: "uppercase", color: "#5E5E6A" }}>SUBMITTED</div>
-                <div style={{ fontSize: 14, fontWeight: 600, minWidth: 60, textAlign: "right" }}>{r.amt}</div>
+                <div style={{ display: "flex", alignItems: "center", gap: 14, flexShrink: 0, marginLeft: "auto" }}>
+                  <span style={{ fontSize: 10, fontWeight: 600, textTransform: "uppercase", color: "#5E5E6A", lineHeight: 1.2, paddingTop: 2 }}>SUBMITTED</span>
+                  <span style={{ fontSize: 13, fontWeight: 600, lineHeight: 1.2, minWidth: 52, textAlign: "right" }}>{r.amt}</span>
+                </div>
               </div>
             ))}
           </div>
@@ -191,10 +193,10 @@ const Pill = ({ expanded, showGreeting, greetingOp, showPanel, showPraise, prais
       <div style={{ position: "absolute", inset: 0, background: "linear-gradient(145deg, #E8F0FF 0%, #D4E4FA 100%)", borderRadius: "inherit", opacity: solidOp, transition: "opacity 0.4s ease-out", pointerEvents: "none", zIndex: 0 }} />
       <div style={{ height: 48, display: "flex", alignItems: "center", gap: 8, position: "relative", zIndex: 2 }}>
         <PillLogo size={24} />
-        <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", minWidth: 0 }}>
           {showGreeting && <span style={{ fontSize: 14, fontWeight: 600, color: "rgba(30,50,80,0.85)", opacity: greetingOp, transition: "opacity 0.4s ease-out", whiteSpace: "nowrap" }}>Hey, Alex.</span>}
         </div>
-        <div style={{ display: "flex", alignItems: "center", gap: 6 }}><PulseDot /><TimerDisplay seconds={timerSec} /></div>
+        <div style={{ display: "flex", alignItems: "center", gap: 6, flexShrink: 0 }}><PulseDot /><TimerDisplay seconds={timerSec} /></div>
       </div>
       {expanded && (
         <div style={{ maxHeight: showPanel ? 230 : 0, opacity: showPanel ? 1 : 0, overflow: "hidden", transition: "max-height 0.28s cubic-bezier(0.4,0,0.2,1), opacity 0.28s ease-out" }}>
@@ -225,7 +227,15 @@ const Pill = ({ expanded, showGreeting, greetingOp, showPanel, showPraise, prais
   );
 };
 
-export default function HarveFullDemo() {
+function resetAll(setters) {
+  const s = setters;
+  s.setWallIn(false); s.setMenuIn(false); s.setDockIn(false); s.setWindowIn(false);
+  s.setPillVisible(false); s.setExpanded(false); s.setShowPanel(false); s.setShowGreeting(false);
+  s.setGreetingOp(0); s.setSolidOp(0); s.setShowPraise(false); s.setPraiseOp(0); s.setPillOp(1);
+  s.setTimerSec(322); s.setZoom(1); s.setBgBlur(0); s.setPillPhase("hidden");
+}
+
+export default function HarveFullDemo({ play = false }) {
   const [wallIn, setWallIn] = useState(false);
   const [menuIn, setMenuIn] = useState(false);
   const [dockIn, setDockIn] = useState(false);
@@ -244,6 +254,7 @@ export default function HarveFullDemo() {
   const [bgBlur, setBgBlur] = useState(0);
   const [pillPhase, setPillPhase] = useState("hidden");
   const mountedRef = useRef(true);
+  const runIdRef = useRef(0);
   const sleep = (ms) => new Promise(r => setTimeout(r, ms));
 
   const resetPill = useCallback(() => {
@@ -253,45 +264,80 @@ export default function HarveFullDemo() {
   }, []);
 
   const runPillCycle = useCallback(async () => {
+    const myRun = runIdRef.current;
     if (!mountedRef.current) return;
-    resetPill(); await sleep(150); if (!mountedRef.current) return;
+    resetPill();
+    await sleep(150);
+    if (myRun !== runIdRef.current || !mountedRef.current) return;
     setPillVisible(true); setPillPhase("idle");
-    await sleep(T.IDLE); if (!mountedRef.current) return;
+    await sleep(T.IDLE);
+    if (myRun !== runIdRef.current || !mountedRef.current) return;
     setPillPhase("zooming"); setZoom(2.6); setBgBlur(6);
-    await sleep(T.ZOOM); if (!mountedRef.current) return;
+    await sleep(T.ZOOM);
+    if (myRun !== runIdRef.current || !mountedRef.current) return;
     setPillPhase("greeting"); setShowGreeting(true); setSolidOp(1);
     await sleep(150); setGreetingOp(1);
-    await sleep(T.GREET_HOLD); if (!mountedRef.current) return;
+    await sleep(T.GREET_HOLD);
+    if (myRun !== runIdRef.current || !mountedRef.current) return;
     setGreetingOp(0); await sleep(T.GREET_OUT);
     setShowGreeting(false); setSolidOp(0);
-    await sleep(T.POST_GREET); if (!mountedRef.current) return;
+    await sleep(T.POST_GREET);
+    if (myRun !== runIdRef.current || !mountedRef.current) return;
     setPillPhase("expanding"); setExpanded(true);
     await sleep(50); setShowPanel(true);
-    await sleep(T.EXPAND + 150); if (!mountedRef.current) return;
-    setPillPhase("expanded"); await sleep(T.EXPANDED); if (!mountedRef.current) return;
+    await sleep(T.EXPAND + 150);
+    if (myRun !== runIdRef.current || !mountedRef.current) return;
+    setPillPhase("expanded"); await sleep(T.EXPANDED);
+    if (myRun !== runIdRef.current || !mountedRef.current) return;
     setPillPhase("submitting"); await sleep(T.SUBMIT);
     setShowPanel(false); setExpanded(false); setShowPraise(true); setSolidOp(1);
     setPillPhase("praise");
     await sleep(T.PRAISE_IN); setPraiseOp(1);
-    await sleep(T.PRAISE_HOLD); if (!mountedRef.current) return;
+    await sleep(T.PRAISE_HOLD);
+    if (myRun !== runIdRef.current || !mountedRef.current) return;
     setPraiseOp(0); setPillOp(0);
-    await sleep(T.PRAISE_OUT); if (!mountedRef.current) return;
-    await sleep(T.HARD_CUT); runPillCycle();
+    await sleep(T.PRAISE_OUT);
+    if (myRun !== runIdRef.current || !mountedRef.current) return;
+    await sleep(T.HARD_CUT);
+    if (myRun !== runIdRef.current || !mountedRef.current) return;
+    runPillCycle();
   }, [resetPill]);
 
   useEffect(() => {
     mountedRef.current = true;
+    if (!play) {
+      runIdRef.current += 1;
+      resetAll({
+        setWallIn, setMenuIn, setDockIn, setWindowIn,
+        setPillVisible, setExpanded, setShowPanel, setShowGreeting,
+        setGreetingOp, setSolidOp, setShowPraise, setPraiseOp, setPillOp,
+        setTimerSec, setZoom, setBgBlur, setPillPhase,
+      });
+      return () => { mountedRef.current = false; };
+    }
+
+    const myRun = ++runIdRef.current;
     (async () => {
-      await sleep(200); setWallIn(true);
-      await sleep(T.WALL_IN); setMenuIn(true);
-      await sleep(T.MENU_IN); setDockIn(true);
+      await sleep(200);
+      if (myRun !== runIdRef.current || !mountedRef.current) return;
+      setWallIn(true);
+      await sleep(T.WALL_IN); if (myRun !== runIdRef.current || !mountedRef.current) return;
+      setMenuIn(true);
+      await sleep(T.MENU_IN); if (myRun !== runIdRef.current || !mountedRef.current) return;
+      setDockIn(true);
       await sleep(T.DOCK_IN);
-      await sleep(T.APP_DELAY); setWindowIn(true);
+      await sleep(T.APP_DELAY); if (myRun !== runIdRef.current || !mountedRef.current) return;
+      setWindowIn(true);
       await sleep(T.APP_IN);
-      await sleep(T.PILL_DELAY); runPillCycle();
+      await sleep(T.PILL_DELAY); if (myRun !== runIdRef.current || !mountedRef.current) return;
+      await runPillCycle();
     })();
-    return () => { mountedRef.current = false; };
-  }, [runPillCycle]);
+
+    return () => {
+      mountedRef.current = false;
+      runIdRef.current += 1;
+    };
+  }, [play, runPillCycle]);
 
   useEffect(() => {
     if (pillPhase === "expanded" || pillPhase === "expanding") {
@@ -301,7 +347,12 @@ export default function HarveFullDemo() {
   }, [pillPhase]);
 
   return (
-    <div style={{ width: "100%", aspectRatio: "1920 / 960", maxHeight: "min(72vh, 920px)", margin: "0 auto", position: "relative", overflow: "hidden", background: "#FFF", fontFamily: "-apple-system, 'SF Pro Display', 'Helvetica Neue', 'Inter', sans-serif", borderRadius: 20 }}>
+    <div style={{
+      width: "100%", maxWidth: 880, aspectRatio: "16 / 10", maxHeight: "min(56vh, 520px)",
+      margin: "0 auto", position: "relative", overflow: "hidden", background: "#FFF",
+      fontFamily: "-apple-system, 'SF Pro Display', 'Helvetica Neue', 'Inter', sans-serif",
+      borderRadius: 18, lineHeight: "normal",
+    }}>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
         @keyframes pulseDot{0%,100%{opacity:1;box-shadow:0 0 6px rgba(52,211,153,0.6)}50%{opacity:0.6;box-shadow:0 0 2px rgba(52,211,153,0.3)}}
@@ -312,7 +363,7 @@ export default function HarveFullDemo() {
         ::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.08);border-radius:3px}
         ::-webkit-scrollbar-thumb:hover{background:rgba(255,255,255,0.14)}
       `}</style>
-      <div className="harve-demo-root-inner" style={{ position: "absolute", inset: 0 }}>
+      <div className="harve-demo-root-inner" style={{ position: "absolute", inset: 0, lineHeight: "normal" }}>
         <Wallpaper show={wallIn} />
         <TopBar show={menuIn} />
         <HarveWindow show={windowIn} blur={bgBlur} />
