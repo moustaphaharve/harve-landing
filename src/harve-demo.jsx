@@ -301,13 +301,35 @@ export default function HarveFullDemo({ play = false }) {
   const [pillPhase, setPillPhase] = useState("hidden");
   const mountedRef = useRef(true);
   const runIdRef = useRef(0);
+  const demoContainerRef = useRef(null);
+  /** Max pill scale so the zoom animation never wider than the demo frame (fixes mobile “severe zoom”). */
+  const pillZoomCapRef = useRef(2.08);
   const sleep = (ms) => new Promise(r => setTimeout(r, ms));
+
+  const updatePillZoomCap = useCallback(() => {
+    const el = demoContainerRef.current;
+    if (!el) return;
+    const w = el.getBoundingClientRect().width;
+    const margin = 20;
+    const pillBase = 288;
+    const cap = Math.min(2.08, Math.max(1, (w - margin) / pillBase));
+    pillZoomCapRef.current = cap;
+  }, []);
 
   const resetPill = useCallback(() => {
     setPillVisible(false); setExpanded(false); setShowPanel(false); setShowGreeting(false);
     setGreetingOp(0); setSolidOp(0); setShowPraise(false); setPraiseOp(0); setPillOp(1);
     setTimerSec(322); setZoom(1); setBgBlur(0); setPillPhase("hidden");
   }, []);
+
+  useEffect(() => {
+    updatePillZoomCap();
+    const el = demoContainerRef.current;
+    if (!el || typeof ResizeObserver === "undefined") return;
+    const ro = new ResizeObserver(() => updatePillZoomCap());
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [updatePillZoomCap]);
 
   const runPillCycle = useCallback(async () => {
     const myRun = runIdRef.current;
@@ -318,7 +340,8 @@ export default function HarveFullDemo({ play = false }) {
     setPillVisible(true); setPillPhase("idle");
     await sleep(T.IDLE);
     if (myRun !== runIdRef.current || !mountedRef.current) return;
-    setPillPhase("zooming"); setZoom(2.08); setBgBlur(6);
+    updatePillZoomCap();
+    setPillPhase("zooming"); setZoom(pillZoomCapRef.current); setBgBlur(6);
     await sleep(T.ZOOM);
     if (myRun !== runIdRef.current || !mountedRef.current) return;
     setPillPhase("greeting"); setShowGreeting(true); setSolidOp(1);
@@ -347,7 +370,7 @@ export default function HarveFullDemo({ play = false }) {
     await sleep(T.HARD_CUT);
     if (myRun !== runIdRef.current || !mountedRef.current) return;
     runPillCycle();
-  }, [resetPill]);
+  }, [resetPill, updatePillZoomCap]);
 
   useEffect(() => {
     mountedRef.current = true;
@@ -393,12 +416,16 @@ export default function HarveFullDemo({ play = false }) {
   }, [pillPhase]);
 
   return (
-    <div style={{
-      width: "100%", maxWidth: 980, aspectRatio: "16 / 10", maxHeight: "min(62vh, 620px)",
-      margin: "0 auto", position: "relative", overflow: "hidden", background: "#FFF",
-      fontFamily: "-apple-system, 'SF Pro Display', 'Helvetica Neue', 'Inter', sans-serif",
-      borderRadius: 18, lineHeight: "normal",
-    }}>
+    <div
+      ref={demoContainerRef}
+      className="harve-demo-stage"
+      style={{
+        width: "100%", maxWidth: 980, aspectRatio: "16 / 10", maxHeight: "var(--harve-demo-max-h, min(62vh, 620px))",
+        margin: "0 auto", position: "relative", overflow: "hidden", background: "#FFF",
+        fontFamily: "-apple-system, 'SF Pro Display', 'Helvetica Neue', 'Inter', sans-serif",
+        borderRadius: 18, lineHeight: "normal",
+      }}
+    >
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap');
         @keyframes pulseDot{0%,100%{opacity:1;box-shadow:0 0 6px rgba(52,211,153,0.6)}50%{opacity:0.6;box-shadow:0 0 2px rgba(52,211,153,0.3)}}

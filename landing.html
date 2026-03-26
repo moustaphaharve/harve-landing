@@ -478,11 +478,23 @@ a.nav-cta, a.cta-primary, a.cta-secondary {
   width: 100%;
   line-height: normal;
 }
+/* Mobile: shorter frame + zoomed-out feel; pill scale is capped in JS from container width */
+#harve-demo-root {
+  --harve-demo-max-h: min(62vh, 620px);
+}
 @media (max-width: 768px) {
+  #harve-demo-root {
+    --harve-demo-max-h: min(48vh, 340px);
+  }
   .mac-demo-section { padding: 0 16px 24px; margin-top: -40px; }
   .mac-demo-glow { border-radius: 18px; }
   .mac-demo-glow::before { inset: -24px -20px -28px -20px; filter: blur(28px); }
   .mac-demo-glow-inner { border-radius: 16px; }
+}
+@media (max-width: 420px) {
+  #harve-demo-root {
+    --harve-demo-max-h: min(44vh, 300px);
+  }
 }
 
 /* ── How It Works ── */
