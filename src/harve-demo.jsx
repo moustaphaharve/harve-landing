@@ -9,6 +9,14 @@ const T = {
 
 const HARVE_LOGO_SRC = "/harve-logo-white.png";
 
+/** Demo balance shown in app window + expanded pill */
+const DEMO_BALANCE = "$537.22";
+
+const font = {
+  ui: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+  round: "'Nunito', -apple-system, BlinkMacSystemFont, sans-serif",
+};
+
 const HarveLogoImg = ({ size = 22, style = {} }) => (
   <img
     src={HARVE_LOGO_SRC}
@@ -71,13 +79,13 @@ const TimerDisplay = ({ seconds }) => {
   const m = Math.floor((seconds % 3600) / 60);
   return (
     <span style={{
-      fontFamily: "'JetBrains Mono', ui-monospace, 'SF Mono', 'Segoe UI Mono', Menlo, Consolas, monospace",
+      fontFamily: font.round,
       fontSize: 13,
-      fontWeight: 600,
+      fontWeight: 500,
       fontVariantNumeric: "tabular-nums",
       fontFeatureSettings: '"tnum" 1',
-      letterSpacing: "0.06em",
-      color: "rgba(52, 62, 78, 0.92)",
+      letterSpacing: "0.04em",
+      color: "rgba(52, 62, 78, 0.88)",
       lineHeight: 1.15,
     }}>
       {String(h).padStart(2, "0")}:{String(m).padStart(2, "0")}
@@ -155,7 +163,7 @@ const HarveWindow = ({ show, blur = 0 }) => {
       opacity: show ? 1 : 0,
       filter: blur > 0 ? `blur(${blur}px)` : "none",
       transition: "opacity 0.4s cubic-bezier(0.16,1,0.3,1), transform 0.4s cubic-bezier(0.16,1,0.3,1), filter 0.8s ease",
-      fontFamily: "'Inter', -apple-system, sans-serif", color: "#E4E4E8",
+      fontFamily: font.ui, color: "#E4E4E8",
       display: "flex", flexDirection: "column", zIndex: 20,
       minHeight: 0,
     }}>
@@ -172,33 +180,93 @@ const HarveWindow = ({ show, blur = 0 }) => {
         <div style={{ height: 4 }} />
       </div>
       <div style={{ flex: 1, overflowY: "auto", overflowX: "hidden", minHeight: 0, WebkitOverflowScrolling: "touch" }}>
-        <div style={{ padding: "0 22px 22px", background: "#111114" }}>
-          <div style={{ padding: "18px 0 16px", display: "flex", flexDirection: "column", gap: 8 }}>
-            <div style={{ fontSize: 21, fontWeight: 600, lineHeight: 1.28, color: "#E4E4E8" }}>Hey, Alex</div>
-            <div style={{ fontSize: 13, color: "#5E5E6A", lineHeight: 1.45 }}>Available: $20.00 · Next payout Monday</div>
-          </div>
-          <div style={{ marginBottom: 16, padding: "14px 18px", borderRadius: 12, background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.11)" }}>
-            <div style={{ fontSize: 13, fontWeight: 600, lineHeight: 1.5, color: "rgba(255,255,255,0.96)" }}>Your recent sessions are scoring as high-value professional work. That means higher payouts. Keep it up.</div>
-            <div style={{ fontSize: 12, fontWeight: 500, marginTop: 10, color: "rgba(255,255,255,0.58)", lineHeight: 1.4 }}>Average quality score: 88/100.</div>
-          </div>
-          <div style={{ display: "flex", flexDirection: "row", flexWrap: "wrap", gap: 12, alignItems: "stretch" }}>
-            <div style={{ flex: "1 1 240px", minWidth: 0, padding: 22, borderRadius: 14, background: "linear-gradient(135deg, #0F1B3D 0%, #1A2F6B 40%, #2845A0 100%)", position: "relative", overflow: "hidden", display: "flex", flexDirection: "column" }}>
-              <div style={{ position: "absolute", top: 0, right: 0, width: "50%", height: "100%", background: "linear-gradient(135deg, transparent, rgba(59,130,246,0.15))" }} />
-              <div style={{ fontSize: 17, fontWeight: 600, color: "white", position: "relative", lineHeight: 1.32, marginBottom: 10 }}>Start earning now</div>
-              <div style={{ fontSize: 13, color: "rgba(255,255,255,0.55)", marginBottom: 16, lineHeight: 1.48, position: "relative", flex: 1 }}>Longer sessions pay more. Start recording and forget.</div>
-              <div style={{ display: "inline-flex", alignSelf: "flex-start", padding: "9px 18px", borderRadius: 8, fontSize: 12, fontWeight: 600, color: "white", background: "rgba(255,255,255,0.10)", border: "1px solid rgba(255,255,255,0.12)", position: "relative" }}>● Start Recording</div>
+        <div style={{ padding: "0 22px 12px", background: "#111114" }}>
+          <div style={{ padding: "14px 0 10px", display: "flex", flexDirection: "column", gap: 6 }}>
+            <div style={{ fontSize: 20, fontWeight: 600, lineHeight: 1.28, color: "#E4E4E8" }}>Hey, Alex</div>
+            <div style={{ fontSize: 13, fontWeight: 400, color: "#5E5E6A", lineHeight: 1.45 }}>
+              Available: {DEMO_BALANCE} · Next payout Monday
             </div>
-            <div style={{ flex: "1 1 200px", minWidth: 168, padding: "20px 22px", borderRadius: 14, background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)", display: "flex", flexDirection: "column", justifyContent: "center" }}>
-              <div style={{ fontSize: 11, fontWeight: 500, marginBottom: 8, color: "#5E5E6A", lineHeight: 1.25 }}>Earned today</div>
-              <div style={{ fontSize: 28, fontWeight: 700, lineHeight: 1.12 }}>$20.00</div>
-              <div style={{ fontSize: 12, color: "#5E5E6A", marginTop: 10, lineHeight: 1.4 }}>Next payout: Monday</div>
+          </div>
+          <div style={{ marginBottom: 12, padding: "12px 16px", borderRadius: 12, background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.11)" }}>
+            <div style={{ fontSize: 13, fontWeight: 500, lineHeight: 1.5, color: "rgba(255,255,255,0.96)" }}>Your recent sessions are scoring as high-value professional work. That means higher payouts. Keep it up.</div>
+            <div style={{ fontSize: 12, fontWeight: 400, marginTop: 8, color: "rgba(255,255,255,0.58)", lineHeight: 1.4 }}>Average quality score: 88/100.</div>
+          </div>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "minmax(0, 1fr) minmax(100px, 26%)",
+              gap: 10,
+              alignItems: "stretch",
+            }}
+          >
+            <div
+              style={{
+                minWidth: 0,
+                padding: "12px 14px 10px",
+                borderRadius: 14,
+                background: "linear-gradient(135deg, #0F1B3D 0%, #1A2F6B 40%, #2845A0 100%)",
+                position: "relative",
+                overflow: "hidden",
+                display: "flex",
+                flexDirection: "column",
+              }}
+            >
+              <div style={{ position: "absolute", top: 0, right: 0, width: "50%", height: "100%", background: "linear-gradient(135deg, transparent, rgba(59,130,246,0.15))" }} />
+              <div style={{ fontSize: 16, fontWeight: 600, color: "white", position: "relative", lineHeight: 1.3, marginBottom: 6 }}>Start earning now</div>
+              <div style={{ fontSize: 12, fontWeight: 400, color: "rgba(255,255,255,0.56)", marginBottom: 10, lineHeight: 1.42, position: "relative" }}>Longer sessions pay more. Start recording and forget.</div>
+              <div style={{ display: "flex", justifyContent: "flex-end", marginTop: "auto", position: "relative" }}>
+                <div
+                  style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: 6,
+                    padding: "7px 14px",
+                    borderRadius: 8,
+                    fontSize: 11,
+                    fontWeight: 500,
+                    fontFamily: font.round,
+                    color: "rgba(255,255,255,0.95)",
+                    background: "rgba(255,255,255,0.10)",
+                    border: "1px solid rgba(255,255,255,0.14)",
+                  }}
+                >
+                  <span style={{ opacity: 0.95, fontSize: 9 }}>●</span> Start Recording
+                </div>
+              </div>
+            </div>
+            <div
+              style={{
+                minWidth: 0,
+                padding: "10px 12px",
+                borderRadius: 14,
+                background: "rgba(255,255,255,0.03)",
+                border: "1px solid rgba(255,255,255,0.06)",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+              }}
+            >
+              <div style={{ fontSize: 10, fontWeight: 500, marginBottom: 4, color: "#5E5E6A", lineHeight: 1.2, letterSpacing: "0.02em" }}>Earned today</div>
+              <div
+                style={{
+                  fontSize: 22,
+                  fontWeight: 400,
+                  fontFamily: font.round,
+                  fontVariantNumeric: "tabular-nums",
+                  lineHeight: 1.1,
+                  color: "#E4E4E8",
+                }}
+              >
+                {DEMO_BALANCE}
+              </div>
+              <div style={{ fontSize: 11, fontWeight: 400, color: "#5E5E6A", marginTop: 6, lineHeight: 1.35 }}>Next payout: Monday</div>
             </div>
           </div>
         </div>
-        <div style={{ background: "#0C0C0F", borderRadius: "14px 14px 0 0", minHeight: 128 }}>
-          <div style={{ padding: "18px 22px 22px" }}>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
-              <div style={{ fontSize: 14, fontWeight: 600, lineHeight: 1.2 }}>Recordings</div>
+        <div style={{ background: "#0C0C0F", borderRadius: "14px 14px 0 0", minHeight: 108 }}>
+          <div style={{ padding: "14px 18px 16px" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 10 }}>
+              <div style={{ fontSize: 13, fontWeight: 600, lineHeight: 1.2 }}>Recordings</div>
               <div style={{ fontSize: 12, color: "#5E5E6A" }}>19 total</div>
             </div>
             {recs.map((r, i) => (
@@ -222,7 +290,7 @@ const HarveWindow = ({ show, blur = 0 }) => {
 
 const Pill = ({ expanded, showGreeting, greetingOp, showPanel, showPraise, praiseOp, timerSec, pillOp, solidOp }) => {
   const br = expanded && !showPraise ? 18 : 100;
-  const pad = expanded && !showPraise ? "0 18px 16px" : "0 18px";
+  const pad = expanded && !showPraise ? "0 16px 12px" : "0 18px";
   return (
     <div style={{
       width: 288, margin: "0 auto", overflow: "hidden",
@@ -237,36 +305,84 @@ const Pill = ({ expanded, showGreeting, greetingOp, showPanel, showPraise, prais
       position: "relative",
     }}>
       <div style={{ position: "absolute", inset: 0, background: "linear-gradient(145deg, #E8F0FF 0%, #D4E4FA 100%)", borderRadius: "inherit", opacity: solidOp, transition: "opacity 0.4s ease-out", pointerEvents: "none", zIndex: 0 }} />
-      <div style={{ height: 48, display: "flex", alignItems: "center", gap: 8, position: "relative", zIndex: 2 }}>
+      <div style={{ height: 46, display: "flex", alignItems: "center", gap: 8, position: "relative", zIndex: 2 }}>
         <HarveLogoGhost size={22} />
         <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", minWidth: 0 }}>
-          {showGreeting && <span style={{ fontSize: 14, fontWeight: 600, color: "rgba(30,50,80,0.85)", opacity: greetingOp, transition: "opacity 0.4s ease-out", whiteSpace: "nowrap" }}>Hey, Alex.</span>}
+          {showGreeting && (
+            <span
+              style={{
+                fontSize: 14,
+                fontWeight: 500,
+                fontFamily: font.ui,
+                color: "rgba(30,50,80,0.88)",
+                opacity: greetingOp,
+                transition: "opacity 0.4s ease-out",
+                whiteSpace: "nowrap",
+              }}
+            >
+              Hey, Alex.
+            </span>
+          )}
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: 6, flexShrink: 0 }}><PulseDot /><TimerDisplay seconds={timerSec} /></div>
       </div>
       {expanded && (
-        <div style={{ maxHeight: showPanel ? 268 : 0, opacity: showPanel ? 1 : 0, overflow: "hidden", transition: "max-height 0.32s cubic-bezier(0.4,0,0.2,1), opacity 0.28s ease-out" }}>
-          <div style={{ background: "rgba(242,250,255,0.42)", border: "1px solid rgba(255,255,255,0.65)", borderRadius: 13, padding: "12px 16px", marginBottom: 12, backdropFilter: "blur(8px)" }}>
-            <div style={{ fontSize: 10, fontWeight: 600, color: "rgba(60,80,110,0.6)", letterSpacing: 0.8, textTransform: "uppercase", marginBottom: 6 }}>THIS SESSION</div>
-            <div style={{ fontSize: 34, fontWeight: 700, color: "rgba(20,40,70,0.9)", fontVariantNumeric: "tabular-nums", lineHeight: 1.12, fontFamily: "-apple-system, 'SF Pro Display', 'Helvetica Neue', sans-serif" }}>$397.45</div>
-            <div style={{ fontSize: 11, fontWeight: 500, color: "rgba(60,80,110,0.55)", marginTop: 6, lineHeight: 1.35 }}>Quality score <span style={{ color: "rgba(52,150,100,0.8)" }}>82</span>/100 · High Value</div>
+        <div style={{ maxHeight: showPanel ? 232 : 0, opacity: showPanel ? 1 : 0, overflow: "hidden", transition: "max-height 0.32s cubic-bezier(0.4,0,0.2,1), opacity 0.28s ease-out" }}>
+          <div style={{ background: "rgba(242,250,255,0.42)", border: "1px solid rgba(255,255,255,0.65)", borderRadius: 12, padding: "10px 14px 8px", marginBottom: 8, backdropFilter: "blur(8px)" }}>
+            <div style={{ fontSize: 9, fontWeight: 500, fontFamily: font.ui, color: "rgba(60,80,110,0.55)", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 4 }}>THIS SESSION</div>
+            <div
+              style={{
+                fontSize: 30,
+                fontWeight: 400,
+                fontFamily: font.round,
+                color: "rgba(22,42,72,0.94)",
+                fontVariantNumeric: "tabular-nums",
+                lineHeight: 1.08,
+                letterSpacing: "-0.02em",
+              }}
+            >
+              {DEMO_BALANCE}
+            </div>
+            <div style={{ fontSize: 11, fontWeight: 400, fontFamily: font.ui, color: "rgba(60,80,110,0.58)", marginTop: 4, lineHeight: 1.35 }}>
+              Quality score <span style={{ fontWeight: 500, color: "rgba(52,150,100,0.85)" }}>82</span>/100 · High Value
+            </div>
           </div>
-          <div style={{ display: "flex", flexWrap: "wrap", gap: 8, alignItems: "center", paddingBottom: 2 }}>
-            <button type="button" style={{ flex: "1 1 120px", minHeight: 36, borderRadius: 10, border: "1px solid rgba(180,200,225,0.4)", background: "rgba(240,248,255,0.5)", backdropFilter: "blur(6px)", display: "flex", alignItems: "center", justifyContent: "center", gap: 6, fontSize: 12, fontWeight: 600, color: "rgba(40,60,90,0.75)", cursor: "default", fontFamily: "-apple-system, sans-serif", padding: "0 10px" }}>
-              <span style={{ fontSize: 10 }}>❚❚</span> Pause
+          <div style={{ display: "flex", flexDirection: "row", flexWrap: "nowrap", gap: 6, alignItems: "stretch", paddingBottom: 0 }}>
+            <button
+              type="button"
+              style={{
+                flex: "1 1 58%",
+                minHeight: 32,
+                borderRadius: 9,
+                border: "1px solid rgba(180,200,225,0.42)",
+                background: "rgba(240,248,255,0.52)",
+                backdropFilter: "blur(6px)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: 6,
+                fontSize: 12,
+                fontWeight: 400,
+                fontFamily: font.ui,
+                color: "rgba(45,65,95,0.82)",
+                cursor: "default",
+                padding: "0 8px",
+              }}
+            >
+              <span style={{ fontSize: 10, opacity: 0.85, letterSpacing: "-0.05em" }}>❚❚</span> Pause
             </button>
-            <button type="button" style={{ width: 40, minHeight: 36, borderRadius: 10, border: "1px solid rgba(180,200,225,0.4)", background: "rgba(240,248,255,0.5)", backdropFilter: "blur(6px)", display: "flex", alignItems: "center", justifyContent: "center", cursor: "default", flexShrink: 0 }}>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(40,60,90,0.7)" strokeWidth="2" strokeLinecap="round"><rect x="9" y="1" width="6" height="12" rx="3" /><path d="M5 10a7 7 0 0014 0" /><line x1="12" y1="17" x2="12" y2="21" /></svg>
+            <button type="button" style={{ width: 34, minHeight: 32, borderRadius: 9, border: "1px solid rgba(180,200,225,0.4)", background: "rgba(240,248,255,0.5)", backdropFilter: "blur(6px)", display: "flex", alignItems: "center", justifyContent: "center", cursor: "default", flexShrink: 0 }}>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="rgba(40,60,90,0.68)" strokeWidth="1.85" strokeLinecap="round"><rect x="9" y="1" width="6" height="12" rx="3" /><path d="M5 10a7 7 0 0014 0" /><line x1="12" y1="17" x2="12" y2="21" /></svg>
             </button>
-            <button type="button" style={{ width: 40, minHeight: 36, borderRadius: 10, border: "1px solid rgba(100,140,200,0.4)", background: "linear-gradient(135deg, rgba(80,130,220,0.6), rgba(60,110,200,0.7))", display: "flex", alignItems: "center", justifyContent: "center", cursor: "default", flexShrink: 0 }}>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" /></svg>
+            <button type="button" style={{ width: 34, minHeight: 32, borderRadius: 9, border: "1px solid rgba(100,140,200,0.38)", background: "linear-gradient(135deg, rgba(80,130,220,0.58), rgba(60,110,200,0.72))", display: "flex", alignItems: "center", justifyContent: "center", cursor: "default", flexShrink: 0 }}>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" /></svg>
             </button>
           </div>
         </div>
       )}
       {showPraise && (
         <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", zIndex: 10, opacity: praiseOp, transition: "opacity 0.52s ease-out" }}>
-          <span style={{ fontSize: 15, fontWeight: 600, color: "rgba(30,60,100,0.85)" }}>Nice work!</span>
+          <span style={{ fontSize: 15, fontWeight: 500, fontFamily: font.ui, color: "rgba(30,60,100,0.88)" }}>Nice work!</span>
         </div>
       )}
     </div>
@@ -422,12 +538,12 @@ export default function HarveFullDemo({ play = false }) {
       style={{
         width: "100%", maxWidth: 980, aspectRatio: "16 / 10", maxHeight: "var(--harve-demo-max-h, min(62vh, 620px))",
         margin: "0 auto", position: "relative", overflow: "hidden", background: "#FFF",
-        fontFamily: "-apple-system, 'SF Pro Display', 'Helvetica Neue', 'Inter', sans-serif",
+        fontFamily: font.ui,
         borderRadius: 18, lineHeight: "normal",
       }}
     >
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Nunito:wght@400;500;600&display=swap');
         @keyframes pulseDot{0%,100%{opacity:1;box-shadow:0 0 6px rgba(52,211,153,0.6)}50%{opacity:0.6;box-shadow:0 0 2px rgba(52,211,153,0.3)}}
         @keyframes avatarShine{0%,70%,100%{left:-100%}85%{left:100%}}
         .harve-demo-root-inner *{box-sizing:border-box}
