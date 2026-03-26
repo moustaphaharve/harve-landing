@@ -1,6 +1,8 @@
 # Deploy Harve marketing site on Vercel
 
-This folder is a **static** site (HTML/CSS). No `npm run build` required.
+This folder is mostly **static** (HTML/CSS). The homepage **Mac demo** is a pre-bundled **`demo-bundle.js`** (React). No Vercel build step is required if you commit `demo-bundle.js`.
+
+**After editing** `src/harve-demo.jsx` or `src/demo-entry.jsx`, run **`npm install`** once, then **`npm run build:demo`** to regenerate `demo-bundle.js`, and commit it.
 
 ## 1. Repo layout
 
