@@ -71,7 +71,17 @@ const BatteryIcon = ({ color = "rgba(255,255,255,0.82)" }) => (
 );
 
 const PulseDot = () => (
-  <span style={{ display: "inline-block", width: 7, height: 7, borderRadius: "50%", background: "#34D399", boxShadow: "0 0 6px rgba(52,211,153,0.6)", animation: "pulseDot 2s ease-in-out infinite" }} />
+  <span
+    style={{
+      display: "inline-block",
+      width: 8,
+      height: 8,
+      borderRadius: "50%",
+      background: "radial-gradient(circle at 30% 30%, #6EE7B7 0%, #34D399 45%, #059669 100%)",
+      boxShadow: "0 0 0 2px rgba(52, 211, 153, 0.45), 0 0 14px rgba(52, 211, 153, 0.85), 0 0 28px rgba(16, 185, 129, 0.45)",
+      animation: "pulseDot 2s ease-in-out infinite",
+    }}
+  />
 );
 
 const TimerDisplay = ({ seconds }) => {
@@ -295,16 +305,49 @@ const Pill = ({ expanded, showGreeting, greetingOp, showPanel, showPraise, prais
   return (
     <div style={{
       width: 288, margin: "0 auto", overflow: "hidden",
-      background: "linear-gradient(145deg, rgba(225,240,255,0.28) 0%, rgba(180,215,255,0.16) 100%)",
-      backdropFilter: "blur(32px) saturate(180%) brightness(1.04)",
-      WebkitBackdropFilter: "blur(32px) saturate(180%) brightness(1.04)",
+      background: "linear-gradient(145deg, rgba(235, 248, 255, 0.52) 0%, rgba(190, 220, 255, 0.28) 100%)",
+      backdropFilter: "blur(36px) saturate(200%) brightness(1.08)",
+      WebkitBackdropFilter: "blur(36px) saturate(200%) brightness(1.08)",
       borderRadius: br, padding: pad,
-      border: "1px solid rgba(255,255,255,0.28)",
-      boxShadow: "0 8px 28px rgba(0,0,0,0.1), 0 2px 8px rgba(0,0,0,0.06)",
+      border: "1px solid rgba(255,255,255,0.55)",
+      boxShadow: `
+        0 0 0 3px rgba(120, 170, 255, 0.38),
+        0 0 28px rgba(72, 128, 235, 0.42),
+        0 10px 36px rgba(55, 120, 230, 0.22),
+        0 4px 12px rgba(0,0,0,0.08),
+        inset 0 1px 0 rgba(255,255,255,0.75),
+        inset 0 -1px 0 rgba(45, 95, 210, 0.12)
+      `,
       opacity: pillOp,
       transition: "border-radius 0.48s cubic-bezier(0.4,0,0.2,1), padding 0.48s cubic-bezier(0.4,0,0.2,1), opacity 0.34s ease-out",
       position: "relative",
     }}>
+      <div
+        aria-hidden
+        style={{
+          position: "absolute",
+          inset: 0,
+          borderRadius: "inherit",
+          pointerEvents: "none",
+          zIndex: 1,
+          overflow: "hidden",
+          opacity: 0.5,
+        }}
+      >
+        <div
+          className="harve-pill-shine-sweep"
+          style={{
+            position: "absolute",
+            top: "-40%",
+            left: "-60%",
+            width: "55%",
+            height: "180%",
+            background: "linear-gradient(105deg, transparent 0%, rgba(255,255,255,0.95) 42%, rgba(255,255,255,0.2) 52%, transparent 68%)",
+            transform: "rotate(12deg)",
+            animation: "pillShine 4.2s ease-in-out infinite",
+          }}
+        />
+      </div>
       <div style={{ position: "absolute", inset: 0, background: "linear-gradient(145deg, #E8F0FF 0%, #D4E4FA 100%)", borderRadius: "inherit", opacity: solidOp, transition: "opacity 0.4s ease-out", pointerEvents: "none", zIndex: 0 }} />
       <div style={{ height: 46, display: "flex", alignItems: "center", gap: 8, position: "relative", zIndex: 2 }}>
         <HarveLogoGhost size={22} />
@@ -543,8 +586,12 @@ export default function HarveFullDemo({ play = false }) {
       }}
     >
       <style>{`
-        @keyframes pulseDot{0%,100%{opacity:1;box-shadow:0 0 6px rgba(52,211,153,0.6)}50%{opacity:0.6;box-shadow:0 0 2px rgba(52,211,153,0.3)}}
+        @keyframes pulseDot{0%,100%{opacity:1;filter:brightness(1.05)}50%{opacity:0.88;filter:brightness(0.92)}}
+        @keyframes pillShine{0%,35%{transform:translateX(-120%) rotate(12deg)}65%,100%{transform:translateX(220%) rotate(12deg)}}
         @keyframes avatarShine{0%,70%,100%{left:-100%}85%{left:100%}}
+        @media (prefers-reduced-motion: reduce) {
+          .harve-pill-shine-sweep { animation: none !important; opacity: 0 !important; }
+        }
         .harve-demo-root-inner *{box-sizing:border-box}
         .harve-demo-root-inner button{font:inherit}
         .harve-demo-root-inner .harve-demo-dollar{font-family:'Nunito','Inter',system-ui,sans-serif!important;font-weight:700!important;font-style:normal!important}
@@ -565,8 +612,13 @@ export default function HarveFullDemo({ play = false }) {
           transition: "transform 1s cubic-bezier(0.4,0,0.2,1)",
           width: 288, minHeight: 52, zIndex: 200, pointerEvents: "none",
           maxWidth: "calc(100% - 16px)",
+          filter: pillVisible ? "drop-shadow(0 0 22px rgba(72, 128, 235, 0.5)) drop-shadow(0 10px 28px rgba(55, 120, 230, 0.32))" : "none",
         }}>
-          <div style={{ transform: pillVisible ? "translateY(0)" : "translateY(-20px)", opacity: pillVisible ? 1 : 0, transition: "transform 0.3s ease-out, opacity 0.3s ease-out" }}>
+          <div style={{
+            transform: pillVisible ? "translateY(0)" : "translateY(-20px)",
+            opacity: pillVisible ? 1 : 0,
+            transition: "transform 0.3s ease-out, opacity 0.3s ease-out",
+          }}>
             <Pill expanded={expanded} showGreeting={showGreeting} greetingOp={greetingOp}
               showPanel={showPanel} showPraise={showPraise} praiseOp={praiseOp}
               timerSec={timerSec} pillOp={pillOp} solidOp={solidOp} />
