@@ -20,7 +20,15 @@ const HarveLogoImg = ({ size = 22, style = {} }) => (
   />
 );
 
-/** White Harve mark on blue tile (dock + in-app chrome + pill). */
+/** Translucent white mark (menu bar, window chrome, pill) — not the solid blue dock tile. */
+const HarveLogoGhost = ({ size = 18 }) => (
+  <HarveLogoImg
+    size={size}
+    style={{ opacity: 0.78, filter: "drop-shadow(0 0 10px rgba(255,255,255,0.12))" }}
+  />
+);
+
+/** White Harve mark on blue tile — dock only. */
 const HarveLogoBlueBadge = ({ outer = 36, logo = 22 }) => (
   <div
     style={{
@@ -84,7 +92,7 @@ const TopBar = ({ show }) => (
     opacity: show ? 1 : 0, transform: show ? "translateY(0)" : "translateY(-26px)",
     transition: "all 0.35s cubic-bezier(0.4,0,0.2,1)",
   }}>
-    <HarveLogoImg size={17} />
+    <HarveLogoGhost size={17} />
     <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
       <WifiIcon color="rgba(255,255,255,0.88)" />
       <BatteryIcon color="rgba(255,255,255,0.88)" />
@@ -147,7 +155,7 @@ const HarveWindow = ({ show, blur = 0 }) => {
           <div style={{ display: "flex", gap: 6, marginRight: 4, alignItems: "center", flexShrink: 0 }}>
             {["#FF5F57","#FEBC2E","#28C840"].map(c => <div key={c} style={{ width: 12, height: 12, borderRadius: "50%", background: c }} />)}
           </div>
-          <HarveLogoBlueBadge outer={30} logo={18} />
+          <HarveLogoGhost size={20} />
           <div style={{ flex: 1, minWidth: 8 }} />
           <Avatar letter="A" />
         </div>
@@ -164,14 +172,14 @@ const HarveWindow = ({ show, blur = 0 }) => {
             <div style={{ fontSize: 13, fontWeight: 600, lineHeight: 1.5, color: "rgba(255,255,255,0.96)" }}>Your recent sessions are scoring as high-value professional work. That means higher payouts. Keep it up.</div>
             <div style={{ fontSize: 12, fontWeight: 500, marginTop: 10, color: "rgba(255,255,255,0.58)", lineHeight: 1.4 }}>Average quality score: 88/100.</div>
           </div>
-          <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-            <div style={{ padding: 22, borderRadius: 14, background: "linear-gradient(135deg, #0F1B3D 0%, #1A2F6B 40%, #2845A0 100%)", position: "relative", overflow: "hidden" }}>
+          <div style={{ display: "flex", flexDirection: "row", flexWrap: "wrap", gap: 12, alignItems: "stretch" }}>
+            <div style={{ flex: "1 1 240px", minWidth: 0, padding: 22, borderRadius: 14, background: "linear-gradient(135deg, #0F1B3D 0%, #1A2F6B 40%, #2845A0 100%)", position: "relative", overflow: "hidden", display: "flex", flexDirection: "column" }}>
               <div style={{ position: "absolute", top: 0, right: 0, width: "50%", height: "100%", background: "linear-gradient(135deg, transparent, rgba(59,130,246,0.15))" }} />
               <div style={{ fontSize: 17, fontWeight: 600, color: "white", position: "relative", lineHeight: 1.32, marginBottom: 10 }}>Start earning now</div>
-              <div style={{ fontSize: 13, color: "rgba(255,255,255,0.55)", marginBottom: 16, lineHeight: 1.48, position: "relative" }}>Longer sessions pay more. Start recording and forget.</div>
-              <div style={{ display: "inline-flex", padding: "9px 18px", borderRadius: 8, fontSize: 12, fontWeight: 600, color: "white", background: "rgba(255,255,255,0.10)", border: "1px solid rgba(255,255,255,0.12)", position: "relative" }}>● Start Recording</div>
+              <div style={{ fontSize: 13, color: "rgba(255,255,255,0.55)", marginBottom: 16, lineHeight: 1.48, position: "relative", flex: 1 }}>Longer sessions pay more. Start recording and forget.</div>
+              <div style={{ display: "inline-flex", alignSelf: "flex-start", padding: "9px 18px", borderRadius: 8, fontSize: 12, fontWeight: 600, color: "white", background: "rgba(255,255,255,0.10)", border: "1px solid rgba(255,255,255,0.12)", position: "relative" }}>● Start Recording</div>
             </div>
-            <div style={{ padding: "20px 22px", borderRadius: 14, background: "rgba(255,255,255,0.03)" }}>
+            <div style={{ flex: "1 1 200px", minWidth: 168, padding: "20px 22px", borderRadius: 14, background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)", display: "flex", flexDirection: "column", justifyContent: "center" }}>
               <div style={{ fontSize: 11, fontWeight: 500, marginBottom: 8, color: "#5E5E6A", lineHeight: 1.25 }}>Earned today</div>
               <div style={{ fontSize: 28, fontWeight: 700, lineHeight: 1.12 }}>$20.00</div>
               <div style={{ fontSize: 12, color: "#5E5E6A", marginTop: 10, lineHeight: 1.4 }}>Next payout: Monday</div>
@@ -221,7 +229,7 @@ const Pill = ({ expanded, showGreeting, greetingOp, showPanel, showPraise, prais
     }}>
       <div style={{ position: "absolute", inset: 0, background: "linear-gradient(145deg, #E8F0FF 0%, #D4E4FA 100%)", borderRadius: "inherit", opacity: solidOp, transition: "opacity 0.4s ease-out", pointerEvents: "none", zIndex: 0 }} />
       <div style={{ height: 48, display: "flex", alignItems: "center", gap: 8, position: "relative", zIndex: 2 }}>
-        <HarveLogoBlueBadge outer={32} logo={20} />
+        <HarveLogoGhost size={22} />
         <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", minWidth: 0 }}>
           {showGreeting && <span style={{ fontSize: 14, fontWeight: 600, color: "rgba(30,50,80,0.85)", opacity: greetingOp, transition: "opacity 0.4s ease-out", whiteSpace: "nowrap" }}>Hey, Alex.</span>}
         </div>
