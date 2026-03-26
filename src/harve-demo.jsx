@@ -7,23 +7,50 @@ const T = {
   PRAISE_HOLD: 1400, PRAISE_OUT: 450, HARD_CUT: 250,
 };
 
-const HarveWaveMark = ({ size = 22, circleColor = "#E4E4E8", waveColor = "#111114", style = {} }) => (
-  <svg width={size} height={size} viewBox="0 0 100 100" style={style}>
-    <circle cx="50" cy="50" r="46" fill={circleColor} />
-    <path d="M22 35 Q36 28, 50 35 Q64 42, 78 35" stroke={waveColor} strokeWidth="7" fill="none" strokeLinecap="round" />
-    <path d="M22 50 Q36 43, 50 50 Q64 57, 78 50" stroke={waveColor} strokeWidth="7" fill="none" strokeLinecap="round" />
-    <path d="M22 65 Q36 58, 50 65 Q64 72, 78 65" stroke={waveColor} strokeWidth="7" fill="none" strokeLinecap="round" />
-  </svg>
+const HARVE_LOGO_SRC = "/harve-logo-white.png";
+
+const HarveLogoImg = ({ size = 22, style = {} }) => (
+  <img
+    src={HARVE_LOGO_SRC}
+    alt=""
+    draggable={false}
+    width={size}
+    height={size}
+    style={{ width: size, height: size, objectFit: "contain", display: "block", ...style }}
+  />
 );
 
-const PillLogo = ({ size = 24 }) => (
-  <HarveWaveMark size={size} circleColor="rgba(200,220,240,0.9)" waveColor="rgba(30,50,80,0.85)" />
+/** White Harve mark on blue tile (dock + in-app chrome + pill). */
+const HarveLogoBlueBadge = ({ outer = 36, logo = 22 }) => (
+  <div
+    style={{
+      width: outer,
+      height: outer,
+      borderRadius: outer * 0.26,
+      background: "linear-gradient(180deg, #1d4ed8 0%, #2563eb 52%, #1e3a8a 100%)",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      flexShrink: 0,
+      boxShadow: "inset 0 1px 0 rgba(255,255,255,0.14), 0 2px 10px rgba(0,0,0,0.28)",
+    }}
+  >
+    <HarveLogoImg size={logo} />
+  </div>
 );
 
 const WifiIcon = ({ color = "rgba(255,255,255,0.85)" }) => (
   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2.2" strokeLinecap="round">
     <path d="M1.42 9a16 16 0 0 1 21.16 0" /><path d="M5 12.55a11 11 0 0 1 14.08 0" />
     <path d="M8.53 16.11a6 6 0 0 1 6.95 0" /><circle cx="12" cy="20" r="1" fill={color} stroke="none" />
+  </svg>
+);
+
+const BatteryIcon = ({ color = "rgba(255,255,255,0.82)" }) => (
+  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+    <rect x="3" y="7" width="16" height="10" rx="2" />
+    <path d="M21 10.5v3" strokeLinecap="round" />
+    <rect x="5" y="9" width="10" height="6" rx="0.5" fill={color} fillOpacity="0.35" stroke="none" />
   </svg>
 );
 
@@ -50,28 +77,30 @@ const Avatar = ({ letter = "A", size = 26 }) => (
 
 const TopBar = ({ show }) => (
   <div style={{
-    position: "absolute", top: 0, left: 0, right: 0, height: 24, zIndex: 10,
-    background: "rgba(255,255,255,0.22)", backdropFilter: "blur(40px) saturate(200%)", WebkitBackdropFilter: "blur(40px) saturate(200%)",
+    position: "absolute", top: 0, left: 0, right: 0, height: 26, zIndex: 10,
+    background: "rgba(0,0,0,0.52)", backdropFilter: "blur(28px) saturate(160%)", WebkitBackdropFilter: "blur(28px) saturate(160%)",
+    borderBottom: "1px solid rgba(255,255,255,0.08)",
     display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0 12px",
-    opacity: show ? 1 : 0, transform: show ? "translateY(0)" : "translateY(-24px)",
+    opacity: show ? 1 : 0, transform: show ? "translateY(0)" : "translateY(-26px)",
     transition: "all 0.35s cubic-bezier(0.4,0,0.2,1)",
   }}>
-    <HarveWaveMark size={16} circleColor="rgba(255,255,255,0.9)" waveColor="rgba(0,0,0,0.7)" />
-    <WifiIcon color="rgba(255,255,255,0.85)" />
+    <HarveLogoImg size={17} />
+    <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+      <WifiIcon color="rgba(255,255,255,0.88)" />
+      <BatteryIcon color="rgba(255,255,255,0.88)" />
+    </div>
   </div>
 );
 
 const Dock = ({ show }) => (
   <div style={{ position: "absolute", bottom: 8, left: "50%", transform: "translateX(-50%)", zIndex: 10, opacity: show ? 1 : 0, transition: "opacity 0.4s ease" }}>
     <div style={{
-      width: 50, height: 59, borderRadius: 12, background: "rgba(255,255,255,0.22)",
-      backdropFilter: "blur(40px) saturate(200%)", WebkitBackdropFilter: "blur(40px) saturate(200%)",
-      border: "1px solid rgba(255,255,255,0.18)", display: "flex", alignItems: "center", justifyContent: "center",
+      width: 54, height: 62, borderRadius: 13, background: "rgba(0,0,0,0.38)",
+      backdropFilter: "blur(28px) saturate(160%)", WebkitBackdropFilter: "blur(28px) saturate(160%)",
+      border: "1px solid rgba(255,255,255,0.12)", display: "flex", alignItems: "center", justifyContent: "center",
       transform: show ? "translateY(0)" : "translateY(30px)", transition: "transform 0.45s cubic-bezier(0.34,1.56,0.64,1) 0.15s",
     }}>
-      <div style={{ width: 38, height: 38, borderRadius: 9, background: "#111114", display: "flex", alignItems: "center", justifyContent: "center" }}>
-        <HarveWaveMark size={24} />
-      </div>
+      <HarveLogoBlueBadge outer={42} logo={26} />
     </div>
   </div>
 );
@@ -118,7 +147,7 @@ const HarveWindow = ({ show, blur = 0 }) => {
           <div style={{ display: "flex", gap: 6, marginRight: 4, alignItems: "center", flexShrink: 0 }}>
             {["#FF5F57","#FEBC2E","#28C840"].map(c => <div key={c} style={{ width: 12, height: 12, borderRadius: "50%", background: c }} />)}
           </div>
-          <HarveWaveMark size={22} />
+          <HarveLogoBlueBadge outer={30} logo={18} />
           <div style={{ flex: 1, minWidth: 8 }} />
           <Avatar letter="A" />
         </div>
@@ -192,7 +221,7 @@ const Pill = ({ expanded, showGreeting, greetingOp, showPanel, showPraise, prais
     }}>
       <div style={{ position: "absolute", inset: 0, background: "linear-gradient(145deg, #E8F0FF 0%, #D4E4FA 100%)", borderRadius: "inherit", opacity: solidOp, transition: "opacity 0.4s ease-out", pointerEvents: "none", zIndex: 0 }} />
       <div style={{ height: 48, display: "flex", alignItems: "center", gap: 8, position: "relative", zIndex: 2 }}>
-        <PillLogo size={24} />
+        <HarveLogoBlueBadge outer={32} logo={20} />
         <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", minWidth: 0 }}>
           {showGreeting && <span style={{ fontSize: 14, fontWeight: 600, color: "rgba(30,50,80,0.85)", opacity: greetingOp, transition: "opacity 0.4s ease-out", whiteSpace: "nowrap" }}>Hey, Alex.</span>}
         </div>
