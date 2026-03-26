@@ -494,51 +494,79 @@ a.nav-cta, a.cta-primary, a.cta-secondary {
 .section-headline {
   font: normal 44px 'Alice', serif; color: var(--text-primary); margin-bottom: 48px;
 }
-.cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+.cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 36px 32px; }
 .card {
-  background: linear-gradient(145deg, rgba(235,245,255,0.32) 0%, rgba(210,230,255,0.18) 100%);
-  border: 1px solid rgba(255,255,255,0.72);
-  border-radius: 20px; padding: 32px 28px 36px 28px;
-  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-  text-align: left; position: relative; overflow: hidden;
-  box-shadow: 0 6px 28px rgba(65,105,200,0.10), inset 0 1.5px 0 rgba(255,255,255,0.85), inset 0 0 60px rgba(255,255,255,0.04);
-  transition: transform 200ms ease, box-shadow 200ms ease;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  text-align: left;
+  position: relative;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  transition: transform 220ms ease;
 }
-.card::before {
-  content: ''; position: absolute; inset: 0; border-radius: 18px;
-  background: radial-gradient(160px 80px at 25% 12%, rgba(255,255,255,0.65) 0%, rgba(255,255,255,0) 55%);
-  opacity: 0.35; pointer-events: none;
-}
-.card:hover { transform: translateY(-2px); box-shadow: 0 10px 36px rgba(65,105,200,0.14), inset 0 1.5px 0 rgba(255,255,255,0.88), inset 0 0 60px rgba(255,255,255,0.05); }
+.card:hover { transform: translateY(-3px); }
 .card-step {
   font: 700 11px 'DM Sans', sans-serif; color: var(--text-muted);
-  letter-spacing: 0.10em; text-transform: uppercase; margin-bottom: 20px;
+  letter-spacing: 0.10em; text-transform: uppercase; margin-bottom: 14px;
 }
 .card-media {
-  width: 100%; aspect-ratio: 16 / 10; border-radius: 16px;
-  overflow: hidden; background: rgba(200,220,255,0.2);
+  width: 100%; aspect-ratio: 16 / 10; border-radius: 18px;
+  overflow: hidden;
+  background: rgba(200, 220, 255, 0.18);
+  box-shadow: 0 12px 40px rgba(10, 28, 92, 0.08);
 }
 .card-media video {
   width: 100%; height: 100%; object-fit: cover; object-position: center; display: block;
 }
-.card-title { font: normal 22px 'Alice', serif; color: var(--text-primary); margin-top: 24px; margin-bottom: 0; }
-.card-body { font: 400 15px/1.7 'DM Sans', sans-serif; color: var(--text-secondary); margin-top: 12px; }
+.card-title {
+  font: 700 clamp(20px, 2.2vw, 26px) 'Alice', serif;
+  color: var(--text-primary);
+  margin-top: 20px;
+  margin-bottom: 0;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+.card-body { font: 400 15px/1.7 'DM Sans', sans-serif; color: var(--text-secondary); margin-top: 10px; }
 
 /* ── Earnings Table ── */
-.earnings-section { padding: 0 48px 100px; max-width: 720px; margin: 0 auto; text-align: center; }
+.earnings-section { padding: 0 48px 100px; max-width: 800px; margin: 0 auto; text-align: center; }
 .earnings-section .section-headline { margin-bottom: 48px; }
+/* Scroll + vertical resize (drag bottom edge), like enterprise interactive tables */
+.earnings-table-wrap {
+  margin: 0 auto;
+  max-width: 720px;
+  width: 100%;
+  max-height: min(44vh, 380px);
+  min-height: 200px;
+  resize: vertical;
+  overflow: auto;
+  border-radius: 20px;
+  -webkit-overflow-scrolling: touch;
+  box-shadow: 0 10px 40px rgba(10, 28, 92, 0.1);
+}
+.earnings-table-wrap::-webkit-scrollbar { width: 9px; height: 9px; }
+.earnings-table-wrap::-webkit-scrollbar-track { background: rgba(220, 232, 248, 0.35); border-radius: 10px; }
+.earnings-table-wrap::-webkit-scrollbar-thumb { background: rgba(80, 110, 175, 0.35); border-radius: 10px; }
+.earnings-table-wrap::-webkit-scrollbar-thumb:hover { background: rgba(80, 110, 175, 0.5); }
 .table-glass {
   background: linear-gradient(145deg, rgba(235,245,255,0.30) 0%, rgba(210,230,255,0.16) 100%);
   border: 1px solid rgba(255,255,255,0.72);
   border-radius: 20px; overflow: hidden;
   backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
-  box-shadow: 0 8px 32px rgba(65,105,200,0.12), inset 0 1.5px 0 rgba(255,255,255,0.82);
+  box-shadow: inset 0 1.5px 0 rgba(255,255,255,0.82);
 }
 .table-glass table { width: 100%; border-collapse: collapse; }
 .table-glass th {
-  background: rgba(255,255,255,0.25); padding: 14px 24px;
-  font: 500 12px 'DM Sans', sans-serif; color: var(--text-muted);
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: rgba(248, 252, 255, 0.92); padding: 14px 24px;
+  font: 600 12px 'DM Sans', sans-serif; color: var(--text-muted);
   text-transform: uppercase; letter-spacing: 0.06em; text-align: left;
+  box-shadow: 0 1px 0 rgba(255,255,255,0.6);
 }
 .table-glass td {
   border-top: 1px solid rgba(255,255,255,0.35); padding: 16px 24px;
@@ -896,19 +924,25 @@ a.nav-cta, a.cta-primary, a.cta-secondary {
 <!-- Earnings Table -->
 <section class="earnings-section">
   <div class="section-headline reveal">What people are earning</div>
-  <div class="table-glass reveal">
-    <table>
-      <thead>
-        <tr><th>User Type</th><th>Monthly Hours</th><th>Est. Monthly</th></tr>
-      </thead>
-      <tbody>
-        <tr><td>Student</td><td>110 hrs</td><td>$165/mo</td></tr>
-        <tr><td>Student (verified)</td><td>132 hrs</td><td>$594/mo</td></tr>
-        <tr><td>Office professional</td><td>68 hrs</td><td>$204/mo</td></tr>
-        <tr><td>Engineer / Analyst</td><td>90 hrs</td><td>$855/mo</td></tr>
-        <tr><td>Lawyer / Doctor</td><td>91 hrs</td><td>$1,934/mo</td></tr>
-      </tbody>
-    </table>
+  <div class="earnings-table-wrap reveal">
+    <div class="table-glass">
+      <table>
+        <thead>
+          <tr><th>User Type</th><th>Monthly Hours</th><th>Est. Monthly</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Student</td><td>110 hrs</td><td>$165/mo</td></tr>
+          <tr><td>Student (verified)</td><td>132 hrs</td><td>$594/mo</td></tr>
+          <tr><td>Office professional</td><td>68 hrs</td><td>$204/mo</td></tr>
+          <tr><td>Engineer / Analyst</td><td>90 hrs</td><td>$855/mo</td></tr>
+          <tr><td>Lawyer / Doctor</td><td>91 hrs</td><td>$1,934/mo</td></tr>
+          <tr><td>Designer / Creative</td><td>72 hrs</td><td>$288/mo</td></tr>
+          <tr><td>Freelancer</td><td>75 hrs</td><td>$312/mo</td></tr>
+          <tr><td>Researcher</td><td>95 hrs</td><td>$428/mo</td></tr>
+          <tr><td>Content creator</td><td>120 hrs</td><td>$380/mo</td></tr>
+        </tbody>
+      </table>
+    </div>
   </div>
   <div class="table-note reveal">Earnings reflect 25% revenue share of actual batch sale price. Higher professional activity = higher sell rate = higher earnings.</div>
 </section>
