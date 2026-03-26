@@ -36,23 +36,24 @@ body {
   font-family: 'DM Sans', sans-serif;
   color: var(--text-primary);
   min-height: 100vh;
-  /* Baked-in vertical wash: soft white through mid-page → back to site blue (no extra divs / scroll math) */
-  background:
+  /* Dark base; light wash covers hero + demo + how (tall layer — then fades so hinge/dark shell read correctly) */
+  background-color: #060a12;
+  background-image:
     linear-gradient(
       180deg,
-      rgba(255, 255, 255, 0.18) 0%,
-      rgba(255, 255, 255, 0.08) 18%,
-      rgba(255, 255, 255, 0.38) 38%,
-      rgba(255, 255, 255, 0.52) 52%,
-      rgba(255, 255, 255, 0.4) 64%,
-      rgba(245, 249, 255, 0.22) 78%,
-      rgba(220, 232, 248, 0.06) 92%,
-      rgba(200, 218, 240, 0) 100%
+      rgba(255, 255, 255, 0.97) 0%,
+      rgba(248, 250, 255, 0.92) 10%,
+      rgba(235, 242, 252, 0.62) 22%,
+      rgba(220, 232, 248, 0.35) 42%,
+      rgba(200, 218, 240, 0.1) 62%,
+      rgba(180, 200, 230, 0.03) 82%,
+      transparent 100%
     ),
-    radial-gradient(ellipse at 30% 20%, rgba(255,255,255,0.55) 0%, transparent 55%),
-    radial-gradient(ellipse at 75% 80%, rgba(180,200,235,0.45) 0%, transparent 50%),
-    linear-gradient(160deg, #dce8f8 0%, #c8d9f0 40%, #bccde8 70%, #c8d4e5 100%);
-  background-attachment: fixed;
+    radial-gradient(ellipse 120% 90% at 50% -10%, rgba(255, 255, 255, 0.5) 0%, transparent 58%),
+    linear-gradient(165deg, #dce8f8 0%, #c8d9f0 42%, #b8c9e4 100%);
+  background-repeat: no-repeat;
+  background-size: 100% 320vh, 100% 320vh, 100% 320vh;
+  background-position: top, top, top;
 }
 
 /* ── Navbar ── */
@@ -185,15 +186,22 @@ a.nav-cta, a.cta-primary, a.cta-secondary {
   position: relative;
   overflow: hidden;
   color: #fff;
-  background: linear-gradient(162deg, rgba(28, 62, 148, 0.98) 0%, rgba(10, 28, 92, 0.94) 45%, rgba(5, 18, 68, 0.98) 100%);
-  border: 1px solid rgba(255, 255, 255, 0.14);
+  /* Lighter blue (same as former final-CTA-only): nav + hero + all primary OS CTAs */
+  background: linear-gradient(
+    162deg,
+    rgba(72, 128, 235, 0.98) 0%,
+    rgba(45, 95, 210, 0.96) 38%,
+    rgba(32, 72, 185, 0.98) 100%
+  );
+  border: 1px solid rgba(255, 255, 255, 0.28);
   letter-spacing: 0.03em;
   font-weight: 500;
   box-shadow:
-    0 8px 32px rgba(10, 28, 92, 0.32),
-    0 2px 8px rgba(10, 28, 92, 0.12),
-    inset 0 1px 0 rgba(255, 255, 255, 0.18),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.15);
+    0 0 0 1px rgba(120, 170, 255, 0.15),
+    0 10px 40px rgba(55, 120, 230, 0.42),
+    0 4px 14px rgba(10, 28, 92, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.28),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.12);
 }
 .cta-download-row .btn-download-primary {
   padding: 14px 32px;
@@ -234,21 +242,22 @@ a.nav-cta, a.cta-primary, a.cta-secondary {
   }
 }
 .btn-download-primary:hover {
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(255, 255, 255, 0.96);
   color: var(--cta-bg);
   transform: translateY(-2px) scale(1.02);
-  box-shadow: 0 8px 28px rgba(10, 28, 92, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.98);
-  border-color: rgba(255, 255, 255, 0.7);
-}
-.nav-cta.btn-download-primary:hover {
-  box-shadow: 0 6px 22px rgba(10, 28, 92, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.95);
+  border-color: rgba(255, 255, 255, 0.75);
+  box-shadow:
+    0 10px 36px rgba(55, 120, 220, 0.28),
+    0 4px 16px rgba(10, 28, 92, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.98);
 }
 .btn-download-primary:hover::after {
   mix-blend-mode: overlay;
   opacity: 0.5;
 }
-/* Final CTA download primary: lighter blue + ambient glow (glare ::after unchanged) */
-.final-cta .cta-download-row .btn-download-primary {
+/* Higher specificity so this always wins over .cta-primary / .nav-cta single-class backgrounds */
+.nav-cta.btn-download-primary,
+.cta-primary.btn-download-primary {
   background: linear-gradient(
     162deg,
     rgba(72, 128, 235, 0.98) 0%,
@@ -256,6 +265,7 @@ a.nav-cta, a.cta-primary, a.cta-secondary {
     rgba(32, 72, 185, 0.98) 100%
   );
   border: 1px solid rgba(255, 255, 255, 0.28);
+  color: #fff;
   box-shadow:
     0 0 0 1px rgba(120, 170, 255, 0.15),
     0 10px 40px rgba(55, 120, 230, 0.42),
@@ -263,7 +273,8 @@ a.nav-cta, a.cta-primary, a.cta-secondary {
     inset 0 1px 0 rgba(255, 255, 255, 0.28),
     inset 0 -1px 0 rgba(0, 0, 0, 0.12);
 }
-.final-cta .cta-download-row .btn-download-primary:hover {
+.nav-cta.btn-download-primary:hover,
+.cta-primary.btn-download-primary:hover {
   background: rgba(255, 255, 255, 0.96);
   color: var(--cta-bg);
   border-color: rgba(255, 255, 255, 0.75);
@@ -271,6 +282,11 @@ a.nav-cta, a.cta-primary, a.cta-secondary {
     0 10px 36px rgba(55, 120, 220, 0.28),
     0 4px 16px rgba(10, 28, 92, 0.12),
     inset 0 1px 0 rgba(255, 255, 255, 0.98);
+}
+.nav-cta.btn-download-primary:hover::after,
+.cta-primary.btn-download-primary:hover::after {
+  mix-blend-mode: overlay;
+  opacity: 0.5;
 }
 .cta-note {
   font: 400 12px 'DM Sans', sans-serif;
@@ -587,9 +603,85 @@ a.nav-cta, a.cta-primary, a.cta-secondary {
 }
 .card-body { font: 400 15px/1.7 'DM Sans', sans-serif; color: var(--text-secondary); margin-top: 10px; }
 
-/* ── Earnings: dark band (enterprise-adjacent) + seamless slider + spotlight ── */
+/* How: scroll-driven entrance (progress tied to scroll position, not a fixed timer) */
+.how {
+  --hp0: 0;
+  --hp1: 0;
+  --hp2: 0;
+  --hp3: 0;
+  --hp4: 0;
+}
+.how .section-label {
+  opacity: calc(0.04 + 0.96 * var(--hp0));
+  transform: translateY(calc(40px * (1 - var(--hp0))));
+  transition: none;
+}
+.how .section-headline {
+  opacity: calc(0.04 + 0.96 * var(--hp1));
+  transform: translateY(calc(40px * (1 - var(--hp1))));
+  transition: none;
+}
+.how .cards .card:nth-child(1) { --hc: var(--hp2); }
+.how .cards .card:nth-child(2) { --hc: var(--hp3); }
+.how .cards .card:nth-child(3) { --hc: var(--hp4); }
+.how .cards .card {
+  opacity: calc(0.04 + 0.96 * var(--hc, 0));
+  transform: translateY(calc(40px * (1 - var(--hc, 0))));
+  transition: none;
+}
+.how .cards .card:hover {
+  transform: translateY(calc(-3px + 40px * (1 - var(--hc, 0))));
+}
+@media (prefers-reduced-motion: reduce) {
+  .how .section-label,
+  .how .section-headline,
+  .how .cards .card {
+    opacity: 1;
+    transform: none;
+  }
+  .how .cards .card:hover { transform: translateY(-3px); }
+}
+
+/* ── Dark lower shell: light page → hinge → solid navy through footer (no fade back to white) ── */
+.site-dark-lower {
+  --earn-navy: #060a12;
+  position: relative;
+  isolation: isolate;
+  background: var(--earn-navy);
+}
+/* Film grain (normal blend — avoids overlay blending with body behind the shell) */
+.site-dark-lower::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.028;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
+}
+.site-dark-lower > * {
+  position: relative;
+  z-index: 1;
+}
+/* Hinge: SVG gradient (smooth stops) + grain — avoids 8-bit CSS gradient banding */
+.site-dark-lower__hinge {
+  position: relative;
+  height: 88px;
+  width: 100%;
+  flex-shrink: 0;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1' preserveAspectRatio='none'%3E%3Cdefs%3E%3ClinearGradient id='h' gradientUnits='objectBoundingBox' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='%23f4f7fb'/%3E%3Cstop offset='0.06' stop-color='%23e6edf7'/%3E%3Cstop offset='0.12' stop-color='%23d0dce8'/%3E%3Cstop offset='0.18' stop-color='%23b4c4d8'/%3E%3Cstop offset='0.24' stop-color='%2394a8c4'/%3E%3Cstop offset='0.30' stop-color='%23748bad'/%3E%3Cstop offset='0.36' stop-color='%235a7294'/%3E%3Cstop offset='0.42' stop-color='%2344567a'/%3E%3Cstop offset='0.48' stop-color='%23334663'/%3E%3Cstop offset='0.54' stop-color='%2326354e'/%3E%3Cstop offset='0.60' stop-color='%231c283c'/%3E%3Cstop offset='0.66' stop-color='%23151f32'/%3E%3Cstop offset='0.72' stop-color='%23111a2a'/%3E%3Cstop offset='0.78' stop-color='%230e1624'/%3E%3Cstop offset='0.84' stop-color='%230c131f'/%3E%3Cstop offset='0.90' stop-color='%23060a12'/%3E%3Cstop offset='1' stop-color='%23060a12'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='1' height='1' fill='url(%23h)'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
+}
+.site-dark-lower__hinge::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.055;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.45'/%3E%3C/svg%3E");
+}
+
+/* ── Earnings: dark band + seamless slider + spotlight (content sits on .site-dark-lower solid) ── */
 .earnings-dark-band {
-  --earn-navy: #070F1A;
   --earn-navy-mid: #0B1628;
   --earn-border: rgba(255, 255, 255, 0.09);
   --earn-muted: rgba(255, 255, 255, 0.52);
@@ -598,34 +690,11 @@ a.nav-cta, a.cta-primary, a.cta-secondary {
   --earn-accent: #3B7FE8;
   --earn-scroll: 1;
   position: relative;
-  padding: 120px 48px 88px;
+  padding: 48px 48px 96px;
   max-width: none;
   margin: 0;
-  background:
-    radial-gradient(ellipse 100% 70% at 50% -5%, rgba(59, 127, 232, 0.1) 0%, transparent 55%),
-    linear-gradient(
-      180deg,
-      rgba(255, 255, 255, 0) 0%,
-      rgba(230, 238, 250, 0.12) 5%,
-      rgba(140, 160, 200, 0.22) 14%,
-      rgba(45, 58, 88, 0.55) 24%,
-      rgba(12, 20, 38, 0.92) 34%,
-      var(--earn-navy) 42%,
-      var(--earn-navy-mid) 100%
-    );
-}
-.earnings-dark-band-fade {
-  height: 100px;
-  margin: 0;
-  background: linear-gradient(
-    180deg,
-    #0a1528 0%,
-    #0d1a30 18%,
-    rgba(200, 215, 238, 0.42) 62%,
-    rgba(236, 242, 252, 0.75) 88%,
-    rgba(248, 250, 255, 0.92) 100%
-  );
-  pointer-events: none;
+  /* Solid field only — no top glow (was washing headline toward white) */
+  background: transparent;
 }
 .earnings-section {
   max-width: 640px;
@@ -795,35 +864,48 @@ a.nav-cta, a.cta-primary, a.cta-secondary {
   margin-top: 16px; max-width: 560px; margin-left: auto; margin-right: auto;
 }
 
-/* ── Final CTA ── */
+/* ── Final CTA (inside .site-dark-lower — dark field) ── */
 .final-cta {
-  padding: 100px 48px;
+  padding: 72px 48px 88px;
   text-align: center;
   position: relative;
   z-index: 1;
-  background: linear-gradient(180deg, rgba(248, 250, 255, 0.55) 0%, rgba(220, 232, 248, 0.2) 100%);
+  background: transparent;
 }
-.final-cta h2 { font: normal 56px 'Alice', serif; color: var(--text-primary); margin-bottom: 12px; }
-.final-cta p { font: 400 18px/1.6 'DM Sans', sans-serif; color: var(--text-secondary); margin-bottom: 36px; }
+.final-cta h2 { font: normal 56px 'Alice', serif; color: rgba(255, 255, 255, 0.96); margin-bottom: 12px; }
+.final-cta p { font: 400 18px/1.6 'DM Sans', sans-serif; color: rgba(255, 255, 255, 0.58); margin-bottom: 36px; }
+.site-dark-lower .final-cta .cta-note {
+  color: rgba(255, 255, 255, 0.42);
+}
+.site-dark-lower .final-cta .cta-secondary {
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.06) 100%);
+  color: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 4px 22px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+.site-dark-lower .final-cta .cta-secondary:hover {
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.1) 100%);
+  box-shadow: 0 6px 26px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
 
 /* ── FAQ ── */
 .faq { padding: 80px 48px 100px; max-width: 720px; margin: 0 auto; }
-.faq-headline { font: normal 44px 'Alice', serif; color: var(--text-primary); margin-bottom: 48px; }
+.faq-headline { font: normal 44px 'Alice', serif; color: rgba(255, 255, 255, 0.96); margin-bottom: 48px; }
 .faq-item {
-  border-bottom: 1px solid rgba(255,255,255,0.40);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
-.faq-item:first-child { border-top: 1px solid rgba(255,255,255,0.40); }
+.faq-item:first-child { border-top: 1px solid rgba(255, 255, 255, 0.1); }
 .faq-q {
   display: flex; justify-content: space-between; align-items: center;
   padding: 20px 0; cursor: pointer; gap: 16px;
-  font: 500 15px 'DM Sans', sans-serif; color: var(--text-primary);
+  font: 500 15px 'DM Sans', sans-serif; color: rgba(255, 255, 255, 0.92);
   background: none; border: none; width: 100%; text-align: left;
 }
-.faq-q:hover { color: rgba(10,28,92,1); }
+.faq-q:hover { color: #fff; }
 .faq-chevron {
   width: 20px; height: 20px; flex-shrink: 0;
   transition: transform 250ms ease;
-  color: var(--text-muted);
+  color: rgba(255, 255, 255, 0.4);
 }
 .faq-item.open .faq-chevron { transform: rotate(180deg); }
 .faq-a {
@@ -836,43 +918,49 @@ a.nav-cta, a.cta-primary, a.cta-secondary {
   padding: 0 0 20px;
 }
 .faq-a p {
-  font: 400 14px/1.7 'DM Sans', sans-serif; color: var(--text-secondary);
+  font: 400 14px/1.7 'DM Sans', sans-serif; color: rgba(255, 255, 255, 0.58);
 }
 
 /* ── Footer ── */
 .footer {
-  border-top: 1px solid rgba(255,255,255,0.35);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
   padding: 48px 48px 24px;
+  background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.35) 100%);
 }
 .footer-top {
   display: flex; justify-content: space-between; align-items: flex-start;
   margin-bottom: 40px; gap: 48px; flex-wrap: wrap;
 }
 .footer-brand { display: flex; flex-direction: column; gap: 16px; }
+.footer .brand-mark--sm span { color: rgba(255, 255, 255, 0.95); }
+.footer .brand-mark--sm svg {
+  filter: brightness(0) invert(1);
+  opacity: 0.92;
+}
 .footer-socials { display: flex; gap: 14px; margin-top: 4px; }
 .footer-socials a {
   display: flex; align-items: center; justify-content: center;
   width: 32px; height: 32px; border-radius: 8px;
-  color: var(--text-secondary); transition: all 160ms ease;
+  color: rgba(255, 255, 255, 0.55); transition: all 160ms ease;
 }
-.footer-socials a:hover { color: var(--text-primary); transform: translateY(-1px); }
+.footer-socials a:hover { color: #fff; transform: translateY(-1px); }
 .footer-cols { display: flex; gap: 64px; }
 .footer-col h4 {
-  font: 600 12px 'DM Sans', sans-serif; color: var(--text-muted);
+  font: 600 12px 'DM Sans', sans-serif; color: rgba(255, 255, 255, 0.45);
   text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 14px;
 }
 .footer-col a {
   display: block; font: 400 14px 'DM Sans', sans-serif;
-  color: var(--text-secondary); text-decoration: none;
+  color: rgba(255, 255, 255, 0.72); text-decoration: none;
   padding: 4px 0; transition: color 150ms ease;
 }
-.footer-col a:hover { color: var(--text-primary); }
+.footer-col a:hover { color: #fff; }
 .footer-bottom {
-  border-top: 1px solid rgba(255,255,255,0.30);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
   padding-top: 20px;
   display: flex; justify-content: space-between; align-items: center;
 }
-.footer-copy { font: 400 12px 'DM Sans', sans-serif; color: var(--text-muted); }
+.footer-copy { font: 400 12px 'DM Sans', sans-serif; color: rgba(255, 255, 255, 0.4); }
 
 /* Whole sections: rise in on scroll (transform only — keeps inner reveal / IO working) */
 .section-scroll-in {
@@ -1128,12 +1216,12 @@ a.nav-cta, a.cta-primary, a.cta-secondary {
   </div>
 </section>
 
-<!-- How It Works -->
-<section class="how section-scroll-in">
-  <div class="section-label reveal">HOW IT WORKS</div>
-  <div class="section-headline reveal">Three steps. Zero effort.</div>
-  <div class="cards reveal-stagger">
-    <div class="card reveal">
+<!-- How It Works (scroll-linked reveal — see updateHowScroll) -->
+<section class="how">
+  <div class="section-label">HOW IT WORKS</div>
+  <div class="section-headline">Three steps. Zero effort.</div>
+  <div class="cards">
+    <div class="card">
       <div class="card-step">01</div>
       <div class="card-media">
         <video src="/tagvid1.mp4" muted loop autoplay playsinline></video>
@@ -1141,7 +1229,7 @@ a.nav-cta, a.cta-primary, a.cta-secondary {
       <div class="card-title">Download Harve</div>
       <div class="card-body">Install the lightweight overlay on your Mac or PC. Takes 30 seconds. Runs silently in the background.</div>
     </div>
-    <div class="card reveal">
+    <div class="card">
       <div class="card-step">02</div>
       <div class="card-media">
         <video src="https://videos.pexels.com/video-files/4064869/4064869-uhd_2732_1440_25fps.mp4" muted loop autoplay playsinline></video>
@@ -1149,7 +1237,7 @@ a.nav-cta, a.cta-primary, a.cta-secondary {
       <div class="card-title">Live your day</div>
       <div class="card-body">Work, study, browse — whatever you do. Harve captures your active sessions passively. You do nothing extra.</div>
     </div>
-    <div class="card reveal">
+    <div class="card">
       <div class="card-step">03</div>
       <div class="card-media">
         <video src="https://videos.pexels.com/video-files/7567651/7567651-hd_1920_1080_25fps.mp4" muted loop autoplay playsinline></video>
@@ -1160,29 +1248,30 @@ a.nav-cta, a.cta-primary, a.cta-secondary {
   </div>
 </section>
 
-<!-- Earnings: dark band, seamless slider + spotlight (no carousel) -->
-<div class="earnings-dark-band section-scroll-in" id="earnings-dark-band">
-  <section class="earnings-section" id="earnings">
-    <h2 class="earnings-headline reveal">What people are earning</h2>
-    <p class="earnings-sub reveal">Drag the handle to your monthly professional hours — we match to the nearest real community profile.</p>
-    <div class="earnings-explorer reveal">
-      <div class="earnings-slider-block">
-        <label for="earnings-hrs-slider">Monthly professional hours</label>
-        <div class="earnings-slider-row">
-          <input type="range" id="earnings-hrs-slider" class="earnings-range-dark" min="60" max="140" value="90" step="1" aria-valuetext="90 hours per month" />
-          <div class="earnings-range-readout-dark" aria-live="polite"><span id="earnings-hrs-readout">90</span><span class="muted"> hrs / mo</span></div>
+<!-- Dark lower half: hinge from light page → solid dark through footer -->
+<div class="site-dark-lower">
+  <div class="site-dark-lower__hinge" aria-hidden="true"></div>
+  <div class="earnings-dark-band section-scroll-in" id="earnings-dark-band">
+    <section class="earnings-section" id="earnings">
+      <h2 class="earnings-headline reveal">What people are earning</h2>
+      <p class="earnings-sub reveal">Drag the handle to your monthly professional hours — we match to the nearest real community profile.</p>
+      <div class="earnings-explorer reveal">
+        <div class="earnings-slider-block">
+          <label for="earnings-hrs-slider">Monthly professional hours</label>
+          <div class="earnings-slider-row">
+            <input type="range" id="earnings-hrs-slider" class="earnings-range-dark" min="60" max="140" value="90" step="1" aria-valuetext="90 hours per month" />
+            <div class="earnings-range-readout-dark" aria-live="polite"><span id="earnings-hrs-readout">90</span><span class="muted"> hrs / mo</span></div>
+          </div>
         </div>
+        <div class="earnings-spotlight" id="earnings-spotlight" aria-live="polite">
+          <div class="earnings-spotlight-role" id="earnings-role">Engineer / Analyst</div>
+          <div class="earnings-spotlight-meta"><span id="earnings-hrs-display">90</span> hrs / month · example profile</div>
+          <div class="earnings-spotlight-money"><span id="earnings-money">$855</span><span class="earnings-per">/mo</span></div>
+        </div>
+        <p class="earnings-explorer-hint">Figures are illustrative; actual payouts depend on batch pricing and your quality score.</p>
       </div>
-      <div class="earnings-spotlight" id="earnings-spotlight" aria-live="polite">
-        <div class="earnings-spotlight-role" id="earnings-role">Engineer / Analyst</div>
-        <div class="earnings-spotlight-meta"><span id="earnings-hrs-display">90</span> hrs / month · example profile</div>
-        <div class="earnings-spotlight-money"><span id="earnings-money">$855</span><span class="earnings-per">/mo</span></div>
-      </div>
-      <p class="earnings-explorer-hint">Figures are illustrative; actual payouts depend on batch pricing and your quality score.</p>
-    </div>
-  </section>
-</div>
-<div class="earnings-dark-band-fade" aria-hidden="true"></div>
+    </section>
+  </div>
 
 <!-- Final CTA -->
 <section class="final-cta section-scroll-in">
@@ -1261,6 +1350,7 @@ a.nav-cta, a.cta-primary, a.cta-secondary {
     <span class="footer-copy">&copy; 2026 Harve.ai. All rights reserved.</span>
   </div>
 </footer>
+</div><!-- /.site-dark-lower -->
 
 <div id="mac-install-modal" class="mac-install-modal" aria-hidden="true" role="dialog" aria-labelledby="mac-install-title">
   <div class="mac-install-card" role="document">
@@ -1587,6 +1677,16 @@ a.nav-cta, a.cta-primary, a.cta-secondary {
       btn.innerHTML = winBtnHtml;
       btn.replaceWith(btn.cloneNode(true));
     });
+    /* Re-apply primary class after clone (some browsers drop duplicate classes on replace). */
+    if (isMacDesktop) {
+      document.querySelectorAll('.btn-download-mac').forEach(function (btn) {
+        if (btn.classList.contains('cta-primary')) btn.classList.add('btn-download-primary');
+      });
+    } else {
+      document.querySelectorAll('.btn-download-windows').forEach(function (btn) {
+        if (btn.classList.contains('cta-primary')) btn.classList.add('btn-download-primary');
+      });
+    }
     document.querySelectorAll('.btn-download-windows').forEach(function (btn) {
       btn.addEventListener('click', function (e) {
         e.preventDefault();
@@ -1601,6 +1701,7 @@ a.nav-cta, a.cta-primary, a.cta-secondary {
     }
     navEl = document.getElementById('nav-download');
     if (navEl) {
+      navEl.classList.add('nav-cta', 'btn-download-primary');
       navEl.addEventListener('click', function (e) {
         e.preventDefault();
         if (isMacDesktop) handleMacDownload();
@@ -1671,7 +1772,7 @@ a.nav-cta, a.cta-primary, a.cta-secondary {
         revealObserver.unobserve(entry.target);
       }
     });
-  }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+  }, { threshold: 0.06, rootMargin: '0px 0px -4% 0px' });
   reveals.forEach(function(el) { revealObserver.observe(el); });
 
   var sectionScrollEls = document.querySelectorAll('.section-scroll-in');
@@ -1682,8 +1783,50 @@ a.nav-cta, a.cta-primary, a.cta-secondary {
         sectionScrollIo.unobserve(entry.target);
       }
     });
-  }, { threshold: 0.06, rootMargin: '0px 0px -6% 0px' });
+  }, { threshold: 0.02, rootMargin: '0px 0px 12% 0px' });
   sectionScrollEls.forEach(function(el) { sectionScrollIo.observe(el); });
+
+  /** Elements already in view on first paint often miss IO; kick classes once layout is stable. */
+  function kickScrollAnimations() {
+    var vh = window.innerHeight || 800;
+    function visibleEnough(el) {
+      var r = el.getBoundingClientRect();
+      return r.bottom > 32 && r.top < vh * 0.92;
+    }
+    document.querySelectorAll('.section-scroll-in').forEach(function(el) {
+      if (visibleEnough(el)) el.classList.add('is-in-view');
+    });
+    document.querySelectorAll('.reveal').forEach(function(el) {
+      if (visibleEnough(el)) el.classList.add('visible');
+    });
+  }
+  requestAnimationFrame(function() {
+    requestAnimationFrame(kickScrollAnimations);
+  });
+
+  /* How section: opacity/transform track scroll position (fast scroll = fast reveal, slow = gradual). */
+  var howSection = document.querySelector('.how');
+  var howReduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function spanProgress(p, a, b) {
+    if (p <= a) return 0;
+    if (p >= b) return 1;
+    return (p - a) / (b - a);
+  }
+  function updateHowScroll() {
+    if (!howSection || howReduceMotion) return;
+    var r = howSection.getBoundingClientRect();
+    var vh = window.innerHeight || 800;
+    var raw = (vh * 0.88 - r.top) / (vh * 0.52 + r.height * 0.42);
+    var p = Math.max(0, Math.min(1, raw));
+    howSection.style.setProperty('--hp0', String(spanProgress(p, 0.0, 0.22)));
+    howSection.style.setProperty('--hp1', String(spanProgress(p, 0.0, 0.28)));
+    howSection.style.setProperty('--hp2', String(spanProgress(p, 0.08, 0.4)));
+    howSection.style.setProperty('--hp3', String(spanProgress(p, 0.14, 0.5)));
+    howSection.style.setProperty('--hp4', String(spanProgress(p, 0.2, 0.58)));
+  }
+  window.addEventListener('scroll', updateHowScroll, { passive: true });
+  window.addEventListener('resize', updateHowScroll);
+  updateHowScroll();
 
   /** Replay hero + nav entrance + scroll reveals (e.g. returning from /enterprise via browser back + bfcache). */
   function replayLandingEntrance() {
@@ -1717,6 +1860,7 @@ a.nav-cta, a.cta-primary, a.cta-secondary {
       el.classList.remove('open');
     });
     if (typeof updateProofOpacity === 'function') updateProofOpacity();
+    updateHowScroll();
   }
 
   window.addEventListener('pageshow', function(ev) {
@@ -1837,8 +1981,15 @@ a.nav-cta, a.cta-primary, a.cta-secondary {
         entries.forEach(function (e) {
           if (e.isIntersecting) band.classList.add('earnings-band--visible');
         });
-      }, { threshold: 0.1, rootMargin: '0px 0px -6% 0px' });
+      }, { threshold: 0.05, rootMargin: '0px 0px 10% 0px' });
       io.observe(band);
+      requestAnimationFrame(function () {
+        requestAnimationFrame(function () {
+          var r = band.getBoundingClientRect();
+          var vh = window.innerHeight || 800;
+          if (r.bottom > 40 && r.top < vh * 0.9) band.classList.add('earnings-band--visible');
+        });
+      });
 
       function earningsScrollDrive() {
         var r = band.getBoundingClientRect();
