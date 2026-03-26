@@ -158,15 +158,23 @@ a.nav-cta, a.cta-primary, a.cta-secondary {
 .btn-download-primary {
   position: relative;
   overflow: hidden;
-  background: linear-gradient(162deg, rgba(28, 62, 148, 0.98) 0%, rgba(10, 28, 92, 0.94) 45%, rgba(5, 18, 68, 0.98) 100%);
-  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: var(--text-primary);
+  background: linear-gradient(
+    165deg,
+    #eef8ff 0%,
+    #dff0fb 22%,
+    #c8e4f6 48%,
+    #aed4ef 72%,
+    #96c5e8 100%
+  );
+  border: 1px solid rgba(255, 255, 255, 0.95);
   letter-spacing: 0.03em;
   font-weight: 700;
   box-shadow:
-    0 8px 32px rgba(10, 28, 92, 0.32),
-    0 2px 8px rgba(10, 28, 92, 0.12),
-    inset 0 1px 0 rgba(255, 255, 255, 0.18),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.15);
+    0 6px 28px rgba(100, 160, 210, 0.22),
+    0 2px 10px rgba(90, 150, 200, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.98),
+    inset 0 -1px 0 rgba(120, 175, 220, 0.35);
 }
 .cta-download-row .btn-download-primary {
   padding: 14px 32px;
@@ -188,16 +196,16 @@ a.nav-cta, a.cta-primary, a.cta-secondary {
   background: linear-gradient(
     105deg,
     rgba(255, 255, 255, 0) 0%,
-    rgba(255, 255, 255, 0.12) 38%,
-    rgba(255, 255, 255, 1) 50%,
-    rgba(255, 255, 255, 0.15) 62%,
+    rgba(255, 255, 255, 0.35) 38%,
+    rgba(255, 255, 255, 0.95) 50%,
+    rgba(255, 255, 255, 0.4) 62%,
     rgba(255, 255, 255, 0) 100%
   );
   transform: translateX(-160%) skewX(-14deg);
   animation: download-btn-glare 5s cubic-bezier(0.45, 0, 0.2, 1) infinite;
   pointer-events: none;
-  mix-blend-mode: screen;
-  opacity: 0.85;
+  mix-blend-mode: soft-light;
+  opacity: 0.55;
   z-index: 1;
   will-change: transform;
 }
@@ -207,18 +215,23 @@ a.nav-cta, a.cta-primary, a.cta-secondary {
   }
 }
 .btn-download-primary:hover {
-  background: rgba(255, 255, 255, 0.95);
+  background: linear-gradient(165deg, #ffffff 0%, #f2f9ff 45%, #e4f2fc 100%);
   color: var(--cta-bg);
   transform: translateY(-2px) scale(1.02);
-  box-shadow: 0 8px 28px rgba(10, 28, 92, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.98);
-  border-color: rgba(255, 255, 255, 0.7);
+  box-shadow:
+    0 10px 32px rgba(100, 160, 210, 0.2),
+    0 2px 12px rgba(90, 150, 200, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 1);
+  border-color: rgba(255, 255, 255, 1);
 }
 .nav-cta.btn-download-primary:hover {
-  box-shadow: 0 6px 22px rgba(10, 28, 92, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.95);
+  box-shadow:
+    0 8px 26px rgba(100, 160, 210, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 1);
 }
 .btn-download-primary:hover::after {
   mix-blend-mode: overlay;
-  opacity: 0.5;
+  opacity: 0.35;
 }
 .cta-note {
   font: 400 12px 'DM Sans', sans-serif;
