@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Harve</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Alice&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: #FFFFFF;
+    color: #0A1C5C;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .topbar {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 16px 24px;
+  }
+  .logout-btn {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    color: #8B95A8;
+    background: none;
+    border: 1px solid #E2E6EF;
+    border-radius: 8px;
+    padding: 7px 14px;
+    cursor: pointer;
+    transition: all 150ms ease;
+  }
+  .logout-btn:hover {
+    color: #0A1C5C;
+    border-color: #C8CDD8;
+    background: #F8F9FB;
+  }
+  .container {
+    text-align: center;
+    max-width: 420px;
+    padding: 40px 24px;
+  }
+  .logo { margin-bottom: 32px; }
+  h1 {
+    font-family: 'Alice', serif;
+    font-weight: normal;
+    font-size: 28px;
+    color: #0A1C5C;
+    margin-bottom: 12px;
+  }
+  .subtitle {
+    font-size: 15px;
+    color: #8B95A8;
+    line-height: 1.6;
+    margin-bottom: 8px;
+  }
+  .link {
+    color: #4A6CF7;
+    text-decoration: none;
+    font-weight: 500;
+    cursor: pointer;
+  }
+  .link:hover { text-decoration: underline; }
+  .divider {
+    width: 48px;
+    height: 1px;
+    background: #E2E6EF;
+    margin: 28px auto;
+  }
+  .secondary {
+    font-size: 13px;
+    color: #B0B8C8;
+  }
+  .secondary a {
+    color: #4A6CF7;
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .secondary a:hover { text-decoration: underline; }
+  .help {
+    font-size: 12px;
+    color: #C0C6D2;
+    margin-top: 16px;
+  }
+  .help a { color: #8B95A8; text-decoration: none; }
+  .help a:hover { text-decoration: underline; }
+  .hidden { display: none; }
+  .spinner {
+    width: 28px; height: 28px;
+    border: 3px solid #E2E6EF; border-top-color: #0A1C5C;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin: 0 auto 20px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+</style>
+</head>
+<body>
+
+<div class="topbar" id="topbar">
+  <button class="logout-btn" id="logoutBtn">Wrong account? Log out</button>
+</div>
+
+<!-- Main "Opening Harve" view -->
+<div class="container" id="openingView">
+  <div class="logo">
+    <svg width="48" height="48" viewBox="0 0 20 20" fill="none">
+      <defs><mask id="lm"><rect width="20" height="20" fill="black"/><circle cx="10" cy="10" r="9" fill="white"/>
+      <path d="M4 7.6C6.5 6.75 8.5 6.75 10 7.6 11.5 8.45 13.5 8.45 16 7.6" stroke="black" stroke-width="2.1" stroke-linecap="round" fill="none"/>
+      <path d="M4 10C6.5 9.15 8.5 9.15 10 10 11.5 10.85 13.5 10.85 16 10" stroke="black" stroke-width="2.1" stroke-linecap="round" fill="none"/>
+      <path d="M4 12.4C6.5 11.55 8.5 11.55 10 12.4 11.5 13.25 13.5 13.25 16 12.4" stroke="black" stroke-width="2.1" stroke-linecap="round" fill="none"/>
+      </mask></defs>
+      <g mask="url(#lm)"><circle cx="10" cy="10" r="9.2" fill="#0A1C5C"/></g>
+      <circle cx="10" cy="10" r="9" stroke="#0A1C5C" stroke-width="1.5" fill="none"/>
+    </svg>
+  </div>
+  <h1>Opening Harve</h1>
+  <p class="subtitle">
+    You can now start earning directly from the Harve app.<br>
+    If you weren't redirected automatically, <a class="link" id="retryLink" href="#">click here</a>.
+  </p>
+  <div class="divider"></div>
+  <p class="secondary">
+    Don't have Harve installed? <a href="/">Download now</a>.
+  </p>
+  <p class="help"><a href="mailto:support@harve.ai">Need help?</a></p>
+</div>
+
+<!-- "Switching accounts" view -->
+<div class="container hidden" id="switchingView">
+  <div class="logo">
+    <svg width="48" height="48" viewBox="0 0 20 20" fill="none">
+      <defs><mask id="lm2"><rect width="20" height="20" fill="black"/><circle cx="10" cy="10" r="9" fill="white"/>
+      <path d="M4 7.6C6.5 6.75 8.5 6.75 10 7.6 11.5 8.45 13.5 8.45 16 7.6" stroke="black" stroke-width="2.1" stroke-linecap="round" fill="none"/>
+      <path d="M4 10C6.5 9.15 8.5 9.15 10 10 11.5 10.85 13.5 10.85 16 10" stroke="black" stroke-width="2.1" stroke-linecap="round" fill="none"/>
+      <path d="M4 12.4C6.5 11.55 8.5 11.55 10 12.4 11.5 13.25 13.5 13.25 16 12.4" stroke="black" stroke-width="2.1" stroke-linecap="round" fill="none"/>
+      </mask></defs>
+      <g mask="url(#lm2)"><circle cx="10" cy="10" r="9.2" fill="#0A1C5C"/></g>
+      <circle cx="10" cy="10" r="9" stroke="#0A1C5C" stroke-width="1.5" fill="none"/>
+    </svg>
+  </div>
+  <div class="spinner"></div>
+  <h1>Switching accounts</h1>
+  <p class="subtitle">
+    Signing you out and opening a fresh login...<br>
+    This will take a moment.
+  </p>
+</div>
+
+<script>
+(function() {
+  var params = new URLSearchParams(window.location.search);
+  var code = params.get('code');
+  var oauthError = params.get('error');
+  var oauthDesc = params.get('error_description');
+  var codeSent = false;
+
+  /** Same bridge for WorkOS redirect to https://www.harve.ai/auth/callback or /auth-callback */
+  function openApp() {
+    if (codeSent) return;
+    if (oauthError) {
+      codeSent = true;
+      var q = 'error=' + encodeURIComponent(oauthError);
+      if (oauthDesc) q += '&error_description=' + encodeURIComponent(oauthDesc);
+      window.location.href = 'harve://callback?' + q;
+      return;
+    }
+    if (!code) return;
+    codeSent = true;
+    window.location.href = 'harve://callback?code=' + encodeURIComponent(code);
+  }
+
+  document.getElementById('retryLink').addEventListener('click', function(e) {
+    e.preventDefault();
+    codeSent = false;
+    openApp();
+  });
+
+  document.getElementById('logoutBtn').addEventListener('click', function() {
+    codeSent = true;
+    document.getElementById('openingView').classList.add('hidden');
+    document.getElementById('topbar').classList.add('hidden');
+    document.getElementById('switchingView').classList.remove('hidden');
+
+    window.location.href = 'harve://callback?action=reauth';
+  });
+
+  setTimeout(openApp, 400);
+})();
+</script>
+</body>
+</html>

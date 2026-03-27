@@ -18,7 +18,7 @@ This folder is mostly **static** (HTML/CSS). The homepage **Mac demo** is a pre-
 
 Vercel **rewrites** map pretty paths to the real files, e.g. **`/privacy`** → `privacy.html`, **`/support/articles/install-harve`** → `…/install-harve.html`. **301 redirects** send old `*.html` links to the short form for SEO.
 
-You can share **`https://harve.ai/auth-callback`** with WorkOS (same page as `auth-callback.html`).
+OAuth **must** use the slash form WorkOS expects, e.g. **`https://www.harve.ai/auth/callback`** (same behavior as `/auth-callback` and `auth-callback.html`). The repo serves it via **`auth/callback/index.html`** (static path) plus `vercel.json` rewrites so Vercel cannot miss the route.
 
 ## 2. New project
 
@@ -44,8 +44,8 @@ After deploy you get a URL like `https://harve-landing-xxx.vercel.app`. Click th
 
 | Task | Where |
 |------|--------|
-| WorkOS redirect | Add **`https://harve.ai/auth-callback`** (exact) in WorkOS dashboard |
-| Electron app | Set **`HARVE_REDIRECT_URI=https://harve.ai/auth-callback`** for production builds (`ENV.md` in `harve-overlay`) |
+| WorkOS redirect | **`https://www.harve.ai/auth/callback`** (exact; must match app + dashboard) |
+| Electron app | Production default is `https://www.harve.ai/auth/callback` in `harve-overlay` `auth.ts`; override only with **`HARVE_REDIRECT_URI`** if needed |
 | Intercom Fin | Re-sync website; **exclude** `/shop` if old host had a store; seed **`/support`** |
 | `sitemap.xml` / `robots.txt` | Already use `https://harve.ai` — no change if that’s your canonical URL |
 

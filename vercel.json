@@ -10,6 +10,8 @@
   ],
   "rewrites": [
     { "source": "/", "destination": "/landing.html" },
+    { "source": "/auth/callback", "destination": "/auth/callback/index.html" },
+    { "source": "/auth/callback/", "destination": "/auth/callback/index.html" },
     { "source": "/privacy", "destination": "/privacy.html" },
     { "source": "/privacy/", "destination": "/privacy.html" },
     { "source": "/terms", "destination": "/terms.html" },
