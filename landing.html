@@ -664,17 +664,20 @@ a.nav-cta, a.cta-primary, a.cta-secondary {
   z-index: 1;
 }
 
-/* Bridge (replaces thin hinge): soft page fade → one hard navy “marker” streak — no banded SVG strip */
+/* Bridge: crossfade pale page blues → navy — no near-white stops (avoids “hard white” seam) */
 .site-dark-bridge {
   position: relative;
   z-index: 1;
   padding: clamp(48px, 8vw, 96px) clamp(20px, 4vw, 32px) clamp(52px, 7vw, 80px);
+  perspective: 960px;
   background: linear-gradient(
     180deg,
-    rgba(248, 250, 255, 1) 0%,
-    rgba(236, 242, 252, 0.95) 18%,
-    rgba(210, 224, 244, 0.55) 42%,
-    rgba(40, 58, 88, 0.35) 72%,
+    rgb(225, 234, 248) 0%,
+    rgb(198, 214, 238) 14%,
+    rgb(165, 188, 224) 30%,
+    rgb(118, 142, 186) 48%,
+    rgb(62, 82, 118) 66%,
+    rgb(28, 38, 58) 82%,
     #060a12 100%
   );
 }
@@ -685,12 +688,20 @@ a.nav-cta, a.cta-primary, a.cta-secondary {
   background: #0a2244;
   border-radius: 6px 20px 5px 16px;
   transform: rotate(-0.75deg);
+  transform-origin: center center;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  will-change: transform, opacity;
   box-shadow:
     0 4px 0 rgba(0, 0, 0, 0.38),
     inset 0 1px 0 rgba(255, 255, 255, 0.06);
 }
 @media (prefers-reduced-motion: reduce) {
-  .site-dark-bridge__streak { transform: none; }
+  .site-dark-bridge { perspective: none; }
+  .site-dark-bridge__streak {
+    transform: rotate(-0.75deg);
+    will-change: auto;
+  }
 }
 .site-dark-bridge__headline {
   font: normal clamp(22px, 4.2vw, 40px) 'Alice', serif;
@@ -1968,6 +1979,33 @@ a.nav-cta, a.cta-primary, a.cta-secondary {
   window.addEventListener('scroll', updateProofOpacity, { passive: true });
   window.addEventListener('resize', updateProofOpacity);
   updateProofOpacity();
+
+  // ── Bridge streak: scroll-driven spin in / spin out (3D tilt) ──
+  (function bridgeStreakScroll() {
+    var streak = document.querySelector('.site-dark-bridge__streak');
+    if (!streak) return;
+    var mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+    if (mq.matches) return;
+
+    function tick() {
+      var r = streak.getBoundingClientRect();
+      var vh = window.innerHeight || 800;
+      var centerY = r.top + r.height * 0.5;
+      var start = vh * 0.92;
+      var end = vh * 0.34;
+      var t = clamp01((start - centerY) / (start - end));
+      var ease = t * t * (3 - 2 * t);
+      var spinX = (1 - ease) * 16;
+      var spinZ = (1 - ease) * -9;
+      var op = 0.4 + 0.6 * ease;
+      streak.style.transform =
+        'rotate(' + (-0.75 + spinZ * 0.15) + 'deg) rotateX(' + spinX + 'deg)';
+      streak.style.opacity = String(op);
+    }
+    window.addEventListener('scroll', tick, { passive: true });
+    window.addEventListener('resize', tick);
+    tick();
+  })();
 
   // ── Earnings: dark band visibility + slider → spotlight (no carousel) ──
   (function earningsExplorer() {
