@@ -669,7 +669,7 @@ a.nav-cta, a.cta-primary, a.cta-secondary {
   position: relative;
   z-index: 1;
   padding: clamp(48px, 8vw, 96px) clamp(20px, 4vw, 32px) clamp(52px, 7vw, 80px);
-  perspective: 960px;
+  perspective: 1400px;
   background: linear-gradient(
     180deg,
     rgb(225, 234, 248) 0%,
@@ -1980,27 +1980,32 @@ a.nav-cta, a.cta-primary, a.cta-secondary {
   window.addEventListener('resize', updateProofOpacity);
   updateProofOpacity();
 
-  // ── Bridge streak: scroll-driven spin in / spin out (3D tilt) ──
+  // ── Bridge streak: scroll-linked flip (long range, starts before “in view”; reverses on scroll up) ──
   (function bridgeStreakScroll() {
+    var bridge = document.querySelector('.site-dark-bridge');
     var streak = document.querySelector('.site-dark-bridge__streak');
-    if (!streak) return;
-    var mq = window.matchMedia('(prefers-reduced-motion: reduce)');
-    if (mq.matches) return;
+    if (!bridge || !streak) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
     function tick() {
-      var r = streak.getBoundingClientRect();
+      var br = bridge.getBoundingClientRect();
       var vh = window.innerHeight || 800;
-      var centerY = r.top + r.height * 0.5;
-      var start = vh * 0.92;
-      var end = vh * 0.34;
-      var t = clamp01((start - centerY) / (start - end));
-      var ease = t * t * (3 - 2 * t);
-      var spinX = (1 - ease) * 16;
-      var spinZ = (1 - ease) * -9;
-      var op = 0.4 + 0.6 * ease;
+      var top = br.top;
+      // Wide range: t=0 when bridge is still below / barely entering; t=1 when it’s well up the viewport
+      var startTop = vh * 1.38;
+      var endTop = vh * 0.06;
+      var t = clamp01((startTop - top) / (startTop - endTop));
+      // Linear = motion clearly tied to scroll (not a soft fade)
+      var ease = t;
+      var inv = 1 - ease;
+      // Aggressive “card flip” — not an opacity fade
+      var rx = inv * 62;
+      var ry = inv * 18;
+      var rz = -0.75 + inv * -18;
+      var tz = inv * -70;
+      streak.style.opacity = '';
       streak.style.transform =
-        'rotate(' + (-0.75 + spinZ * 0.15) + 'deg) rotateX(' + spinX + 'deg)';
-      streak.style.opacity = String(op);
+        'translateZ(' + tz + 'px) rotateZ(' + rz + 'deg) rotateY(' + ry + 'deg) rotateX(' + rx + 'deg)';
     }
     window.addEventListener('scroll', tick, { passive: true });
     window.addEventListener('resize', tick);
