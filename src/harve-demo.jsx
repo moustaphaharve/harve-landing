@@ -325,7 +325,7 @@ const Pill = ({ expanded, showGreeting, greetingOp, showPanel, showPraise, prais
       transition: "border-radius 0.48s cubic-bezier(0.4,0,0.2,1), padding 0.48s cubic-bezier(0.4,0,0.2,1), opacity 0.34s ease-out",
       position: "relative",
     }}>
-      <div style={{ position: "absolute", inset: 0, background: "linear-gradient(145deg, #E8F0FF 0%, #D4E4FA 100%)", borderRadius: "inherit", opacity: solidOp, transition: "opacity 0.4s ease-out", pointerEvents: "none", zIndex: 0 }} />
+      <div style={{ position: "absolute", inset: 0, background: "#E8F0FF", borderRadius: "inherit", opacity: solidOp, transition: "opacity 0.4s ease-out", pointerEvents: "none", zIndex: 0 }} />
       <div style={{ height: 46, display: "flex", alignItems: "center", gap: 8, position: "relative", zIndex: 2 }}>
         <HarveLogoGhost size={22} />
         <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", minWidth: 0 }}>
@@ -498,7 +498,7 @@ export default function HarveFullDemo({ play = false }) {
     setShowPanel(false);
     await sleep(T.PANEL_COLLAPSE);
     if (myRun !== runIdRef.current || !mountedRef.current) return;
-    setExpanded(false); setShowPraise(true); setSolidOp(0);
+    setExpanded(false); setShowPraise(true); setSolidOp(1);
     setPillPhase("praise");
     await sleep(T.PRAISE_IN); setPraiseOp(1);
     await sleep(T.PRAISE_HOLD);
