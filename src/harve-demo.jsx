@@ -3,11 +3,14 @@ import { useState, useEffect, useRef, useCallback } from "react";
 const T = {
   WALL_IN: 700, MENU_IN: 350, DOCK_IN: 400, APP_DELAY: 500, APP_IN: 400,
   PILL_DELAY: 600, IDLE: 1800, ZOOM: 1000, GREET_HOLD: 1700, GREET_OUT: 400,
-  POST_GREET: 400, EXPAND: 480, EXPANDED: 2000, SUBMIT: 180, PRAISE_IN: 80,
+  POST_GREET: 400, EXPAND: 480, EXPANDED: 2000, SUBMIT: 180,
+  PANEL_COLLAPSE: 480,
+  PRAISE_IN: 80,
   PRAISE_HOLD: 1400, PRAISE_OUT: 450, HARD_CUT: 250,
 };
 
-const HARVE_LOGO_SRC = "/harve-logo-white.png";
+/** Absolute URL so the demo works in file:// embeds (Electron) and on harve.ai. */
+const HARVE_LOGO_SRC = "https://www.harve.ai/harve-logo-white.png";
 
 /** Demo balance shown in app window + expanded pill */
 const DEMO_BALANCE = "$537.22";
@@ -322,32 +325,6 @@ const Pill = ({ expanded, showGreeting, greetingOp, showPanel, showPraise, prais
       transition: "border-radius 0.48s cubic-bezier(0.4,0,0.2,1), padding 0.48s cubic-bezier(0.4,0,0.2,1), opacity 0.34s ease-out",
       position: "relative",
     }}>
-      <div
-        aria-hidden
-        style={{
-          position: "absolute",
-          inset: 0,
-          borderRadius: "inherit",
-          pointerEvents: "none",
-          zIndex: 1,
-          overflow: "hidden",
-          opacity: 0.5,
-        }}
-      >
-        <div
-          className="harve-pill-shine-sweep"
-          style={{
-            position: "absolute",
-            top: "-40%",
-            left: "-60%",
-            width: "55%",
-            height: "180%",
-            background: "linear-gradient(105deg, transparent 0%, rgba(255,255,255,0.95) 42%, rgba(255,255,255,0.2) 52%, transparent 68%)",
-            transform: "rotate(12deg)",
-            animation: "pillShine 4.2s ease-in-out infinite",
-          }}
-        />
-      </div>
       <div style={{ position: "absolute", inset: 0, background: "linear-gradient(145deg, #E8F0FF 0%, #D4E4FA 100%)", borderRadius: "inherit", opacity: solidOp, transition: "opacity 0.4s ease-out", pointerEvents: "none", zIndex: 0 }} />
       <div style={{ height: 46, display: "flex", alignItems: "center", gap: 8, position: "relative", zIndex: 2 }}>
         <HarveLogoGhost size={22} />
@@ -371,7 +348,7 @@ const Pill = ({ expanded, showGreeting, greetingOp, showPanel, showPraise, prais
         <div style={{ display: "flex", alignItems: "center", gap: 6, flexShrink: 0 }}><PulseDot /><TimerDisplay seconds={timerSec} /></div>
       </div>
       {expanded && (
-        <div style={{ maxHeight: showPanel ? 232 : 0, opacity: showPanel ? 1 : 0, overflow: "hidden", transition: "max-height 0.32s cubic-bezier(0.4,0,0.2,1), opacity 0.28s ease-out" }}>
+        <div style={{ maxHeight: showPanel ? 232 : 0, opacity: showPanel ? 1 : 0, overflow: "hidden", transition: "max-height 0.48s cubic-bezier(0.4,0,0.2,1), opacity 0.4s cubic-bezier(0.4,0,0.2,1)" }}>
           <div style={{ background: "rgba(242,250,255,0.42)", border: "1px solid rgba(255,255,255,0.65)", borderRadius: 12, padding: "10px 14px 8px", marginBottom: 8, backdropFilter: "blur(8px)" }}>
             <div style={{ fontSize: 9, fontWeight: 500, fontFamily: font.ui, color: "rgba(60,80,110,0.55)", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 4 }}>THIS SESSION</div>
             <div
@@ -518,7 +495,10 @@ export default function HarveFullDemo({ play = false }) {
     setPillPhase("expanded"); await sleep(T.EXPANDED);
     if (myRun !== runIdRef.current || !mountedRef.current) return;
     setPillPhase("submitting"); await sleep(T.SUBMIT);
-    setShowPanel(false); setExpanded(false); setShowPraise(true); setSolidOp(1);
+    setShowPanel(false);
+    await sleep(T.PANEL_COLLAPSE);
+    if (myRun !== runIdRef.current || !mountedRef.current) return;
+    setExpanded(false); setShowPraise(true); setSolidOp(0);
     setPillPhase("praise");
     await sleep(T.PRAISE_IN); setPraiseOp(1);
     await sleep(T.PRAISE_HOLD);
@@ -580,18 +560,16 @@ export default function HarveFullDemo({ play = false }) {
       className="harve-demo-stage"
       style={{
         width: "100%", maxWidth: 980, aspectRatio: "16 / 10", maxHeight: "var(--harve-demo-max-h, min(62vh, 620px))",
-        margin: "0 auto", position: "relative", overflow: "hidden", background: "#FFF",
+        margin: "0 auto", position: "relative", overflow: "hidden",
+        /* Match window chrome — #FFF left hairline gaps at rounded corners vs. the dark window */
+        background: "#111114",
         fontFamily: font.ui,
         borderRadius: 18, lineHeight: "normal",
       }}
     >
       <style>{`
         @keyframes pulseDot{0%,100%{opacity:1;filter:brightness(1.05)}50%{opacity:0.88;filter:brightness(0.92)}}
-        @keyframes pillShine{0%,35%{transform:translateX(-120%) rotate(12deg)}65%,100%{transform:translateX(220%) rotate(12deg)}}
         @keyframes avatarShine{0%,70%,100%{left:-100%}85%{left:100%}}
-        @media (prefers-reduced-motion: reduce) {
-          .harve-pill-shine-sweep { animation: none !important; opacity: 0 !important; }
-        }
         .harve-demo-root-inner *{box-sizing:border-box}
         .harve-demo-root-inner button{font:inherit}
         .harve-demo-root-inner .harve-demo-dollar{font-family:'Nunito','Inter',system-ui,sans-serif!important;font-weight:700!important;font-style:normal!important}
