@@ -160,10 +160,21 @@
 (function() {
   var params = new URLSearchParams(window.location.search);
   var code = params.get('code');
+  var oauthError = params.get('error');
+  var oauthDesc = params.get('error_description');
   var codeSent = false;
 
+  /** Same bridge for WorkOS redirect to https://www.harve.ai/auth/callback or /auth-callback */
   function openApp() {
-    if (codeSent || !code) return;
+    if (codeSent) return;
+    if (oauthError) {
+      codeSent = true;
+      var q = 'error=' + encodeURIComponent(oauthError);
+      if (oauthDesc) q += '&error_description=' + encodeURIComponent(oauthDesc);
+      window.location.href = 'harve://callback?' + q;
+      return;
+    }
+    if (!code) return;
     codeSent = true;
     window.location.href = 'harve://callback?code=' + encodeURIComponent(code);
   }

@@ -2,7 +2,8 @@
   "name": "harve-landing",
   "private": true,
   "scripts": {
-    "build:demo": "esbuild src/demo-entry.jsx --bundle --outfile=demo-bundle.js --format=iife --loader:.jsx=jsx --jsx=automatic --minify"
+    "build:demo": "esbuild src/demo-entry.jsx --bundle --outfile=demo-bundle.js --format=iife --loader:.jsx=jsx --jsx=automatic --minify",
+    "build:demo-embed": "esbuild src/demo-embed-entry.jsx --bundle --outfile=demo-embed-bundle.js --format=iife --loader:.jsx=jsx --jsx=automatic --minify"
   },
   "dependencies": {
     "react": "^18.3.1",

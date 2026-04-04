@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Harve demo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  html, body { margin: 0; padding: 0; height: 100%; background: transparent; }
+  body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100%;
+    box-sizing: border-box;
+    padding: 0;
+  }
+  .mac-demo-section {
+    padding: 0;
+    max-width: 100%;
+    margin: 0;
+    position: relative;
+    z-index: 1;
+    opacity: 1;
+    transform: none;
+  }
+  .mac-demo-glow {
+    position: relative;
+    border-radius: 22px;
+    padding: 0;
+    max-width: 100%;
+    margin: 0 auto;
+    background: transparent;
+  }
+  .mac-demo-glow::before {
+    content: '';
+    position: absolute;
+    inset: -40px -44px -48px -40px;
+    z-index: 0;
+    border-radius: 40px;
+    pointer-events: none;
+    opacity: 1;
+    background:
+      radial-gradient(ellipse 95% 100% at 0% 10%, rgba(255, 90, 70, 0.72) 0%, rgba(255, 120, 95, 0.35) 38%, transparent 62%),
+      radial-gradient(ellipse 88% 92% at 100% 6%, rgba(55, 130, 255, 0.68) 0%, rgba(90, 160, 255, 0.32) 40%, transparent 58%),
+      radial-gradient(ellipse 100% 88% at 100% 96%, rgba(255, 140, 75, 0.55) 0%, rgba(255, 170, 120, 0.2) 45%, transparent 55%),
+      radial-gradient(ellipse 95% 92% at 0% 90%, rgba(175, 85, 230, 0.45) 0%, rgba(200, 130, 255, 0.18) 48%, transparent 58%);
+    filter: blur(44px);
+  }
+  .mac-demo-glow-inner {
+    position: relative;
+    z-index: 1;
+    border-radius: 20px;
+    overflow: hidden;
+    background: #fff;
+    line-height: normal;
+    box-shadow:
+      0 24px 64px rgba(25, 55, 120, 0.1),
+      0 8px 24px rgba(0, 0, 0, 0.05);
+  }
+  #harve-demo-root {
+    display: block;
+    width: 100%;
+    line-height: normal;
+    --harve-demo-max-h: min(42vh, 280px);
+  }
+  #harve-demo-root .harve-demo-dollar {
+    font-family: 'Nunito', 'Inter', system-ui, sans-serif !important;
+    font-weight: 700 !important;
+    font-style: normal !important;
+  }
+</style>
+</head>
+<body>
+<section class="mac-demo-section mac-demo-section--visible" aria-label="Harve product demo">
+  <div class="mac-demo-glow">
+    <div class="mac-demo-glow-inner">
+      <div id="harve-demo-root"></div>
+    </div>
+  </div>
+</section>
+<script src="./demo-embed-bundle.js"></script>
+</body>
+</html>
